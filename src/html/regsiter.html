@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册</title>
+		<meta name="viewport" content="width=720,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body data-sms-type="1">
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<!--<span class="triangle-btn green"></span>-->
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">注册</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap regsiter_main">
+			<div class="main">
+				<div class="regsiter_pack">
+					<div class="regsiter_item regsiter_phone show">
+						<input type="tel" id="reg_phoneNumber" value="" placeholder="请输入您的手机号" maxlength="11" autocomplete="off" class="zs_phoneNumber"/>
+						<i class="icon_clear"></i>
+					</div>
+					<div class="regsiter_item regsiter_password">
+						<input type="password" id="reg_password" value="" placeholder="请输入密码(密码长度6-20位，不含空格)" autocomplete="off"  />
+						<i class="icon_clear"></i>
+					</div>
+					<div class="regsiter_item regsiter_password_again">
+						<input type="password" id="reg_password_again" value="" placeholder="请再次输入密码" autocomplete="off"  />
+						<i class="icon_clear"></i>
+					</div>
+					<div class="regsiter_item regsiter_smscode" style="position:relative">
+						<input type="tel" maxlength="6" id="verify_code" name="" placeholder="请输入手机验证码" autocomplete="off" />
+						<a id="reg_verify_code" class="get_verify_code">获取验证码</a>
+					    <a id="reg_time" style="display:none ;background: none; color: #F76A10;" class="zs_time"></a>
+					    <i class="icon_clear"></i>
+					</div>
+					
+					<div class="regsiter_btn">
+						<button autocomplete="off">注册</button>
+					</div>
+				</div>
+				<!--<div class="success">
+					<div class="success_pop">注册成功</div>
+					<div class="success_prompt"><span class="regsiter_time" style="color: red;">3</span>秒后自动跳转<a style="padding-left: 20px;color: #fe7831;">跳过</a></div>
+				</div>-->
+			</div>			
+		</div>	
+		<div class="toast-ui">
+		    <span class="toast">注册成功</span>
+		</div>
+		<div class="pop-dialog" style="">
+		    <div class="pop-body">
+		        <p class="pop-msg"><span>手机号14700080905已绑定其它帐号,</span><br>继续注册将解除该手机与原京东帐号的绑定，并绑定新注册的京东账号</p>
+		        <div class="pop-btns">
+		            <a href="javascript:;" class="btn-pop btn-cancel J_ping" id="cancelBtn" report-eventid="MLoginRegister_UnbundlingCancel">取消</a>
+		            <a href="javascript:;" class="btn-pop btn-continue J_ping" report-eventid="MLoginRegister_UnbundlingContinue" data-bind="1">继续注册</a>
+		        </div>
+		    </div>
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			$("input").on("focus",function(){
+				$(this).parent().find(".icon_clear").show();
+			})
+			$("input").on("blur",function(){
+				var nood= $(this)
+				setTimeout(function(){
+					nood.parent().find(".icon_clear").hide();
+				},10)
+			})
+			$(".icon_clear").on("click",function(){
+				console.log("icon_clear")
+				console.log($(this).parent().find("input").val(""))
+				$(this).parent().find("input").val("")
+			})
+		})
+	</script>
+</html>
