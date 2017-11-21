@@ -1,17 +1,17 @@
 .swiper-wrapper img{width: 100%;height: 100%;}
 /*结构公用样式*/
 html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
-.header_wrap{max-width: 720px;width: 100%;margin: 0 auto;height:96px;border-bottom: 1px solid #d8d8d8;position: fixed;background: #000;z-index: 3;top: 0;left:0;right:0;}
+.header_wrap{max-width: 750px;width: 100%;margin: 0 auto;height:96px;border-bottom: 1px solid #d8d8d8;position: fixed;background: #000;z-index: 3;top: 0;left:0;right:0;}
 .header_contain{position:relative;width: 100%;}
 .header_title{font-size: 32px;color: #FFF;margin: 0 auto;position: absolute;top: 0;left: 0;width: 100%;height: 96px;text-align: center;line-height: 96px;}
 .header_left{width: 150px;height: 96px;position: absolute;top:0;left:0;line-height: 96px;z-index: 10;}
 .header_left img{margin-left: 12px;}
 .header_right{width: 150px;height: 96px;position: absolute;top:0;right:0;line-height: 96px;z-index: 10;}
 
-.main_wrap{max-width: 720px;width: 100%;margin:0 auto;background: #f0f0f0;}
+.main_wrap{max-width: 750px;width: 100%;margin:0 auto;background: #f0f0f0;}
 .main{width: 100%;height:auto;}
 
-.footer_wrap{max-width: 720px;width: 100%;margin: 0 auto;height: 100px;background: #202020;position: fixed;border-top: 1px solid #bababa;left: 0;bottom: 0;z-index: 9999;right:0;}
+.footer_wrap{max-width: 750px;width: 100%;margin: 0 auto;height: 100px;background: #202020;position: fixed;border-top: 1px solid #bababa;left: 0;bottom: 0;z-index: 9999;right:0;}
 .empty{width: 100%;height: 96px;}
 .empty1{width: 100%;height: 110px;}
 
@@ -26,6 +26,17 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .footer .footer_item.actived:nth-child(3){background: url(../img/icon_bot_list_b@2x.png) no-repeat center 16px}
 .footer .footer_item:nth-child(4){background: url(../img/icon_bot_user_a@2x.png) no-repeat center 16px}
 .footer .footer_item.actived:nth-child(4){ background: url(../img/icon_bot_user_b@2x.png) no-repeat center 16px}
+
+/*公用功能性类*/
+/*左右浮动*/
+.float_left{float: left;}
+.float_right{float: right;}
+/*清除浮动*/
+.clearfloat:after{content: ".";display: block;height: 0;overflow: hidden;visibility: hidden;clear: both;}
+/*公用遮罩层*/
+.my_bg{width: 100%;height: 100%;background: #000;position: fixed;top: 0;left: 0;opacity: 0.8;z-index: 6;filter: Alpha(opacity=80);overflow: hidden;display: none}
+/*隐藏一个元素*/
+.hidden{display: none;}
 
 .toast-ui {
     display: none;
@@ -134,3 +145,24 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 /*首页*/
 .index_left{text-align: center;color: #C30D23;background: url(../img/list_down@2x.png) no-repeat 110px center;font-size: 30px;}
 .index_right{text-align: center;padding-left: 50px;}
+.index_main{background: #000;}
+.banner_wrap{width: 100%;height: 440px;padding-top: 34px;}
+.index_banner{}
+.swiper-wrapper{}
+.index_banner .swiper-slide{width: 618px;height: 380px;background: red;}
+
+.menu_nav{width: 100%;display: flex;box-sizing: border-box;text-align: center;background: #000;color: #6f7174;font-size: 20px;padding: 30px 0;}
+.menu_nav .item{flex: 1;}
+.menu_nav .item dt{width: 100px;height: 100px;border-radius: 50%;border: 1px solid #6F7174;margin: 0 auto;}
+.menu_nav .item dd{line-height: 50px;}
+
+.index_module{padding: 20px 24px;background: #000;line-height: 30px;font-size: 20px;color: #6F7174;}
+.index_module h3{width: 100%;height: 70px;padding: 15px 0; background: url(../img/biao_list@2x.png) no-repeat left center;line-height: 40px;font-size: 30px;color: #9c9FA3;text-indent: 20px;}
+.index_module .module_item{padding: 16px 0;border-bottom: 1px solid #333;}
+.index_module .module_item:last-child{border-bottom: none;}
+.module_item dt,.module_item dd{float: left;}
+.module_item dt{width: 270px;height: 178px;border-radius: 15px;}
+.module_item dt img{width: 100%;height: 100%;}
+.module_item dd{padding: 0 24px;width: 402px;}
+.module_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 30px;color: #9C9FA3;}
+.module_item dd .description{padding: 15px 0; overflow:hidden; text-overflow:ellipsis;display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3;line-height: 30px;}

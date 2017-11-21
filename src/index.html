@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=720,user-scalable=no" />
+		<meta name="viewport" content="width=750,user-scalable=no" />
 		<meta content="telephone=no, address=no" name="format-detection" />
 		<link rel="stylesheet" type="text/css" href="css/rest.css" />
 		<link rel="stylesheet" type="text/css" href="css/swiper-3.3.1.min.css"/>
@@ -22,10 +22,74 @@
 			</div>
 		</div>
 		<div class="empty"></div>
-		<div class="main_wrap regsiter_main">
+		<div class="main_wrap index_main">
 			<div class="main">
+				<div class="banner_wrap">
+					<div class="index_banner">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">slider1</div>
+						    <div class="swiper-slide">slider2</div>
+						    <div class="swiper-slide">slider3</div>
+						</div>
+					</div>
+				</div>
+				<div class="menu_nav">
+					<dl class="item">
+						<dt><img src="img/icon_insurence@2x.png"/></dt>
+						<dd>车险分期</dd>
+					</dl>
+					<dl class="item">
+						<dt><img src="img/icon_addoil@2x.png"/></dt>
+						<dd>加油无忧</dd>
+					</dl>
+					<dl class="item">
+						<dt><img src="img/icon_etc@2x.png"/></dt>
+						<dd>便捷ETC</dd>
+					</dl>
+					<dl class="item">
+						<dt><img src="img/icon_carfix@2x.png"/></dt>
+						<dd>维修保养</dd>
+					</dl>
+					<dl class="item">
+						<dt><img src="img/icon_car@2x.png"/></dt>
+						<dd>新车</dd>
+					</dl>
+				</div>
+				<div class="index_module">
+					<h3 class="title">特价车</h3>
+					<div class="module_box">
+						<dl class="module_item clearfloat">
+							<dt><img src="img/goods_pic.png"/></dt>
+							<dd>
+								<h4>BMW 3系GT 一触即发</h4>
+								<div class="description">
+									融合轿跑车的动感外形与ＧＴ车的独特优势，外观和设计中的Ｍ基因添加运动个性。
+								</div>
+							</dd>
+						</dl>
+						<dl class="module_item clearfloat">
+							<dt><img src="img/goods_pic.png"/></dt>
+							<dd>
+								<h4>BMW 3系GT 一触即发</h4>
+								<div class="description">
+									融合轿跑车的动感外形与ＧＴ车的独特优势，外观和设计中的Ｍ基因添加运动个性。
+								</div>
+							</dd>
+						</dl>
+						<dl class="module_item clearfloat">
+							<dt><img src="img/goods_pic.png"/></dt>
+							<dd>
+								<h4>BMW 3系GT 一触即发</h4>
+								<div class="description">
+									融合轿跑车的动感外形与ＧＴ车的独特优势，外观和设计中的Ｍ基因添加运动个性。
+								</div>
+							</dd>
+						</dl>
+					</div>
+				</div>
 			</div>
 		</div>
+		<div class="empty"></div>
 		<div class="footer_wrap">
 			<div class="footer clearfloat" id="foot">
 				<div class="footer_item actived">首页</div>
@@ -37,4 +101,15 @@
 	</body>
 	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/swiper.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var swiper = new Swiper (".index_banner", {
+		    direction: 'horizontal',
+		    loop: true,
+		    autoplay:5000,
+		    autoplayDisableOnInteraction : false,
+		    spaceBetween : 34,
+		    width:618,
+		});
+	</script>
 </html>
