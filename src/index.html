@@ -8,6 +8,10 @@
 		<link rel="stylesheet" type="text/css" href="css/swiper-3.3.1.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css/base.css"/>
 		<title>首页</title>
+		<style type="text/css">
+			.swiper-slide-prev,.swiper-slide-next{transform:scale(0.8);-ms-transform:scale(0.8);-webkit-transform:scale(0.8); -o-transform:scale(0.8);-moz-transform:scale(0.8);}
+			.swiper-slide{box-sizing: border-box;box-shadow: 20px 20px 12px 36px rgba(195,13,35,0.34);}
+		</style>
 	</head>
 	<body>
 		<div class="header_wrap">
@@ -27,7 +31,7 @@
 				<div class="banner_wrap">
 					<div class="index_banner">
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">slider1</div>
+							<div class="swiper-slide"><img src="img/banner.png"/></div>
 						    <div class="swiper-slide">slider2</div>
 						    <div class="swiper-slide">slider3</div>
 						</div>
@@ -106,10 +110,13 @@
 		var swiper = new Swiper (".index_banner", {
 		    direction: 'horizontal',
 		    loop: true,
+		    loopAdditionalSlides :2,
 		    autoplay:5000,
-		    autoplayDisableOnInteraction : false,
-		    spaceBetween : 34,
-		    width:618,
+		    //autoplayDisableOnInteraction : false,
+		    //spaceBetween : 34,
+		    slidesPerView : 1.4,
+			centeredSlides : true,
+		    //width:618,
 		});
 	</script>
 </html>

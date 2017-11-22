@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>车辆认证</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">车辆认证</h1>
+			    
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main">
+				<div class="authentication_top">
+					<p>1.请提供清晰照片,拍照时防止反光</p>
+					<p>2.信息仅用于投保,我们将为您严格保密</p>
+				</div>
+				<div class="authentication_center">
+					<div class="authentication_center_item">
+						<input type="file" accept="image/*" class="car_img" name="car_img"/>
+					</div>
+					<div class="authentication_center_item">
+						<input type="file" accept="image/*" class="car_img" name="car_img"/>
+					</div>
+				</div>
+				<div class="authentication_bottom"><button class="submit_btn90">提交</button></div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".authentication_center").on("change",".car_img",function(){
+				var nood= $(this).parent();
+				var tar = this,
+				files = tar.files,
+				fNum = files.length,
+				URL = window.URL || window.webkitURL,
+				file = files[0];
+				if( !file ) return;
+				var fr = new FileReader();
+				fr.onload = function () {
+	                var result = this.result;
+	                var img = new Image();
+	                img.src = result;
+	                if (img.complete) {
+	                    callback();
+	                } else {
+	                    img.onload = callback;
+	                }
+	                function callback(){
+	                	nood.append(img)
+	                	console.log(result)
+	                }
+	            }
+				console.log("change")
+				fr.readAsDataURL(file);
+			})
+		})
+	</script>
+</html>

@@ -8,7 +8,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .header_left img{margin-left: 12px;}
 .header_right{width: 150px;height: 96px;position: absolute;top:0;right:0;line-height: 96px;z-index: 10;}
 
-.main_wrap{max-width: 750px;width: 100%;margin:0 auto;background: #f0f0f0;}
+.main_wrap{max-width: 750px;width: 100%;margin:0 auto;background: #eaeaea;}
 .main{width: 100%;height:auto;}
 
 .footer_wrap{max-width: 750px;width: 100%;margin: 0 auto;height: 100px;background: #202020;position: fixed;border-top: 1px solid #bababa;left: 0;bottom: 0;z-index: 9999;right:0;}
@@ -16,7 +16,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .empty1{width: 100%;height: 110px;}
 
 .footer{font-size: 20px;display: flex;}
-.footer_item{flex: 1;text-align: center;padding-top: 66px;color: #3e4248;}
+.footer_item{flex: 1;text-align: center;padding-top: 66px;color: #3e4248;line-height: 35px;}
 .footer .footer_item.actived{ color:#c30d23;}
 .footer .footer_item:nth-child(1){background: url(../img/icon_bot_home_a-@2x.png) no-repeat center 16px}
 .footer .footer_item.actived:nth-child(1){ background: url(../img/icon_bot_home_b@2x.png) no-repeat center 16px}
@@ -37,6 +37,9 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .my_bg{width: 100%;height: 100%;background: #000;position: fixed;top: 0;left: 0;opacity: 0.8;z-index: 6;filter: Alpha(opacity=80);overflow: hidden;display: none}
 /*隐藏一个元素*/
 .hidden{display: none;}
+
+/*提交按钮90高度*/
+.submit_btn90{width: 100%;height: 90px;background: url(../img/bg_02.png) repeat left center;text-align: center;line-height: 90px;color: #FFFFFF;font-size: 34px;border-radius: 6px;}
 
 .toast-ui {
     display: none;
@@ -146,10 +149,13 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .index_left{text-align: center;color: #C30D23;background: url(../img/list_down@2x.png) no-repeat 110px center;font-size: 30px;}
 .index_right{text-align: center;padding-left: 50px;}
 .index_main{background: #000;}
-.banner_wrap{width: 100%;height: 440px;padding-top: 34px;}
-.index_banner{}
+.banner_wrap{width: 100%;height: 440px;padding-top: 34px;overflow: hidden;position: relative;}
+.index_banner{width: 100%;height: 100%;}
 .swiper-wrapper{}
-.index_banner .swiper-slide{width: 618px;height: 380px;background: red;}
+.index_banner .swiper-slide{height: 380px;background: red;line-height: 380px;text-align: center;font-size: 150px;}
+.swiper-slide img{width: 100%;height: 100%;vertical-align: inherit;}
+.swiper-slide-prev,.swiper-slide-next{transform:scale(0.8);-ms-transform:scale(0.8);-webkit-transform:scale(0.8); -o-transform:scale(0.8);-moz-transform:scale(0.8);}
+.swiper-slide{box-sizing: border-box;box-shadow: 20px 20px 12px 36px rgba(195,13,35,0.34);}
 
 .menu_nav{width: 100%;display: flex;box-sizing: border-box;text-align: center;background: #000;color: #6f7174;font-size: 20px;padding: 30px 0;}
 .menu_nav .item{flex: 1;}
@@ -166,3 +172,26 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .module_item dd{padding: 0 24px;width: 402px;}
 .module_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 30px;color: #9C9FA3;}
 .module_item dd .description{padding: 15px 0; overflow:hidden; text-overflow:ellipsis;display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3;line-height: 30px;}
+
+/*我模块样式*/
+.authentication_top{padding: 24px;line-height: 36px;font-size: 26px;color: #9e9e9e;}
+.authentication_center{padding: 60px 0;}
+.authentication_center_item{width: 484px;height: 279px;margin: 34px auto;}
+.authentication_center_item:first-child{background: url(../img/car_1@2x.png) no-repeat center;}
+.authentication_center_item:last-child{background: url(../img/car_1@2x.png) no-repeat center;}
+.authentication_center_item .car_img{display: block;width: 100%;height: 100%;opacity:0;}
+..authentication_center_item img{display: block;width: 100%;height: 100%;}
+.authentication_bottom{padding: 60px 40px;}
+
+.garage_main{padding: 24px 0;}
+.garage_box{}
+.garage_car_item{width: 100%;height: 200px;border-bottom: 1px solid #ddd;padding: 0 24px;background: #FFFFFF;}
+.garage_car_item dt,.garage_car_item dd{float: left;height: 200px;}
+.garage_car_item dt{width: 200px;background: url(../img/goods_pic.png) no-repeat center;}
+.garage_car_item dd{line-height: 46px;color: #333;font-size: 28px;width: 502px;padding: 40px 24px;background: #FFFFFF url(../img/choose@2x.png) no-repeat right 46px;}
+
+
+.feedback_textarea{padding: 24px;}
+.feedback_textarea textarea{width: 100%;height: 400px;background: #FFFFFF;padding: 8px;border-radius: 10px;font-size: 28px;line-height: 36px;}
+.feedback_textarea button{margin: 30px auto;}
+
