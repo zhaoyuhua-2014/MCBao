@@ -21,8 +21,9 @@
 		<div class="main_wrap">
 			<div class="main">
 				<div class="ce_aplly_top">
-					<div class="list_item ">
+					<div class="list_item radio_marry">
 						<span class="actived">未婚</span><span>已婚</span>
+						<input type="hidden" name="marry" id="marry" value="0" />
 					</div>
 					<div class="list_item">
 						<label>期望提车城市</label>
@@ -34,8 +35,12 @@
 					</div>
 				</div>
 				<div class="updata_card_info">
-					<div class="updata_card_item user_card_a"></div>
-					<div class="updata_card_item user_card_b"></div>
+					<div class="updata_card_item user_card_a">
+						<input type="file" accept="image/*" class="car_img" name="car_img"/>
+					</div>
+					<div class="updata_card_item user_card_b">
+						<input type="file" accept="image/*" class="car_img" name="car_img"/>
+					</div>
 				</div>
 				<div class="ce_apply_description description_info">
 					<p>1.5折订车需信用评估请上传您的省份证，请拍照上传</p>
@@ -53,6 +58,42 @@
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$(".radio_marry").on("click","span",function(){
+				$(this).addClass("actived").siblings().removeClass("actived");
+				$("input[name='marry']").val($(this).index())
+			});
+			$(".updata_card_info").on("change",".car_img",function(){
+				var nodes = $(this).parent();
+	        	var tar = this,
+				files = tar.files,
+				fNum = files.length,
+				URL = window.URL || window.webkitURL,
+				file = files[0];
+				if( !file ) return;
+				var fr = new FileReader();
+				var span = document.createElement("span");
+				span.className = "comment_good_image"
+            	span.innerHTML = '<img src="../img/logo@2x.png"/>';
+            	nodes.append(span)
+				fr.onload = function () {
+	                var result = this.result;
+	                var img = new Image();
+	                img.src = result;
+					// 图片加载完毕之后进行压缩，然后上传
+	                if (img.complete) {
+	                    callback();
+	                } else {
+	                    img.onload = callback;
+	                }
+	
+	                function callback() {
+	                    $(span).find("img").attr("src",result);
+	                    img = null;
+	                }
+	
+	            };
+                fr.readAsDataURL(file);
+			})
 			
 		})
 	</script>
