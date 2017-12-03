@@ -108,6 +108,9 @@
 			subNav.on("click",'.mall_subnav_item',function(){
 				$(this).addClass("actived").siblings().removeClass("actived")
 			})
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
 		})
 	</script>
 </html>

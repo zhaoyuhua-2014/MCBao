@@ -18,23 +18,141 @@
 			</div>
 		</div>
 		<div class="empty"></div>
-		<div class="main_wrap">
+		<div class="main_wrap changecity">
 			<div class="main">
 				<div class="changecity_box">
 					<div class="changecity_header">
 						<div class="position_city">
-							当前：
+							当前：杭州
 						</div>
 					</div>
-					<div class="changecity_content">
-						<div class="position_city">
-							
+					<div class="changecity_center clearfloat">
+						<div class="changecity_content float_left">
+							<div class="position_city">
+								<div class="msg_title">定位/最近访问</div>
+								<div class="city_box clearfloat">
+									<span class="city_item icon">
+										杭州
+									</span>
+								</div>
+							</div>
+							<div class="hot_city">
+								<div class="hot_title">热门城市</div>
+								<div class="city_box clearfloat">
+									<span class="city_item">北京</span>
+									<span class="city_item">上海</span>
+									<span class="city_item">南京</span>
+									<span class="city_item">宁波</span>
+									<span class="city_item">金华</span>
+									<span class="city_item">湖州</span>
+									<span class="city_item">温州</span>
+									<span class="city_item">台州</span>
+									<span class="city_item">苏州</span>
+									
+								</div>
+							</div>
+							<div class="all_city">
+								<div class="citys_letter">
+									<div class="city_first_letter">
+										<a name="A">A</a>
+									</div>
+									<div class="city_list_box">
+										<div class="city_list_item">阿拉善盟</div>
+										<div class="city_list_item">鞍山</div>
+										<div class="city_list_item">安庆</div>
+									</div>
+								</div>
+								<div class="citys_letter">
+									<div class="city_first_letter">
+										<a name="B">B</a>
+									</div>
+									<div class="city_list_box">
+										<div class="city_list_item">阿拉善盟</div>
+										<div class="city_list_item">鞍山</div>
+										<div class="city_list_item">安庆</div>
+									</div>
+								</div>
+								<div class="citys_letter">
+									<div class="city_first_letter">
+										<a name="C">C</a>
+									</div>
+									<div class="city_list_box">
+										<div class="city_list_item">阿拉善盟</div>
+										<div class="city_list_item">鞍山</div>
+										<div class="city_list_item">安庆</div>
+									</div>
+								</div>
+								<div class="citys_letter">
+									<div class="city_first_letter">
+										<a name="D">D</a>
+									</div>
+									<div class="city_list_box">
+										<div class="city_list_item">阿拉善盟</div>
+										<div class="city_list_item">鞍山</div>
+										<div class="city_list_item">安庆</div>
+									</div>
+								</div>
+								<div class="citys_letter">
+									<div class="city_first_letter">
+										<a name="F">F</a>
+									</div>
+									<div class="city_list_box">
+										<div class="city_list_item">阿拉善盟</div>
+										<div class="city_list_item">鞍山</div>
+										<div class="city_list_item">安庆</div>
+									</div>
+								</div>
+								<div class="citys_letter">
+									<div class="city_first_letter">
+										<a name="G">G</a>
+									</div>
+									<div class="city_list_box">
+										<div class="city_list_item">阿拉善盟</div>
+										<div class="city_list_item">鞍山</div>
+										<div class="city_list_item">安庆</div>
+									</div>
+								</div>
+								<div class="citys_letter">
+									<div class="city_first_letter">
+										<a name="H">H</a>
+									</div>
+									<div class="city_list_box">
+										<div class="city_list_item">阿拉善盟</div>
+										<div class="city_list_item">鞍山</div>
+										<div class="city_list_item">安庆</div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="hot_city">
-							
-						</div>
-						<div class="all_city">
-							
+						<div class="changecity_sidenav float_right">
+							<ul class="anchor_list">
+								<li><a href="#A">A</a></li>
+								<li><a href="#B">B</a></li>
+								<li><a href="#C">C</a></li>
+								<li><a href="#D">D</a></li>
+								<li><a href="#E">E</a></li>
+								<li><a href="#F">F</a></li>
+								<li><a href="#G">G</a></li>
+								<li><a href="#H">H</a></li>
+								<li><a href="#I">I</a></li>
+								<li><a href="#J">J</a></li>
+								<li><a href="#K">K</a></li>
+								<li><a href="#L">L</a></li>
+								<li><a href="#M">M</a></li>
+								<li><a href="#N">N</a></li>
+								<li><a href="#O">O</a></li>
+								<li><a href="#P">P</a></li>
+								<li><a href="#Q">Q</a></li>
+								<li><a href="#R">R</a></li>
+								<li><a href="#S">S</a></li>
+								<li><a href="#T">T</a></li>
+								<li><a href="#U">U</a></li>
+								<li><a href="#V">V</a></li>
+								<li><a href="#W">W</a></li>
+								<li><a href="#X">X</a></li>
+								<li><a href="#Y">Y</a></li>
+								<li><a href="#Z">Z</a></li>
+							</ul>
 						</div>
 					</div>
 					
@@ -47,7 +165,9 @@
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
 		})
 	</script>
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>我的余额</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap my_balance">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">我的余额</h1>
+			</div>
+		</div>
+		<div class="main_wrap my_balance">
+			<div class="main">
+				<div class="my_balance_top">
+					<p class="my_balance_tit">账户余额(元)</p>
+					<div class="my_balance_money">
+						200.00
+					</div>
+				</div>
+				<div class="my_balance_center">
+					<div class="list_item" data-url = "recharge.html"><span class="float_left"><img src="../img/icon_cz@2x.png"/> 充值</span><span class="float_right icon">&nbsp;</span></div>
+					<div class="list_item" data-url = "withdraw_cash.html"><span class="float_left"><img src="../img/icon_tx@2x.png"/> 提现</span><span class="float_right icon">&nbsp;</span></div>
+				</div>
+			</div>			
+		</div>
+		<div class="empty"></div>
+		<div class="footer_wrap my_balance">
+			<div class="footer" id="foot">
+				常见问题
+			</div>
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			});
+			$(".my_balance_center .list_item").on("click",function(){
+				var nood = $(this);
+				window.location.href = nood.attr("data-url")
+			})
+		})
+	</script>
+</html>

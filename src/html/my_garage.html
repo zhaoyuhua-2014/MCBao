@@ -65,7 +65,19 @@
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			
+			$(".callback").on("click",function(){
+				window.history.back();
+			});
+			$(".garage_box").on("click",".garage_car_item dd",function(){
+				var nood = $(this).parent();
+				if (!nood.is(".actived")) {
+					nood.addClass("actived").siblings().removeClass("actived")
+				}
+			})
+			$(".garage_box").on("click",".garage_car_item dd .float_right.color_or",function(e){
+				e.stopPropagation()
+				window.location.href = "car_authentication.html"
+			})
 		})
 	</script>
 </html>

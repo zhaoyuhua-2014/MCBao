@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>收件人信息</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">收件人信息</h1>
+			    <div class="header_right right_text">
+			    	保存
+				</div>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap my_address">
+			<div class="main">
+				<div class="my_address_box">
+					<div class="list_item">
+						<span class="float_left">收件人</span>
+						<span class="float_right">
+							<input type="text" placeholder="请输入姓名" name="" id="" value="" />
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="left">手机号码</span>
+						<span class="float_right">
+							<input type="text" placeholder="请填写手机号码" name="" id="" value="" />
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="left">收件地址</span>
+						<span class="float_right icon">
+							<input type="text" placeholder="请选择收件地址" name="" id="" value="" />
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="left">详细地址</span>
+						<span class="float_right">
+							<input type="text" placeholder="请填写详细信息" name="" id="" value="" />
+						</span>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
+		})
+	</script>
+</html>

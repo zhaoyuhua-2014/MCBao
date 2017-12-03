@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>车险分期</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">车险分期</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main">
+				<div class="car_insurance_staging">
+					<div class="car_staging_box">
+						<div class="car_staging_box_title">脉车保车险分期</div>
+						<div class="car_staging_box_header">
+							<p>只针对私家车</p>
+						</div>
+						<div class="car_staging_box_center">
+							<div class="car_staging_box_c_item clearfloat">
+								<span class="float_left">投保城市</span>
+								<span class="float_right">杭州</span>
+							</div>
+							<div class="car_staging_box_c_item clearfloat">
+								<span class="float_left">货车保险</span>
+								<span class="float_right">未上牌新车</span>
+							</div>
+							<div class="car_staging_box_c_item clearfloat">
+								<span class="float_left">车主姓名</span>
+								<span class="float_right">张某某</span>
+							</div>
+							<div class="car_staging_box_c_item clearfloat">
+								<span class="float_left">车牌号</span>
+								<span class="float_right">浙Acc123</span>
+							</div>
+						</div>
+						<div class="car_staging_box_bottom clearfloat">
+							<span class="float_left">是否为一年内过户车？</span>
+							<span class="float_right"></span>
+						</div>
+						
+					</div>
+					<div class="car_staging_box_agreement">
+						<span class="icon"></span>
+						<span class="text">我以理解并接受<a href="">《脉车保平台服务协议》</a>以及<a href="">《保险代理机构告知书》</a></span>
+					</div>
+				</div>
+				<div class="payment_submit">
+					<button class="submit_btn90">确认</button>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			});
+			$(".car_staging_box_bottom .float_right").on("click",function(){
+				if ($(this).is(".actived")) {
+					$(this).removeClass("actived");
+				}else{
+					 $(this).addClass("actived");
+				}
+			})
+			$(".car_staging_box_agreement .icon").on("click",function(){
+				if ($(this).is(".actived")) {
+					$(this).removeClass("actived");
+				}else{
+					 $(this).addClass("actived");
+				}
+			})
+		})
+	</script>
+</html>

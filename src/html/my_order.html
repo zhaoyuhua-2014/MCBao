@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>我的订单</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">我的订单</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap my_order">
+			<div class="main">
+				<div class="mall_nav order_nav">
+					<div class="mall_nav_item actived">全部订单</div>
+					<div class="mall_nav_item">未支付</div>
+					<div class="mall_nav_item">已支付</div>
+				</div>
+				<div class="order_box_wrap">
+					<div class="order_box">
+						<div class="order_item">
+							<div class="order_item_top">
+								<span class="float_left">订单编号：8789899</span>
+								<span class="float_right order_status">已支付</span>
+							</div>
+							<div class="order_item_bottom">
+								<div class="oreder_item_b_left">
+									
+								</div>
+								<div class="oreder_item_b_center">
+									<div class="order_item_title">
+										太平洋车险
+									</div>
+									<div class="order_item_money">
+										￥3588.00
+									</div>
+								</div>
+								<div class="oreder_item_b_right">
+									2017.03.04
+								</div>
+							</div>
+						</div>
+						<div class="order_item">
+							<div class="order_item_top">
+								<span class="float_left">订单编号：8789899</span>
+								<span class="float_right order_status color_or">未支付</span>
+							</div>
+							<div class="order_item_bottom">
+								<div class="oreder_item_b_left">
+									
+								</div>
+								<div class="oreder_item_b_center">
+									<div class="order_item_title">
+										太平洋车险
+									</div>
+									<div class="order_item_money">
+										￥3588.00
+									</div>
+								</div>
+								<div class="oreder_item_b_right">
+									2017.03.04
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
+			var nav = $(".order_nav"), order_list= $(".order_box");
+			nav.on("click",'.mall_nav_item',function(){
+				$(this).addClass("actived").siblings().removeClass("actived")
+			})
+			order_list.on("click",'.order_item',function(){
+				//window.location.href = "orderDetaile.html"
+			})
+		})
+	</script>
+</html>

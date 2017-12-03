@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>找回密码</title>
+		<title>车辆信息</title>
 		<meta name="viewport" content="width=750,user-scalable=no"/>
 		<meta content="telephone=no, address=no" name="format-detection" />
     	<link rel="stylesheet" href="../css/rest.css" />
@@ -14,28 +14,34 @@
 			    <div class="header_left callback">
 					<img src="../img/icon_back@2x.png"/>
 			    </div>
-			    <h1 class="header_title header_title_color">找回密码</h1>
+			    <h1 class="header_title header_title_color">车辆信息</h1>
 			</div>
 		</div>
 		<div class="empty"></div>
 		<div class="main_wrap">
 			<div class="main">
-				<div class="find_password">
-					<div>
-						<div class="regsiter_item regsiter_phone show">
-							<input type="tel" id="reg_phoneNumber" value="" placeholder="请输入您的手机号" maxlength="11" autocomplete="off" class="zs_phoneNumber"/>
-							<i class="icon_clear"></i>
-						</div>
-						<div class="regsiter_item regsiter_smscode" style="position:relative">
-							<input type="tel" maxlength="6" id="verify_code" name="" placeholder="请输入手机验证码" autocomplete="off" />
-							<a id="reg_verify_code" class="get_verify_code">获取验证码</a>
-						    <a id="reg_time" style="display:none ;background: none; color: #F76A10;" class="zs_time"></a>
-						    <i class="icon_clear"></i>
-						</div>
+				<div class="car_info_box">
+					<div class="list_item">
+						<span class="float_left">车牌号码</span>
+						<span class="float_right">
+							浙A123456
+						</span>
 					</div>
-					<div class="regsiter_btn">
-						<button autocomplete="off">下一步</button>
+					<div class="list_item">
+						<span class="float_left">品牌系列</span>
+						<span class="float_right icon">
+							奥迪A4
+						</span>
 					</div>
+					<div class="list_item">
+						<span class="float_left">车型</span>
+						<span class="float_right icon">
+							2017款----进取型
+						</span>
+					</div>
+				</div>
+				<div class="payment_submit">
+					<button class="submit_btn90">保存</button>
 				</div>
 			</div>			
 		</div>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>车辆信息</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">车辆信息</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main">
+				<div class="car_info_box">
+					<div class="car_info_msg clearfloat">
+						<span class="float_left">车辆信息</span>
+						<span class="float_right">如何查看车辆信息</span>
+					</div>
+					<div class="list_item">
+						<span class="float_left">车主姓名</span>
+						<span class="float_right">
+							李某某
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="float_left">身份证号</span>
+						<span class="float_right ">
+							奥迪A4
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="float_left">车牌号码</span>
+						<span class="float_right">
+							浙A123456
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="float_left">品牌型号</span>
+						<span class="float_right ">
+							奥迪A4
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="float_left">车辆识别码</span>
+						<span class="float_right ">
+							2017款----进取型
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="float_left">发动机号</span>
+						<span class="float_right ">
+							2017款----进取型
+						</span>
+					</div>
+					<div class="list_item">
+						<span class="float_left">注册日期</span>
+						<span class="float_right ">
+							2017款----进取型
+						</span>
+					</div>
+					<p class="car_info_msg1">注意：请确认以上内容与行驶证一致</p>
+				</div>
+				<div class="payment_submit">
+					<button class="submit_btn90">提交</button>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
+		})
+	</script>
+</html>

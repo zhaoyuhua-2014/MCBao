@@ -30,11 +30,11 @@
 								<img src="../img/bg_head@2x.png"/>
 							</dt>
 							<dd>
-								登录/注册
+								<a href="login.html">登录</a>/<a href="regsiter.html">注册</a>
 							</dd>
 						</dl>
 						<div class="my_info_nav">
-							<dl class="my_info_nav_item">
+							<dl class="my_info_nav_item" data-url = "my_balance.html">
 								<dt><img src="../img/icon_ye@2x.png"/></dt>
 								<dd>余额</dd>
 							</dl>
@@ -51,7 +51,7 @@
 				</div>
 				<div class="my_center">
 					<div class="my_center_line">
-						<dl class="my_center_item">
+						<dl class="my_center_item" data-url = "my_garage.html">
 							<dt><img src="../img/icon_bot_car_b@2x.png"/></dt>
 							<dd>我的爱车</dd>
 						</dl>
@@ -59,13 +59,13 @@
 							<dt><img src="../img/icon_date@2x.png"/></dt>
 							<dd>分期付款</dd>
 						</dl>
-						<dl class="my_center_item">
+						<dl class="my_center_item" data-url = "my_policy.html">
 							<dt><img src="../img/icon_list@2x.png"/></dt>
 							<dd>我的保单</dd>
 						</dl>
 					</div>
 					<div class="my_center_line">
-						<dl class="my_center_item">
+						<dl class="my_center_item" data-url = "my_address_list.html">
 							<dt><img src="../img/icon_mi@2x.png"/></dt>
 							<dd>收件信息</dd>
 						</dl>
@@ -73,7 +73,7 @@
 							<dt><img src="../img/icon_v@2x.png"/></dt>
 							<dd>投保认证</dd>
 						</dl>
-						<dl class="my_center_item">
+						<dl class="my_center_item" data-url = "set.html">
 							<dt><img src="../img/icon_set@2x.png"/></dt>
 							<dd>设置</dd>
 						</dl>
@@ -81,12 +81,41 @@
 				</div>
 			</div>			
 		</div>
+		<div class="empty"></div>
+		<div class="footer_wrap">
+			<div class="footer" id="foot">
+				<div class="footer_item" data-url="../index.html" >首页</div>
+				<div class="footer_item" data-url = "mall.html">新车</div>
+				<div class="footer_item" data-url = "my_order.html">订单</div>
+				<div class="footer_item actived" data-url = "my.html">我的</div>
+			</div>
+		</div>
 	</body>
 	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			
+			$(".callback").on("click",function(){
+				window.history.back();
+			});
+			$(".my_center .my_center_item").on("click",function(){
+				var nood = $(this);
+				if (nood.attr("data-url")) {
+					window.location.href = nood.attr("data-url")
+				}
+			})
+			$(".my_info_nav .my_info_nav_item").on("click",function(){
+				var nood = $(this);
+				if (nood.attr("data-url")) {
+					window.location.href = nood.attr("data-url")
+				}
+			})
+			$("#foot").on("click",".footer_item",function(){
+				var isActive = $(this).is(".actived");
+				if (!isActive) {
+					window.location.href = $(this).attr("data-url");
+				}
+			})
 		})
 	</script>
 </html>

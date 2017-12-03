@@ -184,8 +184,23 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .module_item dd{padding: 0 24px;width: 402px;}
 .module_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 30px;color: #9C9FA3;}
 .module_item dd .description{padding: 15px 0; overflow:hidden; text-overflow:ellipsis;display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3;line-height: 30px;}
+/*城市选择*/
+.changecity.main_wrap{padding-top: 0px;}
+.changecity_box{font-size: 30px;}
+.changecity_header{height: 88px;line-height: 88px;padding: 0 24px;background: #FFFFFF;border-bottom: 1px solid #E1E1E1;}
+.changecity_content{width: 696px;}
+.changecity_content .msg_title{height: 82px;line-height: 82px;color: #9E9E9E;padding: 0 24px;}
+.changecity_content .hot_title{height: 72px;line-height: 60px;color: #9E9E9E;padding: 0 24px;}
+.changecity_content .city_box{padding-left: 24px;}
+.hot_city{border-bottom: 1px solid #E1E1E1;}
+.city_item{width: 204px;height: 80px;float: left;text-align: center;line-height: 80px;border: 1px solid #ebebeb;border-radius: 8px;margin-right: 20px;margin-bottom: 20px;background: #FFFFFF;}
+.city_first_letter{height: 55px;line-height: 55px;padding-left:24px ;}
+.city_list_box{padding-left: 24px;background: #FFFFFF;}
+.city_list_item{height: 90px;line-height: 90px;border-bottom: 1px solid #c8c7cc;}
+.changecity_sidenav{width: 54px;text-align: center;background: #fcfcfc;color: #C30D23;font-size: 22px}
 
 /*我模块样式*/
+.main_wrap.my_main{padding-top: 0px;}
 .my_top{width: 100%;min-height: 340px;padding: 0 24px; padding-bottom:36px ;background: url(../img/bg_top@2x.png) no-repeat center top;}
 .my_header{height: 86px;line-height: 86px;text-align: center;color: #FFFFFF;font-size: 36px;}
 
@@ -221,6 +236,10 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .authentication_center_item .car_img{display: block;width: 100%;height: 100%;opacity:0;}
 ..authentication_center_item img{display: block;width: 100%;height: 100%;}
 .authentication_bottom{padding: 60px 40px;}
+/*修改昵称*/
+.revise_name{height: 100px;line-height: 60px;padding: 20px 24px;position: relative;background: #FFFFFF;}
+.revise_name input{width: 100%;height: 60px;line-height: 60px; background: #F7F7F7; font-size: 30px;color: #303030;background: #FFFFFF;}
+.revise_name .icon_clear{top: 32px;right: 26px;display: block;}
 /*我的车库*/
 .garage_main{padding: 24px 0;}
 .garage_box{}
@@ -231,6 +250,30 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .garage_car_item dt{width: 200px;background: url(../img/goods_pic.png) no-repeat center;}
 .garage_car_item dd{line-height: 46px;color: #333;font-size: 28px;width: 502px;padding-top: 40px;padding-left: 24px; background: #FFFFFF url(../img/choose@2x.png) no-repeat right 46px;}
 .garage_car_item.actived dd{background-image: url(../img/choosen@2x.png);}
+/*车辆信息*/
+.car_info_msg{height:60px;line-height: 46px;padding: 0 24px;}
+.car_info_msg .float_left{font-size: 28px;color: #9E9E9E;}
+.car_info_msg .float_right{color: #FF6E6E;font-size: 26px }
+.car_info_msg1{height: 60px;line-height: 60px;background: #ffdd83;color: #e47634;font-size: 24px;padding: 0 24px;}
+/*车险分期*/
+.car_insurance_staging{padding: 0 24px; padding-top: 50px;}
+.car_staging_box{width: 100%;min-height: 500px;padding: 0 24px;position: relative;background: #FFFFFF;border-radius: 10px;}
+.car_staging_box_title{position: absolute;top: -40px;width: 418px;background: url(../img/bg_title@2x.png) no-repeat center;left: 50%;margin-left: -209px;
+height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
+.car_staging_box_header{border-bottom: 1px dashed #ff8b84;}
+.car_staging_box_header p{height: 96px;text-align: center;color: #fca29c;font-size: 24px;padding-top: 50px;}
+.car_staging_box_center{padding: 22px 12px;}
+.car_staging_box_c_item{height: 72px;line-height: 72px;}
+.car_staging_box_c_item .float_left{font-size: 30px;color: #303030;}
+.car_staging_box_c_item .float_right{font-size: 30px;color: #9E9E9E;}
+.car_staging_box_bottom{height: 110px;line-height: 110px;padding: 0 12px;border-top: 1px solid #e8e6f3;}
+.car_staging_box_bottom .float_left{color: #303030;font-size: 30px}
+.car_staging_box_bottom .float_right{width: 110px;background: url(../img/Switch-off@2x.png) no-repeat center center;height: 110px;}
+.car_staging_box_bottom .float_right.actived{background: url(../img/Switch-on@2x.png) no-repeat center center;}
+.car_staging_box_agreement{padding: 24px 0;line-height: 32px;font-size: 24px;color: #9E9E9E;display: flex;width: 100%;}
+.car_staging_box_agreement span.icon{width: 50px;background: url(../img/agree_choose@2x.png) no-repeat center 5px;}
+.car_staging_box_agreement span.icon.actived{background: url(../img/agree_chosen@2x.png) no-repeat center 5px;}
+.car_staging_box_agreement span.text{padding-left: 6px;}
 /*保险最新报价*/
 .new_insurance_price .garage_car_item dd{line-height: 60px;font-size: 30px;}
 .new_insurance_price .submit{padding: 40px 24px;}
@@ -245,10 +288,25 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .feedback_textarea{padding: 24px;}
 .feedback_textarea textarea{width: 100%;height: 400px;background: #FFFFFF;padding: 8px;border-radius: 10px;font-size: 28px;line-height: 36px;}
 .feedback_textarea button{margin: 30px auto;}
-
+/*关于我们*/
 .about_us{padding: 48px 26px;line-height: 48px;font-size: 28px;color: #666;}
-
-.address_item{margin-top: 20px;font-size: 28px;background: #FFFFFF;}
+/*联系我们&& 设置*/
+.contact_us_box,.set_box{margin-bottom: 20px;}
+.contact_us_box .float_right,.set_box .float_right{color: #9E9E9E;}
+.my_address_box .float_right input{text-align: right;height: 98px;}
+/*我的余额*/
+.my_balance.header_wrap{background: none;border: none;}
+.main_wrap.my_balance{padding-top: 0;}
+.my_balance.footer_wrap{background: url(../img/bg_red_100.png) repeat center;line-height: 100px;color: #FFFFFF;}
+.my_balance .footer{text-align: center;font-size: 36px;display: block;}
+.my_balance_top{height: 432px;width: 100%;background:#FFFFFF url(../img/bg_money@2x.png) no-repeat center;padding-top: 110px;margin-bottom: 56px;}
+.my_balance_tit{font-size: 26px;color: #303030;line-height: 64px;padding-left: 30px;}
+.my_balance_money{color: #FFFFFF; font-size: 72px;text-align: center;}
+/*充值*/
+.recharge_box .list_item{display: flex;}
+.prompt_info{height: 64px;line-height: 64px;font-size: 26px;color: #FF6E6E;padding-left: 24px;}
+/*收件人地址列表*/
+.address_item{margin-bottom: 20px;font-size: 28px;background: #FFFFFF;}
 .address_item .address_top{border-bottom: 1px solid #EAEAEA;padding: 20px 26px;padding-right: 120px;background: url(../img/choose@2x.png) no-repeat 95% 40px;color: #303030;}
 .address_item .address_top.true{background: url(../img/choosen@2x.png) no-repeat 95% 40px;}
 .address_item .address_bottom{padding: 0 26px;line-height: 80px;}
@@ -257,17 +315,17 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .address_item .address_bottom .float_right{color: #e3142d;}
 
 .my_policy_box{padding: 30px;}
-.policy_item{margin-bottom: 30px;background: #FFFFFF;font-size: 28px;}
-.policy_top{display: flex;padding: 30px 0;line-height: 48px;border-bottom: 1px solid #EAEAEA;}
+.policy_item{margin-bottom: 30px;background: url(../img/bg_bd@2x.png) no-repeat center;font-size: 28px;}
+.policy_item.actived .policy_top_right{background: url(../img/choosen@2x.png) no-repeat center 20px;;}
+.policy_top{display: flex;padding: 30px 0;line-height: 48px;}
 .policy_top .policy_top_left{width: 200px;}
-.policy_top .policy_top_center{}
-.policy_top .policy_top_right{width: 120px;}
+.policy_top .policy_top_center{width: 370px;}
+.policy_top .policy_top_right{width: 120px;background: url(../img/choose@2x.png) no-repeat center 20px;}
 .policy_bottom{line-height: 94px;color: #ff697b;}
 .policy_bottom .policy_insurance{padding: 0 20px;}
 
 .payment_info{padding: 46px 24px;}
-.payment_box{width: 100%;padding: 34px 0 28px 0;border-radius: 8px;text-align: center;background: #FFFFFF;}
-.payment_box #line{width: 1px;height: 50px;vertical-align: middle;}
+.payment_box{width: 100%;padding: 34px 0 28px 0;border-radius: 8px;text-align: center;background: #FFFFFF url(../img/line_divide@2x.png) no-repeat center;}
 .payment_box dl{width: 350px;}
 .payment_box dl dt{font-size: 38px;line-height: 54px;}
 .payment_box dl.float_left dt{color: #ff7200;}
@@ -293,10 +351,12 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .car_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 32px;color: #303030;}
 .car_item .description{font-size: 26px;color: #9E9E9E;line-height: 46px;min-height: 76px;}
 .car_item .money{font-size: 32px;color: #ec5330;}
-.car_mall_center{padding: 36px 40px;width: 100%;}
-.car_section{width: 100%;padding: 0 30px;background: #FFFFFF;margin-bottom: 30px;border-radius: 10px;}
-.car_section_title{height: 96px;border-bottom: 2px dashed #ff8b84;}
-.car_mall_footer{position: fixed;height: 100px;line-height: 100px;left: 0;bottom: 0;font-size: 36px;color: #FFFFFF;display: flex;text-align: center;width: 100%;}
+.car_mall_center{padding: 36px 40px;width: 100%;padding-top: 80px;}
+.car_mall_center .car_staging_box_title{background: url(../img/bg_title_gold@2x.png) no-repeat center;}
+.car_staging_box_header p.title{height: 78px;line-height: 78px;text-align: center;color: #303030;font-size: 32px;padding-top: 0;}
+.car_section{width: 100%;padding: 30 0px;margin-bottom: 30px;}
+
+.car_mall_footer{height: 100px;line-height: 100px;font-size: 36px;color: #FFFFFF;display: flex;text-align: center;width: 100%;}
 .car_mall_footer .car_footer_item{flex: 1;}
 .car_mall_footer .car_footer_item:first-child{background: #a4a4a4;}
 .car_mall_footer .car_footer_item:last-child{background: #fc5a5a;}
@@ -332,6 +392,9 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 
 /*信用评估认证*/
 .list_item{width: 100%;border-bottom: 1px solid #e5e6e6;height: 100px;line-height: 100px;background: #FFFFFF;padding: 0 24px;font-size: 30px}
+.list_item .float_right.icon{background: url(../img/arr_left.png) no-repeat right center;padding-right: 24px;}
+.list_item label{width: 220px;display: inline-flex;}
+.list_item input{height: 98px;}
 
 .ce_aplly_top {}
 .ce_aplly_top .list_item{display: flex;}
@@ -367,6 +430,31 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .user_car_b{background: url(../img/car_0@2x.png) no-repeat center;}
 .user_driving_card_a{background: url(../img/up_drivelicense_a@2x.png) no-repeat center;}
 .user_driving_card_b{background: url(../img/up_drivelicense_b@2x.png) no-repeat center;}
+/*订单模块*/
+.main_wrap.my_order{padding-top: 0px;}
+.order_nav{margin-bottom: 20px;}
+.order_nav .mall_nav_item{height: 100px;line-height: 100px;}
+.order_item{width: 100%;padding: 0 20px;background: #FFFFFF;margin-bottom: 20px;}
+.order_item_top{height: 80px;line-height: 80px;border-bottom: 1px solid #DADADA;}
+.order_item_top .float_left{font-size: 24px;color: #9ba0a8;}
+.order_item_top .float_right{font-size: 28px;color: #999999;}
+.order_item_top .float_right.color_or{color: #F5812C;}
+.order_item_bottom{padding: 20px 0;display: flex;height: 140px;}
+.oreder_item_b_left{width: 120px;}
+.oreder_item_b_center{width: 460px;padding-left: 30px;}
+.order_item_title{height: 50px;color: #303030;font-size: 30px;}
+.order_item_money{color: #ff5959;font-size: 36px;}
+.oreder_item_b_right{color: #999999;font-size: 24px;}
+
+/*订单详情*/
+.order_details_top{background: url(../img/bg_list_middle@2x.png) no-repeat center;}
+.order_details_center{padding: 0 24px;padding-top: 70px;}
+.order_details_center .car_staging_box_header{padding-top:60px ;padding-bottom: 24px;}
+.car_staging_box_header_item{height: 62px;line-height: 62px;}
+.car_staging_box_header_item .float_left{color: #303030;font-size: 30px}
+.car_staging_box_header_item .float_right{color: #9E9E9E;font-size: 30px}
+.car_staging_item_title{height: 60px;line-height: 60px;font-size: 30px;}
+.car_staging_box_c_item .float_right.color_ff6600{color: #FF6600;}
 /*说明描述信息*/
 .description_info{font-size: 24px;line-height: 36px;color: #9E9E9E;}
 
@@ -375,4 +463,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .color_gr{color: #46d642;}
 .color_re{color: #e3142d;}
 .color_f9{color: #f96268;}
+.color_9e{color: #9E9E9E;}
+.color_30{color: #303030;}
+.color_ff6600{color: #ff6600;}
 .right_text{font-size: 30px;text-align: center;color: #c30d23;}

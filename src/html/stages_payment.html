@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>分期付款</title>
+		<title>我的分期</title>
 		<meta name="viewport" content="width=750,user-scalable=no"/>
 		<meta content="telephone=no, address=no" name="format-detection" />
     	<link rel="stylesheet" href="../css/rest.css" />
@@ -14,7 +14,7 @@
 			    <div class="header_left callback">
 					<img src="../img/icon_back@2x.png"/>
 			    </div>
-			    <h1 class="header_title header_title_color">分期付款</h1>
+			    <h1 class="header_title header_title_color">我的分期</h1>
 			</div>
 		</div>
 		<div class="empty"></div>
@@ -27,7 +27,6 @@
 								<dt>1003.9</dt>
 								<dd>下月应还</dd>
 							</dl>
-							<span id="line"></span>
 							<dl class="float_right">
 								<dt>7期</dt>
 								<dd>剩余期数</dd>
@@ -54,7 +53,9 @@
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
 		})
 	</script>
 </html>

@@ -35,34 +35,54 @@
 				</div>
 				<div class="car_mall_center">
 					<div class="car_section">
-						<div class="car_section_title">
-							五折购
-						</div>
-						<div class="car_section_center">
-							五折购
+						<div class="car_staging_box">
+							<div class="car_staging_box_title">五折购</div>
+							<div class="car_staging_box_header">
+								<p></p>
+							</div>
+							<div class="car_staging_box_center">
+								<!--<div class="car_staging_box_c_item clearfloat">
+									<span class="float_left">投保城市</span>
+									<span class="float_right">杭州</span>
+								</div>-->
+							</div>
 						</div>
 					</div>
 					<div class="car_section">
-						<div class="car_section_title">
-							购买流程
-						</div>
-						<div class="car_section_center">
-							购买流程
+						<div class="car_staging_box">
+							<div class="car_staging_box_header">
+								<p class="title">购车流程</p>
+							</div>
+							<div class="car_staging_box_center">
+								<!--<div class="car_staging_box_c_item clearfloat">
+									<span class="float_left">投保城市</span>
+									<span class="float_right">杭州</span>
+								</div>-->
+							</div>
 						</div>
 					</div>
 				</div>
-				<ul class="car_mall_footer">
+				<!--<ul class="car_mall_footer">
 					<li class="car_footer_item">返回上一页</li>
 					<li class="car_footer_item">去评估</li>
-				</ul>
+				</ul>-->
 			</div>			
+		</div>
+		<div class="empty1"></div>
+		<div class="footer_wrap">
+			<ul class="footer car_mall_footer" id="foot">
+				<li class="car_footer_item">返回上一页</li>
+				<li class="car_footer_item">去评估</li>
+			</ul>
 		</div>
 	</body>
 	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
 		})
 	</script>
 </html>

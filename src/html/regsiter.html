@@ -83,6 +83,10 @@
 				console.log($(this).parent().find("input").val(""))
 				$(this).parent().find("input").val("")
 			})
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
+			
 		})
 	</script>
 </html>

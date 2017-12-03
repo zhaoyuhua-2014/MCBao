@@ -91,10 +91,10 @@
 		</div>
 		<div class="empty"></div>
 		<div class="footer_wrap">
-			<div class="footer clearfloat" id="foot">
+			<div class="footer" id="foot">
 				<div class="footer_item actived" data-url="index.html" >首页</div>
 				<div class="footer_item" data-url = "html/mall.html">新车</div>
-				<div class="footer_item" data-url = "html/mall.html">订单</div>
+				<div class="footer_item" data-url = "html/my_order.html">订单</div>
 				<div class="footer_item" data-url = "html/my.html">我的</div>
 			</div>
 		</div>
@@ -120,5 +120,15 @@
 				window.location.href = $(this).attr("data-url");
 			}
 		})
+		$(".index_module").on("click",'.module_item',function(){
+			var nood = $(this);
+			window.location.href = "html/car_mall.html"
+		})
+		$(".index_right").on("click",function(){
+			window.location.href = "html/client_service_center.html"
+		})
+		/*window.addEventListener("resize",function(){
+			window.location.reload()
+		})*/
 	</script>
 </html>
