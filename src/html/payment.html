@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>付款</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">付款</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main">
+				<div class="payment_main">
+					<div class="order_details_top ">
+						<!--<dl class="garage_car_item">
+							<dt></dt>
+							<dd>
+								<p>保险公司：太平洋保险</p>
+								<p>价格: <span class="color_f9">3900.45</span></p>
+							</dd>
+						</dl>-->
+						<div class="order_item_bottom">
+							<div class="oreder_item_b_left">
+								
+							</div>
+							<div class="oreder_item_b_center">
+								<div class="order_item_title">
+									太平洋车险
+								</div>
+								<div class="order_item_money">
+									￥3588.00
+								</div>
+							</div>
+							<div class="oreder_item_b_right">
+								
+							</div>
+						</div>
+					</div>
+					<div class="pay_item_box">
+						<div class="pay_item_title">
+							支付方式
+						</div>
+						<div class="pay_item_boxs clearfloat">
+							<span class="pay_way_item actived">分3期(免手续费)<br /> ￥1333.30期 </span>
+							<span class="pay_way_item">分6期(免手续费)<br /> ￥1333.30期 </span>
+							<span class="pay_way_item">分9期(免手续费)<br /> ￥1333.30期 </span>
+							<span class="pay_way_item">分12期(免手续费)<br /> ￥1333.30期 </span>
+							<span class="pay_way_item">全款(免手续费)<br /> ￥1333.30期 </span>
+						</div>
+					</div>
+					<div class="pay_detailes">
+						<div class="car_staging_box">
+							<div class="car_staging_box_header">
+								<p class="title">还款明细</p>
+							</div>
+							<div class="car_staging_box_center">
+								<div class="car_staging_box_c_item clearfloat">
+									<span class="float_left">交强险</span>
+									<span class="float_right">800</span>
+								</div>
+								<div class="car_staging_box_c_item clearfloat">
+									<span class="float_left">车船使用税</span>
+									<span class="float_right">300</span>
+								</div>
+								<div class="car_staging_box_c_item clearfloat">
+									<span class="float_left">商业险分期</span>
+									<span class="float_right">￥1333.30期(6期)</span>
+								</div>
+								<div class="car_staging_box_c_item clearfloat">
+									<span class="float_left">意外伤害险</span>
+									<span class="float_right">200</span>
+								</div>
+								<div class="msg">*每月20前还款</div>
+							</div>
+						</div>
+						<div class="car_staging_box_agreement">
+							<span class="icon"></span>
+							<span class="text">我以理解并接受<a href="">《协议1》</a>以及<a href="">《协议2》</a></span>
+						</div>
+					</div>
+					<div class="payment_submit">
+						<button class="submit_btn90">确认</button>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
+		})
+	</script>
+</html>
