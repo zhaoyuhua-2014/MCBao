@@ -187,8 +187,10 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 /*城市选择*/
 .changecity.main_wrap{padding-top: 0px;}
 .changecity_box{font-size: 30px;}
-.changecity_header{height: 88px;line-height: 88px;padding: 0 24px;background: #FFFFFF;border-bottom: 1px solid #E1E1E1;}
+.changecity_header{height: 88px;line-height: 88px;padding: 0 24px;background: #FFFFFF;border-bottom: 1px solid #E1E1E1;z-index: 2; position: fixed;left: 0;top: 96px;width: 100%;}
+.changecity_center {margin-top: 88px;}
 .changecity_content{width: 696px;}
+.changecity_content{position: relative;}
 .changecity_content .msg_title{height: 82px;line-height: 82px;color: #9E9E9E;padding: 0 24px;}
 .changecity_content .hot_title{height: 72px;line-height: 60px;color: #9E9E9E;padding: 0 24px;}
 .changecity_content .city_box{padding-left: 24px;}
@@ -197,7 +199,9 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .city_first_letter{height: 55px;line-height: 55px;padding-left:24px ;}
 .city_list_box{padding-left: 24px;background: #FFFFFF;}
 .city_list_item{height: 90px;line-height: 90px;border-bottom: 1px solid #c8c7cc;}
-.changecity_sidenav{width: 54px;text-align: center;background: #fcfcfc;color: #C30D23;font-size: 22px}
+.changecity_sidenav{width: 54px;text-align: center;background: #fcfcfc;color: #C30D23;font-size: 22px;padding: 100px 0;position: fixed;right: 0;top: 184px;}
+.changecity_sidenav .anchor_list{padding: 100px 0;}
+.changecity_sidenav li a{height: 32px; color: #C30D23;display: block;}
 
 /*我模块样式*/
 .main_wrap.my_main{padding-top: 0px;}
@@ -389,7 +393,15 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .success .pay_result_txt{text-align: center;font-size: 38px;color: #42b515;}
 .fail .pay_result_txt{text-align: center;font-size: 38px;color: #eb030e;}
 .pay_result_info{font-size: 24px;line-height: 36px;padding: 0 24px;}
-
+/*付款*/
+.pay_item_box{padding: 10px 24px;font-size: 24px;color: #9E9E9E;}
+.pay_item_title{height: 68px;line-height: 68px;font-size: 30px;}
+.pay_item_boxs{}
+.pay_way_item{width: 220px;height: 104px;border-radius: 12px;float: left;margin-right: 20px;margin-bottom: 20px;background: #FFFFFF;line-height: 36px;text-align: center;padding: 16px 0;}
+.pay_way_item:nth-child(3n){margin-right: 0;}
+.pay_way_item.actived{color: #ff6b3E;}
+.pay_detailes{padding: 0 24px;}
+.pay_detailes .msg{color: #fc7c7c;font-size: 24px;line-height: 50px;}
 /*信用评估认证*/
 .list_item{width: 100%;border-bottom: 1px solid #e5e6e6;height: 100px;line-height: 100px;background: #FFFFFF;padding: 0 24px;font-size: 30px}
 .list_item .float_right.icon{background: url(../img/arr_left.png) no-repeat right center;padding-right: 24px;}
