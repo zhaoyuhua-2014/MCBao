@@ -34,11 +34,11 @@
 					</div>
 				</div>
 				<div class="menu_nav">
-					<dl class="item">
+					<dl class="item" data-url = "html/car_insurance_staging.html">
 						<dt><img src="img/icon_insurence@2x.png"/></dt>
 						<dd>车险分期</dd>
 					</dl>
-					<dl class="item">
+					<dl class="item" data-url = "html/car_insurance_staging.html">
 						<dt><img src="img/icon_addoil@2x.png"/></dt>
 						<dd>加油无忧</dd>
 					</dl>
@@ -126,6 +126,10 @@
 		})
 		$(".index_right").on("click",function(){
 			window.location.href = "html/client_service_center.html"
+		})
+		$(".menu_nav dl.item").on("click",function(){
+			var nood = $(this);
+			window.location.href = $(this).attr("data-url");
 		})
 		/*window.addEventListener("resize",function(){
 			window.location.reload()

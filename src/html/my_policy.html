@@ -65,7 +65,13 @@
 						</div>
 					</div>
 				</div>
-			</div>			
+				
+			</div>
+			<div class="footer_wrap">
+				<div class="footer my_policy_footer" id="foot">
+					<div class="policy_footer_item" data-url = "">查看已购险种</div>
+				</div>
+			</div>
 		</div>
 	</body>
 	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
@@ -74,6 +80,9 @@
 		$(document).ready(function(){
 			$(".callback").on("click",function(){
 				window.history.back();
+			});
+			$(".footer_wrap .my_policy_footer .policy_footer_item").on("click",function(){
+				
 			})
 		})
 	</script>

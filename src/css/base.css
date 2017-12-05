@@ -317,7 +317,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .address_item .address_bottom .float_left.true{color: #46d642;}
 .address_item .address_bottom .float_left{color: #F5812C;}
 .address_item .address_bottom .float_right{color: #e3142d;}
-
+/*我的保单*/
 .my_policy_box{padding: 30px;}
 .policy_item{margin-bottom: 30px;background: url(../img/bg_bd@2x.png) no-repeat center;font-size: 28px;}
 .policy_item.actived .policy_top_right{background: url(../img/choosen@2x.png) no-repeat center 20px;;}
@@ -327,6 +327,8 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .policy_top .policy_top_right{width: 120px;background: url(../img/choose@2x.png) no-repeat center 20px;}
 .policy_bottom{line-height: 94px;color: #ff697b;}
 .policy_bottom .policy_insurance{padding: 0 20px;}
+.my_policy_footer{width:100% ;height: 100px;line-height: 100px;text-align: center;background: #fe5050;display: block;}
+.my_policy_footer .policy_footer_item{font-size: 26px;color: #FFFFFF;}
 
 .payment_info{padding: 46px 24px;}
 .payment_box{width: 100%;padding: 34px 0 28px 0;border-radius: 8px;text-align: center;background: #FFFFFF url(../img/line_divide@2x.png) no-repeat center;}
