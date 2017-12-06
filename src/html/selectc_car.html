@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>选择车辆</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">选择车辆</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main">
+				<div class="garage_box">
+					<dl class="garage_car_item actived">
+						<dt></dt>
+						<dd>
+							<p>车牌号:浙A 888U</p>
+							<p>车型:奥迪A3</p>
+							<div class="clearfloat">
+								<p class="float_left">状态: <span class="color_gr">已认证</span></p>
+								<p class="float_right color_re">默认</p>
+							</div>
+						</dd>
+					</dl>
+					<dl class="garage_car_item">
+						<dt></dt>
+						<dd>
+							<p>车牌号:浙A 888U</p>
+							<p>车型:奥迪A3</p>
+							<div class="clearfloat">
+								<p class="float_left">状态: <span class="color_or">认证有礼</span></p>
+								<p class="float_right color_or">去认证</p>
+							</div>
+						</dd>
+					</dl>
+					<dl class="garage_car_item">
+						<dt></dt>
+						<dd>
+							<p>车牌号:浙A 888U</p>
+							<p>车型:奥迪A3</p>
+							<div class="clearfloat">
+								<p class="float_left">状态: <span class="color_gr">已认证</span></p>
+								<p class="float_right color_re"></p>
+							</div>
+						</dd>
+					</dl>
+				</div>
+				<div class="payment_submit">
+					<button class="submit_btn90">确定</button>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			});
+			$(".garage_box").on("click",".garage_car_item",function(){
+				var nood = $(this);
+				if (!nood.is(".actived")) {
+					nood.addClass("actived").siblings().removeClass("actived")	
+				}
+			})
+			$(".submit_btn90").on("click",function(){
+				var car_rz = true,ren_rz = true;
+				if (!car_rz) {
+					window.location.href = "car_authentication.html"
+				}else if(!ren_rz){
+					window.location.href = "updata_card.html"
+				}else{
+					window.location.href = "car_insurance_staging.html"
+				}
+			})
+		})
+	</script>
+</html>
