@@ -404,6 +404,25 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .pay_way_item.actived{color: #ff6b3E;}
 .pay_detailes{padding: 0 24px;}
 .pay_detailes .msg{color: #fc7c7c;font-size: 24px;line-height: 50px;}
+/*在线支付*/
+.line_pay_top{min-height: 400px;width: 100%;background: url(../img/bg_pay_list@2x.png) no-repeat center bottom;font-size: 30px;}
+.line_pay_top ul{background: #FFFFFF;padding: 0 24px;padding-top: 30px;}
+.line_pay_item{height: 60px;line-height: 60px;}
+.line_pay_msg{height: 52px;line-height: 38px;padding: 14px 24px 0 24px;background: #FFFFFF;font-size: 24px;color: #FC7C7C;}
+.lin_pay_packet{height: 85px;line-height: 70px;padding: 0 24px;padding-top: 15px;}
+.lin_pay_packet .float_right.icon{padding-right: 24px;background: url(../img/arr_left.png) no-repeat right center;color: #E82B21;}
+.line_pay_subtotal{height: 100px;line-height: 100px;padding: 0 24px;}
+.line_pay_box{margin: 20px 0;background: #FFFFFF;font-size: 30px}
+.line_pay_box .item{height: 100px;line-height: 100px;padding: 0 20px;border-bottom: 1px solid #e9e8ea;background: url(../img/choose@2x.png) no-repeat 670px center;}
+.line_pay_box .item.actived{background: url(../img/choosen@2x.png) no-repeat 670px center;}
+.line_pay_box .item .float_left{padding-left:90px ;}
+.line_pay_box .item:nth-child(1) .float_left{background: url(../img/icon_wx@2x.png) no-repeat left center;}
+/*选择投保方案*/
+.selectc_policy_box_wrap{width: 100%;min-height: 500px;position: relative;margin-top: 100px;}
+.selectc_policy_box{width: 100%;height: 100%;}
+.selectc_policy_swiper{padding: 30px 24px;}
+
+
 /*信用评估认证*/
 .list_item{width: 100%;border-bottom: 1px solid #e5e6e6;height: 100px;line-height: 100px;background: #FFFFFF;padding: 0 24px;font-size: 30px}
 .list_item .float_right.icon{background: url(../img/arr_left.png) no-repeat right center;padding-right: 24px;}
@@ -480,4 +499,5 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .color_9e{color: #9E9E9E;}
 .color_30{color: #303030;}
 .color_ff6600{color: #ff6600;}
+.color_e82b21{color: #e82b21;}
 .right_text{font-size: 30px;text-align: center;color: #c30d23;}

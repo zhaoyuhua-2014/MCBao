@@ -20,6 +20,44 @@
 		<div class="empty"></div>
 		<div class="main_wrap">
 			<div class="main">
+				<div class="line_pay_top">
+					<ul class="line_pay_">
+						<li class="line_pay_item">
+							<span>交强险：</span><span class="color_9e">800</span>
+						</li>
+						<li class="line_pay_item">
+							<span>车船使用税：</span><span class="color_9e">800</span>
+						</li>
+						<li class="line_pay_item">
+							<span>商业险分期：</span><span class="color_9e">966.00/期(6期)</span>
+						</li>
+						<li class="line_pay_item">
+							<span>意外伤害险：</span><span class="color_9e">200</span>
+						</li>
+					</ul>
+					<div class="line_pay_msg">*每月20日前还款</div>
+					<div class="lin_pay_packet clearfloat">
+						<span class="float_left">红包</span>
+						<span class="float_right icon">3张可用</span>
+					</div>
+					<div class="line_pay_subtotal clearfloat">
+						<span class="float_right">小计<span class="color_e82b21">￥996.70</span></span>
+					</div>
+				</div>
+				<div class="line_pay_box">
+					<!--<div class="item clearfloat">
+						<span class="float_left">支付宝支付</span>
+					</div>-->
+					<div class="item clearfloat actived">
+						<span class="float_left">微信支付</span>
+					</div><!--
+					<div class="item clearfloat">
+						<span class="float_left">银行卡支付</span>
+					</div>-->
+				</div>
+				<div class="payment_submit">
+					<button class="submit_btn90">确认支付</button>
+				</div>
 			</div>			
 		</div>
 	</body>
@@ -29,7 +67,8 @@
 		$(document).ready(function(){
 			$(".callback").on("click",function(){
 				window.history.back();
-			})
+			});
+			
 		})
 	</script>
 </html>

@@ -12,7 +12,7 @@
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
-					<img src="../img/_back@2x.png"/>
+					<img src="../img/icon_back@2x.png"/>
 			    </div>
 			    <h1 class="header_title header_title_color">车辆信息</h1>
 			</div>
@@ -81,7 +81,10 @@
 		$(document).ready(function(){
 			$(".callback").on("click",function(){
 				window.history.back();
-			})
+			});
+			$(".submit_btn90").on("click",function(){
+				window.location.href = "selectc_policy_programme.html"
+			});
 		})
 	</script>
 </html>

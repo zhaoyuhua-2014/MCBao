@@ -81,8 +81,14 @@
 			$(".callback").on("click",function(){
 				window.history.back();
 			});
+			$(".my_policy_box").on("click",".policy_item",function(){
+				var nood = $(this);
+				if (!nood.is(".actived")) {
+					nood.addClass("actived").siblings().removeClass("actived")	
+				}
+			})
 			$(".footer_wrap .my_policy_footer .policy_footer_item").on("click",function(){
-				
+				window.location.href
 			})
 		})
 	</script>
