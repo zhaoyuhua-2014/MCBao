@@ -12,11 +12,11 @@
 	<body>
 		<div class="header_wrap">
 			<div class="header_contain">
-			    <div class="header_left callback index_left">
+			    <div class="header_left callback index_left" data-url = "html/changecity.html">
 					杭州
 			    </div>
 			    <h1 class="header_title header_title_color">脉车宝</h1>
-			    <div class="header_right index_right">
+			    <div class="header_right index_right" data-url = "html/client_service_center.html">
 			    	<img src="img/icon_service@2x.png"/>
 				</div>
 			</div>
@@ -114,23 +114,37 @@
 			centeredSlides : true,
 		    //width:618,
 		});
+		/*点击切换主菜单*/
 		$("#foot").on("click",".footer_item",function(){
 			var isActive = $(this).is(".actived");
 			if (!isActive) {
 				window.location.href = $(this).attr("data-url");
 			}
 		})
+		/*点击进入车详情*/
 		$(".index_module").on("click",'.module_item',function(){
 			var nood = $(this);
 			window.location.href = "html/car_mall.html"
 		})
-		$(".index_right").on("click",function(){
-			window.location.href = "html/client_service_center.html"
-		})
+		/*点击进入客服中心*//*点击进入城市定位*/
+		$(".index_left,.index_right").on("click",function(){
+			var nood = $(this);
+			if (nood.attr("data-url")) {
+				window.location.href = $(this).attr("data-url");
+			}else{
+				alert("暂缺，待定");
+			}
+		});
+		/*点击进入子菜单*/
 		$(".menu_nav dl.item").on("click",function(){
 			var nood = $(this);
-			window.location.href = $(this).attr("data-url");
-		})
+			if (nood.attr("data-url")) {
+				window.location.href = $(this).attr("data-url");
+			}else{
+				alert("暂缺，待定");
+			}
+		});
+		
 		/*window.addEventListener("resize",function(){
 			window.location.reload()
 		})*/

@@ -7,6 +7,7 @@
 		<meta content="telephone=no, address=no" name="format-detection" />
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+    	<script type="text/javascript" async="async" src="https://apis.map.qq.com/tools/geolocation/min?key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp"></script>
 	</head>
 	<body>
 		<div class="header_wrap">
@@ -23,7 +24,7 @@
 				<div class="changecity_box">
 					<div class="changecity_header">
 						<div class="position_city">
-							当前：杭州
+							当前：<span id="position">定位中...</span>
 						</div>
 					</div>
 					<div class="changecity_center clearfloat">
@@ -48,7 +49,6 @@
 									<span class="city_item">温州</span>
 									<span class="city_item">台州</span>
 									<span class="city_item">苏州</span>
-									
 								</div>
 							</div>
 							<div class="all_city">
@@ -339,17 +339,56 @@
 			</div>			
 		</div>
 	</body>
+	
 	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+		
 		$(document).ready(function(){
+			
 			$(".callback").on("click",function(){
 				window.history.back();
-			})
+			});
 			var 
 			wh = document.documentElement.clientHeight;
 			$(".changecity_content").css("overflow-y","auto")
-			$(".changecity_content").height(wh-186)
+			$(".changecity_content").height(wh-186);
+			
+			$("#position").on("click",function(){
+				if ($("#position").is("success")) {
+					console.log("带回城市:"+$(this).html()+"返回首页")
+				}
+			})
 		})
+		window.onload = function(){
+			/*定位*/
+			var result = window._DEFAULT_CITY
+			if (!$("#position").is("success")) {
+				$("#position").html(result.city).addClass("success");
+			}
+			/*$(".pos_btn").on("click",function(){
+				getCurLocation();
+			})
+			var geolocation = new qq.maps.Geolocation();
+			var options = {timeout: 9000};
+	        var positionNum = 0;
+	 		function getCurLocation() {
+	            geolocation.getLocation(showPosition, showErr, options);
+	        }
+	        function showPosition(position) {
+	            positionNum ++;
+				console.log("序号：" + positionNum)
+				console.log(JSON.stringify(position, null, 4));
+	        };
+	  		function showErr() {
+	            $("#position").html("定位失败").addClass("error");
+	        };*/
+			/*点击重新定位*/
+			$("#position").on("click",function(){
+				if ($(this).is(".error")) {
+					getCurLocation();
+				}
+			})
+		}
 	</script>
 </html>
