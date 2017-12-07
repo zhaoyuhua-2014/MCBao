@@ -57,7 +57,18 @@
 		$(document).ready(function(){
 			$(".callback").on("click",function(){
 				window.history.back();
-			})
+			});
+			/*点击选择保险公司*/
+			$(".new_insurance_price_box").on("click",".garage_car_item",function(){
+				var nood = $(this);
+				if (!nood.is(".actived")) {
+					$(this).addClass("actived").siblings().removeClass("actived")
+				}
+			});
+			/*确定跳转到询价页面--或者提示人工询价*/
+			$(".submit_btn90").on("click",function(){
+				window.location.href = "payment.html";
+			});
 		})
 	</script>
 </html>

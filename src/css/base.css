@@ -232,6 +232,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .my_center_item dt{height: 70px;}
 .my_center_item dd{line-height: 80px;font-size: 28px; color: #9E9E9E;}
 
+
 .authentication_top{padding: 24px;line-height: 36px;font-size: 26px;color: #9e9e9e;}
 .authentication_center{padding: 60px 0;}
 .authentication_center_item{width: 484px;height: 279px;margin: 34px auto;}
@@ -240,6 +241,15 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .authentication_center_item .car_img{display: block;width: 100%;height: 100%;opacity:0;}
 .authentication_center_item img{display: block;width: 100%;height: 100%;}
 .authentication_bottom{padding: 60px 40px;}
+/*红包*/
+.red_packet_box{padding: 0 38px;}
+.no_use_red_packet{width: 100%;height: 80px;line-height: 80px; text-align: center;font-size: 30px;color: #303030;background: #FFF;border-radius: 20px;margin-bottom: 30px;}
+.red_packet_list_box{padding: 0 13px;}
+.red_packet_item{width: 651px;height: 157px;background: url(../img/red_packet_bg2@2x.png) no-repeat center;margin-bottom: 30px;}
+.red_packet_item dt{width: 165px;text-align: center;font-size: 32px;color: #FFFFFF;line-height: 152px;font-weight: 800;}
+.red_packet_item dd{padding: 24px 26px 26px 30px;width: 480px;}
+.red_packet_item dd p:first-child{height: 75px;}
+.red_packet_item dd .float_right{width: 117px;height: 23px;}
 /*个人信息*/
 .my_info .list_item:first-child{height: 170px;line-height: 170px;}
 /*修改昵称*/
@@ -261,6 +271,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .car_info_msg .float_left{font-size: 28px;color: #9E9E9E;}
 .car_info_msg .float_right{color: #FF6E6E;font-size: 26px }
 .car_info_msg1{height: 60px;line-height: 60px;background: #ffdd83;color: #e47634;font-size: 24px;padding: 0 24px;}
+.car_info_box .list_item .float_right input{text-align: right;}
 /*车险分期*/
 .car_insurance_staging{padding: 0 24px; padding-top: 50px;}
 .car_staging_box{width: 100%;min-height: 500px;padding: 0 24px;position: relative;background: #FFFFFF;border-radius: 10px;}
@@ -276,7 +287,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_staging_box_bottom .float_left{color: #303030;font-size: 30px}
 .car_staging_box_bottom .float_right{width: 110px;background: url(../img/Switch-off@2x.png) no-repeat center center;height: 110px;}
 .car_staging_box_bottom .float_right.actived{background: url(../img/Switch-on@2x.png) no-repeat center center;}
-.car_staging_box_agreement{padding: 24px 0;line-height: 32px;font-size: 24px;color: #9E9E9E;display: flex;width: 100%;}
+.car_staging_box_agreement{padding: 24px 0;line-height: 36px;font-size: 24px;color: #9E9E9E;display: flex;width: 100%;}
 .car_staging_box_agreement span.icon{width: 50px;background: url(../img/agree_choose@2x.png) no-repeat center 5px;}
 .car_staging_box_agreement span.icon.actived{background: url(../img/agree_chosen@2x.png) no-repeat center 5px;}
 .car_staging_box_agreement span.text{padding-left: 6px;}
@@ -406,7 +417,10 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_brand_list_item{height: 100px;line-height: 100px;border-bottom: 2px solid #c8c7cc;display: flex;}
 .car_brand_list_item dt{width: 50px;height: 50px;}
 .car_brand_list_item dd{padding-left: 24px;}
-.car_brand_list_wrap{background: #FFFFFF;}
+.car_brand_list_box{background: #FFFFFF;margin-bottom: 8px;}
+.car_brand_list_retrieval{position: fixed;right: 0;top:120px;padding: 50px 0;width: 50px;height: 100%;}
+.car_brand_list_retrieval_box{padding: 100px 0;}
+.car_brand_list_retrieval_box a{display: block;text-align: center;line-height: 36px;font-size: 22px;color: #888;}
 /*支付结果*/
 .pay_result_top{height: 380px;text-align: center;}
 .pay_result_icon{height: 270px;}

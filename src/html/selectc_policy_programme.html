@@ -8,7 +8,6 @@
 		<link rel="stylesheet" type="text/css" href="../css/swiper-3.3.1.min.css"/>
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
-    	
 	</head>
 	<body>
 		<div class="header_wrap">
@@ -251,9 +250,14 @@
 			$(".callback").on("click",function(){
 				window.history.back();
 			});
+			/*跳转修改保单*/
 			$(".selectc_policy_swiper_wrap").on("click",".edit",function(){
 				window.location.href = "edit_policy_programme.html"
 			});
+			/*确定跳转到询价页面*/
+			$(".submit_btn90").on("click",function(){
+				window.location.href = "new_insurance_price.html";
+			})
 			var banner = new Swiper(".selectc_policy_box",{
 				autoHeight: true, //高度随内容变化
 				pagination : '.swiper-pagination',
