@@ -39,7 +39,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .hidden{display: none;}
 
 /*提交按钮90高度*/
-.submit_btn90{width: 100%;height: 90px;background: url(../img/bg_02.png) repeat left center;text-align: center;line-height: 90px;color: #FFFFFF;font-size: 34px;border-radius: 6px;}
+.submit_btn90{width: 100%;height: 90px;background-image: url(../img/bg_02.png);background-repeat: repeat;background-position: left center;background-origin: content-box;  text-align: center;line-height: 90px;color: #FFFFFF;font-size: 34px;border-radius: 6px;}
 
 .toast-ui {
     display: none;
@@ -238,8 +238,10 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .authentication_center_item:first-child{background: url(../img/car_1@2x.png) no-repeat center;}
 .authentication_center_item:last-child{background: url(../img/car_1@2x.png) no-repeat center;}
 .authentication_center_item .car_img{display: block;width: 100%;height: 100%;opacity:0;}
-..authentication_center_item img{display: block;width: 100%;height: 100%;}
+.authentication_center_item img{display: block;width: 100%;height: 100%;}
 .authentication_bottom{padding: 60px 40px;}
+/*个人信息*/
+.my_info .list_item:first-child{height: 170px;line-height: 170px;}
 /*修改昵称*/
 .revise_name{height: 100px;line-height: 60px;padding: 20px 24px;position: relative;background: #FFFFFF;}
 .revise_name input{width: 100%;height: 60px;line-height: 60px; background: #F7F7F7; font-size: 30px;color: #303030;background: #FFFFFF;}
@@ -386,7 +388,25 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .mall_center{padding: 0 24px;background: #FFFFFF;}
 .mall_center .mall_center_item{border-bottom: 1px solid #dadada;background: #FFFFFF;}
 .mall_center .mall_center_item:last-child{border-bottom: none;}
-
+/*汽车品牌*/
+.car_brand_box{position: relative;}
+.car_brand_hot_wrap{font-size: 24px;margin-bottom: 10px;}
+.car_brand_hot_tit{height: 70px;line-height: 70px;color: #9E9E9E;padding: 0 24px;}
+.car_brand_hot_box{padding-left: 24px;background: #FFFFFF;}
+.car_brand_hot_box_line{height: 140px;padding: 20px 0; display: flex;border-bottom: 2px solid #C8C7CC;}
+.car_brand_hot_box_line:last-child{border-bottom: 2px solid transparent;}
+.car_brand_hot_box_line dl{flex: 1;text-align: center;}
+.car_brand_hot_box_line dt {width: 70px;height: 70px;display: block;margin: 0 auto;}
+.car_brand_hot_box_line dt img,.car_brand_list_item dt img{width: 100%;height: 100%;}
+.car_brand_hot_box_line dd{color: #303030;line-height: 34px;text-align: center;}
+.car_brand_list_wrap{font-size: 30px}
+.car_brand_list_box_tit{height: 50px;line-height: 50px;padding-left: 16px;border-bottom: 2px solid #eee;}
+.car_brand_list_box_tit a{color: #808080;font-size: 28px;}
+.car_brand_list_box_center{padding-left: 24px;}
+.car_brand_list_item{height: 100px;line-height: 100px;border-bottom: 2px solid #c8c7cc;display: flex;}
+.car_brand_list_item dt{width: 50px;height: 50px;}
+.car_brand_list_item dd{padding-left: 24px;}
+.car_brand_list_wrap{background: #FFFFFF;}
 /*支付结果*/
 .pay_result_top{height: 380px;text-align: center;}
 .pay_result_icon{height: 270px;}
@@ -420,8 +440,27 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 /*选择投保方案*/
 .selectc_policy_box_wrap{width: 100%;min-height: 500px;position: relative;margin-top: 100px;}
 .selectc_policy_box{width: 100%;height: 100%;}
-.selectc_policy_swiper{padding: 30px 24px;}
 
+.selectc_policy_box_wrap .selectc_policy_box .selectc_policy_swiper_wrap{padding: 30px 24px;}
+.selectc_policy_swiper_wrap .car_staging_box{width: 702px;}
+.selectc_policy_box .car_staging_box_header{border-bottom: 2px dashed #999;padding-top: 50px;}
+.selectc_policy_box .car_staging_item{border-bottom: 2px dashed #999999;}
+.selectc_policy_box .car_staging_item:last-child{border-bottom: 2px dashed transparent;}
+.edit_wrap{width: 100%;height: 82px;padding: 16px 24px;}
+.edit_wrap .edit{width: 120px;height: 50px;border-radius: 25px;background:#9fd1f8 ;color: #FFFFFF;text-align: center;line-height: 50px;display: block;margin: 0 auto;font-size: 30px;}
+#selectc_policy_swiper_pagination{position: absolute;bottom: -30px;left: 0;width: 100%;text-align: center;padding: 15px 0;}
+#selectc_policy_swiper_pagination .swiper-pagination-bullet{width: 14px;height: 14px;border-radius: 100%;background: #ff4847;margin: 0 8px; opacity:.5;display: inline-block;}
+#selectc_policy_swiper_pagination .swiper-pagination-bullet-active{opacity: 1;}
+/*修改投保方案*/
+.edit_policy_programme_box_item{font-size: 30px}
+.edit_policy_programme_box_item h3{width: 100%;height: 68px;line-height: 68px;padding: 0 24px;}
+.edit_policy_programme_item{width: 100%;height: 100px;line-height: 100px;padding: 0 24px;border-bottom: 1px solid #C0C0C0;display: flex;background: #FFFFFF;justify-content:space-between;}
+.edit_policy_programme_item .left{width: 260px;}
+.edit_policy_programme_item .center{background: url(../img/agree_choose@2x.png) no-repeat left center;padding-left: 40px;width: 260px;}
+.edit_policy_programme_item .center.actived{background: url(../img/agree_chosen@2x.png) no-repeat left center;}
+.edit_policy_programme_item .right{width: 140px;text-align: right;}
+.edit_policy_programme_item .right.icon{padding-right: 40px;background: url(../img/list_down@2x.png) no-repeat right center;}
+.edit_policy_programme_item b{font-weight: 500;}
 
 /*信用评估认证*/
 .list_item{width: 100%;border-bottom: 1px solid #e5e6e6;height: 100px;line-height: 100px;background: #FFFFFF;padding: 0 24px;font-size: 30px}
