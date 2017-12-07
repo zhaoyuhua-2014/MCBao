@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>红包</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">红包</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main">
+				<div class="red_packet_box">
+					<div class="no_use_red_packet">不使用红包</div>
+					<div class="red_packet_list_box">
+						<dl class="red_packet_item">
+							<dt class="float_left">安盛天平</dt>
+							<dd class="float_left">
+								<p><span style="color: #EC5330;font-size: 65px;">￥50</span><span style="color: #9E9E9E;font-size: 20px;padding-left: 15px;">满1000可用</span></p>
+								<p><span style="color: #d9aaaa;font-size: 24px;">有效期至：2017.12.31</span><span class="float_right" style="display: inline-block;background: url(../img/red_packet_txt@2x.png) no-repeat center;"></span></p>
+							</dd>
+						</dl>
+						<dl class="red_packet_item">
+							<dt class="float_left">安盛天平</dt>
+							<dd class="float_left">
+								<p><span style="color: #EC5330;font-size: 65px;">￥50</span><span style="color: #9E9E9E;font-size: 20px;padding-left: 15px;">满1000可用</span></p>
+								<p><span style="color: #d9aaaa;font-size: 24px;">有效期至：2017.12.31</span><span class="float_right" style="display: inline-block;background: url(../img/red_packet_txt@2x.png) no-repeat center;"></span></p>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
+		})
+	</script>
+</html>
