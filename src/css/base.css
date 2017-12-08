@@ -65,39 +65,18 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
     text-align: left;
     border-radius: 3px;
 }
-
-
 @-webkit-keyframes fadeIn {
-    0% {
-        opacity: .7
-    }
-
-    50% {
-        opacity: 1
-    }
-
-    100% {
-        opacity: .7
-    }
+    0% {opacity: .7}
+	50% {opacity: 1}
+	100% {opacity: .7}
 }
 @-webkit-keyframes fadeout {
-    0%,80% {
-        opacity: 1
-    }
-
-    100% {
-        opacity: 0
-    }
+    0%,80% {opacity: 1}
+    100% {opacity: 0}
 }
-
 @keyframes fadeout {
-    0%,80% {
-        opacity: 1
-    }
-
-    100% {
-        opacity: 0
-    }
+	0%,80% {opacity: 1}
+	100% {opacity: 0}
 }
 .pop-dialog {
     text-align: left;
@@ -189,8 +168,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .changecity_box{font-size: 30px;}
 .changecity_header{height: 88px;line-height: 88px;padding: 0 24px;background: #FFFFFF;border-bottom: 1px solid #E1E1E1;z-index: 2; position: fixed;left: 0;top: 96px;width: 100%;}
 .changecity_center {margin-top: 88px;}
-.changecity_content{width: 696px;}
-.changecity_content{position: relative;}
+.changecity_content{width: 696px;position: relative;}
 .changecity_content .msg_title{height: 82px;line-height: 82px;color: #9E9E9E;padding: 0 24px;}
 .changecity_content .hot_title{height: 72px;line-height: 60px;color: #9E9E9E;padding: 0 24px;}
 .changecity_content .city_box{padding-left: 24px;}
@@ -272,25 +250,83 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .car_info_msg .float_right{color: #FF6E6E;font-size: 26px }
 .car_info_msg1{height: 60px;line-height: 60px;background: #ffdd83;color: #e47634;font-size: 24px;padding: 0 24px;}
 .car_info_box .list_item .float_right input{text-align: right;}
-/*车险分期*/
-.car_insurance_staging{padding: 0 24px; padding-top: 50px;}
-.car_staging_box{width: 100%;min-height: 500px;padding: 0 24px;position: relative;background: #FFFFFF;border-radius: 10px;}
+/*车险分期-保单详情-选择投保方案-订单详情----------公用*/
+.car_staging_box{width: 100%;min-height: 500px;padding: 0 24px;position: relative;background: #FFFFFF;border-radius: 10px;font-size: 30px;}
 .car_staging_box_title{position: absolute;top: -40px;width: 418px;background: url(../img/bg_title@2x.png) no-repeat center;left: 50%;margin-left: -209px;
 height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
-.car_staging_box_header{border-bottom: 1px dashed #ff8b84;}
+.car_staging_box_header{border-bottom: 2px dashed #ff8b84;}
 .car_staging_box_header p{height: 96px;text-align: center;color: #fca29c;font-size: 24px;padding-top: 50px;}
+.car_staging_box_header p.title{height: 78px;line-height: 78px;text-align: center;color: #303030;font-size: 32px;padding-top: 0;}
+
 .car_staging_box_center{padding: 22px 12px;}
 .car_staging_box_c_item{height: 72px;line-height: 72px;}
-.car_staging_box_c_item .float_left{font-size: 30px;color: #303030;}
-.car_staging_box_c_item .float_right{font-size: 30px;color: #9E9E9E;}
+
+/*车险分期*/
+.car_insurance_staging{padding: 0 24px; padding-top: 50px;}
+
 .car_staging_box_bottom{height: 110px;line-height: 110px;padding: 0 12px;border-top: 1px solid #e8e6f3;}
-.car_staging_box_bottom .float_left{color: #303030;font-size: 30px}
 .car_staging_box_bottom .float_right{width: 110px;background: url(../img/Switch-off@2x.png) no-repeat center center;height: 110px;}
 .car_staging_box_bottom .float_right.actived{background: url(../img/Switch-on@2x.png) no-repeat center center;}
 .car_staging_box_agreement{padding: 24px 0;line-height: 36px;font-size: 24px;color: #9E9E9E;display: flex;width: 100%;}
 .car_staging_box_agreement span.icon{width: 50px;background: url(../img/agree_choose@2x.png) no-repeat center 5px;}
 .car_staging_box_agreement span.icon.actived{background: url(../img/agree_chosen@2x.png) no-repeat center 5px;}
 .car_staging_box_agreement span.text{padding-left: 6px;}
+/*保单详情*/
+.policy_details_box_top{position: relative;width: 100%;height: 150px;background: #FFFFFF;padding: 35px 50px;font-size: 30px;}
+.policy_details_box_top dt{width: 80px;height: 80px;float: left;}
+.policy_details_box_top dt img{width: 100%;height: 100%;}
+.policy_details_box_top dd{height: 80px;padding-left: 30px;line-height: 80px;float: left;}
+.policy_details_box_top dd span{padding-right: 20px;}
+.policy_details_box_center{padding: 0 24px;padding-top: 100px;}
+/*车商城*/
+.car_mall_info{padding: 0 24px;background: #FFFFFF;}
+.car_item{padding: 15px 0;background: #FFFFFF;line-height: 30px;font-size: 20px;color: #6F7174;}
+.car_item dt,.car_item dd{float: left;}
+.car_item dt{width: 270px;height: 178px;border-radius: 15px;}
+.car_item dt img{width: 100%;height: 100%;}
+.car_item dd{padding: 0 24px;width: 402px;}
+.car_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 32px;color: #303030;}
+.car_item .description{font-size: 26px;color: #9E9E9E;line-height: 46px;min-height: 76px;}
+.car_item .money{font-size: 32px;color: #ec5330;}
+.car_mall_center{padding: 36px 40px;width: 100%;padding-top: 80px;}
+.car_mall_center .car_staging_box_title{background: url(../img/bg_title_gold@2x.png) no-repeat center;}
+
+.car_section{width: 100%;padding: 30 0px;margin-bottom: 30px;}
+
+.car_mall_footer{height: 100px;line-height: 100px;font-size: 36px;color: #FFFFFF;display: flex;text-align: center;width: 100%;}
+.car_mall_footer .car_footer_item{flex: 1;}
+.car_mall_footer .car_footer_item:first-child{background: #a4a4a4;}
+.car_mall_footer .car_footer_item:last-child{background: #fc5a5a;}
+
+
+/*选择投保方案*/
+.selectc_policy_box_wrap{width: 100%;min-height: 500px;position: relative;margin-top: 100px;}
+.selectc_policy_box{width: 100%;height: 100%;}
+
+.selectc_policy_box_wrap .selectc_policy_box .selectc_policy_swiper_wrap{padding: 30px 24px;}
+.selectc_policy_swiper_wrap .car_staging_box{width: 702px;}
+.selectc_policy_box .car_staging_box_header{border-bottom: 2px dashed #999;padding-top: 50px;}
+.selectc_policy_box .car_staging_item{border-bottom: 2px dashed #999999;}
+.selectc_policy_box .car_staging_item:last-child{border-bottom: 2px dashed transparent;}
+.edit_wrap{width: 100%;height: 82px;padding: 16px 24px;}
+.edit_wrap .edit{width: 120px;height: 50px;border-radius: 25px;background:#9fd1f8 ;color: #FFFFFF;text-align: center;line-height: 50px;display: block;margin: 0 auto;font-size: 30px;}
+#selectc_policy_swiper_pagination{position: absolute;bottom: -30px;left: 0;width: 100%;text-align: center;padding: 15px 0;}
+#selectc_policy_swiper_pagination .swiper-pagination-bullet{width: 14px;height: 14px;border-radius: 100%;background: #ff4847;margin: 0 8px; opacity:.5;display: inline-block;}
+#selectc_policy_swiper_pagination .swiper-pagination-bullet-active{opacity: 1;}
+
+/*订单详情*/
+.order_details_top{background: url(../img/bg_list_middle@2x.png) no-repeat center;}
+.order_details_center{padding: 0 24px;padding-top: 70px;}
+.order_details_center .car_staging_box_header{padding-top:60px ;padding-bottom: 24px;}
+
+.car_staging_box_header_item{height: 62px;line-height: 62px;}
+.car_staging_item_title{height: 60px;line-height: 60px;}
+.car_staging_box_c_item .float_right.color_ff6600{color: #FF6600;}
+
+.policy_details_time_box{padding-top: 10px;padding-bottom: 30px;}
+.policy_details_time_item{height: 42px;line-height: 42px;color: #92c4f3;font-size: 26px;}
+
+
 /*保险最新报价*/
 .new_insurance_price .garage_car_item dd{line-height: 60px;font-size: 30px;}
 .new_insurance_price .submit{padding: 40px 24px;}
@@ -358,33 +394,11 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .stages_box .float_right{color: #9E9E9E;}
 .payment_submit{padding: 60px 24px;}
 
-
-
-/*车商城*/
-.car_mall_info{padding: 0 24px;background: #FFFFFF;}
-.car_item{padding: 15px 0;background: #FFFFFF;line-height: 30px;font-size: 20px;color: #6F7174;}
-.car_item dt,.car_item dd{float: left;}
-.car_item dt{width: 270px;height: 178px;border-radius: 15px;}
-.car_item dt img{width: 100%;height: 100%;}
-.car_item dd{padding: 0 24px;width: 402px;}
-.car_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 32px;color: #303030;}
-.car_item .description{font-size: 26px;color: #9E9E9E;line-height: 46px;min-height: 76px;}
-.car_item .money{font-size: 32px;color: #ec5330;}
-.car_mall_center{padding: 36px 40px;width: 100%;padding-top: 80px;}
-.car_mall_center .car_staging_box_title{background: url(../img/bg_title_gold@2x.png) no-repeat center;}
-.car_staging_box_header p.title{height: 78px;line-height: 78px;text-align: center;color: #303030;font-size: 32px;padding-top: 0;}
-.car_section{width: 100%;padding: 30 0px;margin-bottom: 30px;}
-
-.car_mall_footer{height: 100px;line-height: 100px;font-size: 36px;color: #FFFFFF;display: flex;text-align: center;width: 100%;}
-.car_mall_footer .car_footer_item{flex: 1;}
-.car_mall_footer .car_footer_item:first-child{background: #a4a4a4;}
-.car_mall_footer .car_footer_item:last-child{background: #fc5a5a;}
-
 /*商城*/
 .header_wrap.mall_header{background: transparent;border-bottom: none;}
 .main_wrap.mall_main{padding: 0;}
 .mall_header .header_search{padding: 15px 0;padding-left: 96px;padding-right: 40px;}
- .header_search input{width: 100%;height: 65px;border-radius: 30px;background: #FFFFFF url(../img/icon_serch@2x.png) no-repeat 30px center;padding-left: 80px;font-size: 28px;line-height: 65px;}
+.header_search input{width: 100%;height: 65px;border-radius: 30px;background: #FFFFFF url(../img/icon_serch@2x.png) no-repeat 30px center;padding-left: 80px;font-size: 28px;line-height: 65px;}
 .mall_main .banner_wrap{width: 100%;height: 360px;overflow: hidden;position: relative;}
 .mall_main .mall_banner{width: 100%;height: 100%;}
 .mall_main .mall_banner .swiper-slide{height: 360px;background: red;line-height: 360px;text-align: center;font-size: 150px;}
@@ -399,6 +413,8 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .mall_center{padding: 0 24px;background: #FFFFFF;}
 .mall_center .mall_center_item{border-bottom: 1px solid #dadada;background: #FFFFFF;}
 .mall_center .mall_center_item:last-child{border-bottom: none;}
+
+
 /*汽车品牌*/
 .car_brand_box{position: relative;}
 .car_brand_hot_wrap{font-size: 24px;margin-bottom: 10px;}
@@ -451,20 +467,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .line_pay_box .item.actived{background: url(../img/choosen@2x.png) no-repeat 670px center;}
 .line_pay_box .item .float_left{padding-left:90px ;}
 .line_pay_box .item:nth-child(1) .float_left{background: url(../img/icon_wx@2x.png) no-repeat left center;}
-/*选择投保方案*/
-.selectc_policy_box_wrap{width: 100%;min-height: 500px;position: relative;margin-top: 100px;}
-.selectc_policy_box{width: 100%;height: 100%;}
 
-.selectc_policy_box_wrap .selectc_policy_box .selectc_policy_swiper_wrap{padding: 30px 24px;}
-.selectc_policy_swiper_wrap .car_staging_box{width: 702px;}
-.selectc_policy_box .car_staging_box_header{border-bottom: 2px dashed #999;padding-top: 50px;}
-.selectc_policy_box .car_staging_item{border-bottom: 2px dashed #999999;}
-.selectc_policy_box .car_staging_item:last-child{border-bottom: 2px dashed transparent;}
-.edit_wrap{width: 100%;height: 82px;padding: 16px 24px;}
-.edit_wrap .edit{width: 120px;height: 50px;border-radius: 25px;background:#9fd1f8 ;color: #FFFFFF;text-align: center;line-height: 50px;display: block;margin: 0 auto;font-size: 30px;}
-#selectc_policy_swiper_pagination{position: absolute;bottom: -30px;left: 0;width: 100%;text-align: center;padding: 15px 0;}
-#selectc_policy_swiper_pagination .swiper-pagination-bullet{width: 14px;height: 14px;border-radius: 100%;background: #ff4847;margin: 0 8px; opacity:.5;display: inline-block;}
-#selectc_policy_swiper_pagination .swiper-pagination-bullet-active{opacity: 1;}
 /*修改投保方案*/
 .edit_policy_programme_box_item{font-size: 30px}
 .edit_policy_programme_box_item h3{width: 100%;height: 68px;line-height: 68px;padding: 0 24px;}
@@ -532,15 +535,6 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .order_item_money{color: #ff5959;font-size: 36px;}
 .oreder_item_b_right{color: #999999;font-size: 24px;}
 
-/*订单详情*/
-.order_details_top{background: url(../img/bg_list_middle@2x.png) no-repeat center;}
-.order_details_center{padding: 0 24px;padding-top: 70px;}
-.order_details_center .car_staging_box_header{padding-top:60px ;padding-bottom: 24px;}
-.car_staging_box_header_item{height: 62px;line-height: 62px;}
-.car_staging_box_header_item .float_left{color: #303030;font-size: 30px}
-.car_staging_box_header_item .float_right{color: #9E9E9E;font-size: 30px}
-.car_staging_item_title{height: 60px;line-height: 60px;font-size: 30px;}
-.car_staging_box_c_item .float_right.color_ff6600{color: #FF6600;}
 /*说明描述信息*/
 .description_info{font-size: 24px;line-height: 36px;color: #9E9E9E;}
 
@@ -554,3 +548,9 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .color_ff6600{color: #ff6600;}
 .color_e82b21{color: #e82b21;}
 .right_text{font-size: 30px;text-align: center;color: #c30d23;}
+/*内凹圆效果*/
+.border_radius{width: 28px;height: 28px;border-radius: 50%;display: inline-block;background: #EAEAEA;}
+.top_left{position: absolute;left: -14px;top: -14px;}
+.top_right{position: absolute;right: -14px;top: -14px;}
+.bottom_left{position: absolute;left: -14px;bottom: -14px;}
+.bottom_right{position: absolute;right: -14px;bottom: -14px;}
