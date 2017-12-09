@@ -5,8 +5,10 @@
 		<title>车险分期</title>
 		<meta name="viewport" content="width=750,user-scalable=no"/>
 		<meta content="telephone=no, address=no" name="format-detection" />
+		<link rel="stylesheet" type="text/css" href="../picker/my-picker.css"/>
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+    	
 	</head>
 	<body>
 		<div class="header_wrap">
@@ -29,7 +31,7 @@
 						<div class="car_staging_box_center">
 							<div class="car_staging_box_c_item clearfloat">
 								<span class="float_left color_30">投保城市</span>
-								<span class="float_right color_9e">杭州</span>
+								<span class="float_right color_9e icon"><input type="text" name="" id="" value="" placeholder="请输入投保城市" /></span>
 							</div>
 							<div class="car_staging_box_c_item clearfloat">
 								<span class="float_left color_30">货车保险</span>
@@ -37,16 +39,22 @@
 							</div>
 							<div class="car_staging_box_c_item clearfloat">
 								<span class="float_left color_30">车主姓名</span>
-								<span class="float_right color_9e">张某某</span>
+								<span class="float_right color_9e"><input type="text" name="" id="" value="" placeholder="请输入车主姓名" /></span>
 							</div>
 							<div class="car_staging_box_c_item clearfloat">
 								<span class="float_left color_30">车牌号</span>
-								<span class="float_right color_9e">浙Acc123</span>
+								<span class="float_right color_9e"><input type="text" name="" id="" value="" placeholder="请输入车牌号" /></span>
 							</div>
 						</div>
-						<div class="car_staging_box_bottom clearfloat">
-							<span class="float_left color_30">是否为一年内过户车？</span>
-							<span class="float_right"></span>
+						<div class="car_staging_box_bottom">
+							<div class="car_staging_box_c_item transfer_car clearfloat">
+								<span class="float_left color_30">是否为一年内过户车？</span>
+								<span class="float_right"></span>
+							</div>
+							<div class="car_staging_box_c_item transfer_time">
+								<span class="float_left color_30">过户日期</span>
+								<span class="float_right icon"><input id="example8" type="text" name="" id="" value="" placeholder="请选择" /></span>
+							</div>
 						</div>
 						
 					</div>
@@ -63,16 +71,20 @@
 	</body>
 	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../picker/my-picker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../outside/LAreaData.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$(".callback").on("click",function(){
 				window.history.back();
 			});
-			$(".car_staging_box_bottom .float_right").on("click",function(){
+			$(".transfer_car .float_right").on("click",function(){
 				if ($(this).is(".actived")) {
 					$(this).removeClass("actived");
+					$(".transfer_time").hide();
 				}else{
-					 $(this).addClass("actived");
+				 	$(this).addClass("actived");
+				 	$(".transfer_time").show();
 				}
 			})
 			$(".car_staging_box_agreement .icon").on("click",function(){
@@ -85,6 +97,81 @@
 			$(".submit_btn90").on("click",function(){
 				window.location.href = "car_info1.html"
 			})
+			var year = [2000];
+			var today = new Date();
+			var year_n = today.getFullYear();
+			for (var i = 2000; i <= year_n; i++) {
+			    year.push(i);
+			}
+			var month = [];
+			for (var i = 1; i <= 12; i++) {
+			    month.push(i);
+			}
+			
+			var picker8 = new myPicker({
+			    cols: [{
+			        options: year,
+			        suffix: "年",
+			    }, {
+			        options: month,
+			        suffix: "月",
+			    }, {
+			        options: [],
+			        suffix: "日",
+			    },],
+			    title:'请选择过户日期',
+			    onOkClick: function (values) {
+			    	var str = values[0] + "年" + values[1] + "月" + values[2] + "日";
+			        $('#example8').val(str)
+			    },
+			    setValues: [today.getFullYear(), today.getMonth() + 1, today.getDate()],
+			    onSelectItem: function (i, index, value) {
+					
+			        if (i != 2) {
+			            var year = this.getValue(0);
+			            var month = this.getValue(1);
+						
+			            if (year == null || month == null)
+			                return
+			
+			            var curDate = new Date();
+			            curDate.setYear(year);
+			            
+			            if (year == today.getFullYear()) {
+			            	var months = [];
+			            	for (var i = 1; i <= today.getMonth() + 1; i++) {
+				                months.push(i);
+				            };
+				            this.setOptions(1, months);
+			            }else{
+			            	var months = [];
+			            	for (var i = 1; i <= 12; i++) {
+							    months.push(i);
+							}
+			            	this.setOptions(1, months);
+			            }
+			            curDate.setMonth(month);
+			            curDate.setDate(0);
+			
+			            var day = [];
+			            if (year == today.getFullYear() && month == today.getMonth()+1) {
+			            	for (var i = 1; i <= today.getDate(); i++) {
+				                day.push(i);
+				            }
+			            }else{
+			            	for (var i = 1; i <= curDate.getDate(); i++) {
+				                day.push(i);
+				            }
+			            }
+			            this.setOptions(2, day);
+			        }
+			    }
+			});
+			document.querySelector('#example8').addEventListener('click', function () {
+			    picker8.show();
+			});
+			var datacitys = LAreaData;
+			console.log(console.table(datacitys));
 		})
 	</script>
 </html>

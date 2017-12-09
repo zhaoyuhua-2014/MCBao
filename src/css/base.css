@@ -259,14 +259,19 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_staging_box_header p.title{height: 78px;line-height: 78px;text-align: center;color: #303030;font-size: 32px;padding-top: 0;}
 
 .car_staging_box_center{padding: 22px 12px;}
-.car_staging_box_c_item{height: 72px;line-height: 72px;}
+.car_staging_box_c_item{height: 72px;line-height: 72px; position: relative;}
 
+
+.car_staging_box_c_item .float_right input{text-align: right;}
+.car_staging_box_c_item .float_right.icon{padding-right: 30px;background: url(../img/arr_left.png) no-repeat right center;}
 /*车险分期*/
 .car_insurance_staging{padding: 0 24px; padding-top: 50px;}
 
-.car_staging_box_bottom{height: 110px;line-height: 110px;padding: 0 12px;border-top: 1px solid #e8e6f3;}
-.car_staging_box_bottom .float_right{width: 110px;background: url(../img/Switch-off@2x.png) no-repeat center center;height: 110px;}
-.car_staging_box_bottom .float_right.actived{background: url(../img/Switch-on@2x.png) no-repeat center center;}
+.car_staging_box_bottom{padding: 20px 12px;border-top: 1px solid #e8e6f3;}
+.transfer_car .float_right{width: 110px;background: url(../img/Switch-off@2x.png) no-repeat center center;height: 72px;}
+
+.transfer_car .float_right.actived{background: url(../img/Switch-on@2x.png) no-repeat center center;}
+.transfer_time{display: none;}
 .car_staging_box_agreement{padding: 24px 0;line-height: 36px;font-size: 24px;color: #9E9E9E;display: flex;width: 100%;}
 .car_staging_box_agreement span.icon{width: 50px;background: url(../img/agree_choose@2x.png) no-repeat center 5px;}
 .car_staging_box_agreement span.icon.actived{background: url(../img/agree_chosen@2x.png) no-repeat center 5px;}
@@ -321,7 +326,6 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 
 .car_staging_box_header_item{height: 62px;line-height: 62px;}
 .car_staging_item_title{height: 60px;line-height: 60px;}
-.car_staging_box_c_item .float_right.color_ff6600{color: #FF6600;}
 
 .policy_details_time_box{padding-top: 10px;padding-bottom: 30px;}
 .policy_details_time_item{height: 42px;line-height: 42px;color: #92c4f3;font-size: 26px;}
