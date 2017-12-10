@@ -12,7 +12,7 @@ define(function(require, exports, module){
 
 	$.extend(common,{
 		//EVE 作为正式环境和测试环境的开关，为true时为正式环境，为false时为测试环境
-		EVE:true,
+		EVE:false,
 		//API : "http://api.grhao.com/server/api.do", // 接口地址
 		//API : "http://61.164.118.194:8090/grh_api/server/api.do", // 测试地址
 		// 每页显示的个数
@@ -47,7 +47,7 @@ define(function(require, exports, module){
 		if (common.EVE) {
 			common.API = "";
 		}else{
-			common.API = "http://app.maichebao.com/server/api.do"
+			common.API = "http://api.91mcb.com/mcb_api/server/api.do"
 		}
 	})(common);
 
@@ -464,7 +464,7 @@ define(function(require, exports, module){
 		var nodeTemp = $(this).remove();
 		nodeTemp = null;
 	});
-	(function(){
+	/*(function(){
 		var m = document.createElement("meta"),
 			h = document.getElementsByTagName("head")[0];
 			m.setAttribute("http-equiv","Content-Security-Policy");
@@ -474,6 +474,6 @@ define(function(require, exports, module){
 			m.setAttribute("content","script-src 'self' 'unsafe-inline' 'unsafe-eval' http://61.164.118.194:8090/grh_api/server/api.do; style-src 'self' 'unsafe-inline' 'unsafe-eval'");
 		}
 		h.appendChild(m)
-	})(common)
+	})(common)*/
 	return common;
 });
