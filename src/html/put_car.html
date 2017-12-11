@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>提车</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body>
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">提车</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main">
+				<div class="put_car">
+					<div class="put_car_process">
+						<div class="item">选车</div>
+						<div class="item">付定金</div>
+						<div class="item">约定签约</div>
+						<div class="item gohome">开回家</div>
+					</div>
+					<div class="put_car_msg">
+						确认后定金将扣除，同时您将获得等值优惠券，优惠券可在红包中查看。
+					</div>
+					<div class="put_car_card">
+						<div class="item oil_card">
+							
+						</div>
+						<div class="item repair_voucher">
+							
+						</div>
+					</div>
+				</div>
+				<div class="payment_submit">
+					<button class="submit_btn90">确认提车</button>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
+		})
+	</script>
+</html>

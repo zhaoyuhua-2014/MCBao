@@ -266,7 +266,7 @@ define(function(require, exports, module){
 
 		init : function(){
 			var data = {
-				method:'user_regist',
+				method:'user_register',
 			    mobile:pub.phoneNum,					
 			    smsCode:pub.verify_code,
 			    pwd:common.pwdEncrypt( pub.password ),

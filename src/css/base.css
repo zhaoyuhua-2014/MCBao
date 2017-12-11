@@ -335,6 +335,23 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 /*保险最新报价*/
 .new_insurance_price .garage_car_item dd{line-height: 60px;font-size: 30px;}
 .new_insurance_price .submit{padding: 40px 24px;}
+/*车辆预定*/
+.car_reserve_box{padding: 20px 24px;}
+.car_reserve_money_box{position: relative;width: 100%;padding-top: 50px;padding-bottom: 30px;text-align: center;background: #FFFFFF;border-radius: 20px;}
+.car_reserve_money{line-height: 94px;height: 94px;font-size: 48px;color: #ff8200;}
+.car_reserve_money_box p{height: 50px;line-height: 50px;font-size: 30px}
+.car_reserve_icon{position: absolute;top: -8px;right: 30px;}
+.car_reserve_msg{padding: 15px 24px;font-size: 26px;color: #9E9E9E;line-height: 40px;}
+/*提车*/
+.put_car{background: #FFFFFF;}
+.put_car_process{padding:62px 15px ;background: #FFFFFF url(../img/line_2@2x.png) no-repeat center bottom;display: flex;}
+.put_car_process .item{width: 178px;height: 134px;line-height: 134px;font-size: 30px;color: #FFFFFF;text-align: center;background:#FFFFFF url(../img/bg_blue@2x.png) no-repeat center;}
+.put_car_process .item.gohome{background: url(../img/bg_red@2x.png) no-repeat center;}
+.put_car_msg{padding: 46px 24px;font-size: 26px;color: #9E9E9E;line-height: 40px;}
+.put_car_card{padding-bottom:40px ;padding-left: 40px;display: flex;}
+.put_car_card .item{flex: 1;height: 115px;padding-left: 120px;padding-top: 20px;}
+.put_car_card .oil_card{background: url(../img/card_88_a@2x.png) no-repeat left top;}
+.put_car_card .repair_voucher{background: url(../img/card_q_a@2x.png) no-repeat left top;}
 /*客服中心*/
 .client_server_center_top_item{height: 100px;line-height: 100px;border-bottom: 1px solid #E1E1E1;padding: 0 24px;background:#FFFFFF url(../img/icon_more@2x.png) no-repeat right center;font-size: 30px;color: #303030;}
 .client_server_center_top_item:first-child{background: #eaeaea;background-image: none;color: #9E9E9E;}
