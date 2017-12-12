@@ -12,7 +12,7 @@ define(function(require, exports, module){
 
 	$.extend(common,{
 		//EVE 作为正式环境和测试环境的开关，为true时为正式环境，为false时为测试环境
-		EVE:true,
+		EVE:false,
 		//API : "http://api.grhao.com/server/api.do", // 接口地址
 		//API : "http://61.164.118.194:8090/grh_api/server/api.do", // 测试地址
 		// 每页显示的个数
@@ -47,7 +47,7 @@ define(function(require, exports, module){
 		if (common.EVE) {
 			common.API = "";
 		}else{
-			common.API = "http://app.maichebao.com/server/api.do"
+			common.API = "http://api.91mcb.com/mcb_api/server/api.do"
 		}
 	})(common);
 
@@ -366,7 +366,8 @@ define(function(require, exports, module){
 
 			if ( common.user_data.getKey() ) {
 				var userInfo = common.JSONparse( common.user_data.getItem() );
-				return {
+				return userInfo;
+				/*{
 					cuserInfoid : userInfo.cuserInfoid,
 					firmId : userInfo.firmId,
 					faceImg : userInfo.faceImg,
@@ -375,7 +376,7 @@ define(function(require, exports, module){
 					idCard : userInfo.idCard,
 					mobile : userInfo.mobile,
 					sex : userInfo.sex
-				}
+				}*/
 			}
 		},
 
@@ -415,7 +416,7 @@ define(function(require, exports, module){
 			pwdstr = pwdstr.substring(0, 70);
 			pwdstr = pwdstr.substring(0, 14) + "j" + pwdstr.substring(14, 28) + "x" + pwdstr.substring(28, 42) + "q" + pwdstr.substring(32, 46) + "y" + pwdstr.substring(56, 70) + "3";
 			pwdstr = pwdstr.substring(40, 75) + pwdstr.substring(0, 40);
-			return pwdstr
+			return md
 		},
 		footerNav : function( fn ){
 			$("#foot .footer_item").on('click',function(){
@@ -464,7 +465,7 @@ define(function(require, exports, module){
 		var nodeTemp = $(this).remove();
 		nodeTemp = null;
 	});
-	(function(){
+	/*(function(){
 		var m = document.createElement("meta"),
 			h = document.getElementsByTagName("head")[0];
 			m.setAttribute("http-equiv","Content-Security-Policy");
@@ -474,6 +475,6 @@ define(function(require, exports, module){
 			m.setAttribute("content","script-src 'self' 'unsafe-inline' 'unsafe-eval' http://61.164.118.194:8090/grh_api/server/api.do; style-src 'self' 'unsafe-inline' 'unsafe-eval'");
 		}
 		h.appendChild(m)
-	})(common)
+	})(common)*/
 	return common;
 });

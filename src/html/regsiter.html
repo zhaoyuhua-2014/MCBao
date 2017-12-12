@@ -23,11 +23,11 @@
 			<div class="main">
 				<div class="regsiter_pack">
 					<div class="regsiter_item regsiter_phone show">
-						<input type="tel" id="reg_phoneNumber" value="" placeholder="请输入您的手机号" maxlength="11" autocomplete="off" class="zs_phoneNumber"/>
+						<input type="tel" id="reg_phoneNumber" value="" placeholder="请输入您的手机号" maxlength="11" autocomplete="off" />
 						<i class="icon_clear"></i>
 					</div>
 					<div class="regsiter_item regsiter_password">
-						<input type="password" id="reg_password" value="" placeholder="请输入密码(密码长度6-20位，不含空格)" autocomplete="off"  />
+						<input type="password" id="reg_password" value="" placeholder="请输入密码(至少8位，只包含字母或数字)" autocomplete="off"  />
 						<i class="icon_clear"></i>
 					</div>
 					<div class="regsiter_item regsiter_password_again">
@@ -35,9 +35,9 @@
 						<i class="icon_clear"></i>
 					</div>
 					<div class="regsiter_item regsiter_smscode" style="position:relative">
-						<input type="tel" maxlength="6" id="verify_code" name="" placeholder="请输入手机验证码" autocomplete="off" />
+						<input type="tel" maxlength="6" id="verify_code" name="" placeholder="请输入手机验证码" autocomplete="off" disabled="disabled" />
 						<a id="reg_verify_code" class="get_verify_code">获取验证码</a>
-					    <a id="reg_time" style="display:none ;background: none; color: #F76A10;" class="zs_time"></a>
+					    <a id="reg_time" style="display:none ;background: none; color: #F76A10;" class=""></a>
 					    <i class="icon_clear"></i>
 					</div>
 					
@@ -64,7 +64,7 @@
 		    </div>
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -87,6 +87,13 @@
 				window.history.back();
 			})
 			
+		})
+	</script>-->
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		seajs.use(["../dist/login.js"],function(pub){
+			pub.init();
 		})
 	</script>
 </html>

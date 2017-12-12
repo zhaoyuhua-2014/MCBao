@@ -39,12 +39,12 @@ define(function(require, exports, module){
 		var id = setInterval(function(){
 			if ( pub.time == 0 ) {
 				pub.time = 59; // 重置倒计时值
-				$(".zs_time").hide();
-				$(".zs_get_verify_code").show().html('重新获取');
+				$("#reg_time").hide();
+				$("#reg_verify_code").show().html('重新获取');
 				clearInterval(id);
 				id = null;
 			}else{
-				$(".zs_time").css({"color":"#f76a10","background":"none"}).html("( "+pub.time+"s 后重试 )");
+				$("#reg_time").css({"color":"#f76a10","background":"none"}).html("( "+pub.time+"s 后重试 )");
 			}
 			pub.time--;
 		},1000);
@@ -53,20 +53,19 @@ define(function(require, exports, module){
 	// 发送验证码
 	pub.send_sms = {
 		init : function(){
-
 			common.ajaxPost({
-				method : 'send_sms',
+				method : 'get_sd_mcb20171120',
 				mobile: pub.phoneNum,
-				type : pub.send_sms_type,
+				/*type : pub.send_sms_type,
 				key : pub.key,
-				authcode : pub.imgCode
+				authcode : pub.imgCode*/
 			},function(d){
 				if( d.statusCode == "100000" ){
 					common.prompt( '验证码已发送，请查收' );
 					pub.countDown();// 倒计时开始
 					$("#verify_code").removeAttr("disabled");
-					$(".zs_get_verify_code").hide();
-					$(".zs_time").show().css({"color":"#f76a10","background":"none"}).html('(60s后重试)'); 
+					$("#reg_verify_code").hide();
+					$("#reg_time").show().css({"color":"#f76a10","background":"none"}).html('(60s后重试)'); 
 				}else{
 					common.prompt( d.statusStr );
 				} 
@@ -93,6 +92,7 @@ define(function(require, exports, module){
 		init : function(){
 			common.ajaxPost( pub.login_type, function( d ){
 				if ( d.statusCode == '100000' ) {
+					
 					pub.login.apiHandle.apiData( d );
 				} else{
 					common.prompt(d.statusStr);
@@ -103,55 +103,13 @@ define(function(require, exports, module){
 		},
 		apiData : function( d ){
 			var 
-			infor = d.data.cuserInfo,
-			user_data = {
-			    cuserInfoid : infor.id,
-			    firmId : infor.firmId,
-			    faceImg : infor.faceImg,
-			    petName : infor.petName,
-			    realName : infor.realName,
-			    idCard : infor.idcard,
-			    mobile : infor.mobile,
-			    sex : infor.sex
-			};
-
-			common.user_data.setItem( common.JSONStr(user_data) );
+			infor = d.data;	
+			common.user_data.setItem( common.JSONStr(infor) );
 			common.tokenId.setItem( d.data.tokenId );
 			common.secretKey.setItem( d.data.secretKey );
 			common.setMyTimeout(function(){
-				var 
-				jumpMake = common.jumpMake.getItem(),
-				bool = common.goodid.getKey(),
-				goodsId = bool ? "?goodsId=" + common.goodid.getItem() : '',
-				pathNames = [
-					"moregoods.html",
-					"seckill.html",
-					"seckillDetail.html" + goodsId,
-					"preDetails.html" + goodsId,
-					"my.html",
-					"store.html",
-					"month_service.html",
-					"cuopon.html",
-					"goodsDetails.html" + goodsId,
-					"moregoods.html?type=TAO_CAN",
-					"moregoods.html?type=JU_HUI",
-					"seckillDetaila.html" + goodsId
-				];
-
-				if( 0 < jumpMake && jumpMake < 13 ){
-					bool && common.goodid.removeItem();
-					common.jumpMake.removeItem();
-
-					// 历史记录管理
-					jumpMake  == 3 && common.historyReplace( 'seckill.html' ); // 秒杀详情 -> 秒杀换购 列表
-					jumpMake  == 4 && common.historyReplace( 'pre.html' ); // 预购详情 -> 预购列表
-					jumpMake  == 12 && common.historyReplace( 'seckill.html' ); // 换购详情 -> 秒杀换购 列表
-					jumpMake  == 9 && common.historyReplace( 'moregoods.html' ); // 商品详情 -> 商品详情列表
-
-					common.jumpLinkPlain( pathNames[ jumpMake-1 ] );
-				}else{
-					common.jumpLinkPlain("../index.html");
-				}
+				console.log(JSON.stringify(d.data))
+				common.jumpLinkPlain('../index.html');
 			},500);
 		}
 	};
@@ -176,59 +134,35 @@ define(function(require, exports, module){
 	pub.login.eventHandle = { 
 
 		init : function(){
-
-			// 登录方式切换
-			$(".login_main_top li").on("click",function(){
-				var 
-				$this = $(this),
-				i = $this.index(),
-				isCur = $this.is('.actived');
-				if( !isCur ){
-					$this.addClass('actived').siblings().removeClass('actived');
-					$('.login_main_content').find('ul').eq(i).addClass('show').show().siblings().removeClass('show').hide();
-				}
-			});
-
 			// 登录
-			$('.login_btn').click(function(){
-
+			$('.submit_btn90').click(function(){
+				
 				var 
-				box = $('.login_main_content .show'),
+				box = $('.login_center'),
 				index = box.index();
 
-				pub.phoneNum = box.find('.zs_phoneNumber').val();// 获取活动 tab 的手机号
-				
+				pub.phoneNum = box.find('#reg_phoneNumber').val();// 获取手机号
+				pub.password = box.find("#reg_password").val();
 				if( pub.phoneNum == '' ){
 					common.prompt('请输入手机号');return;
 				}
 				if(!common.PHONE_NUMBER_REG.test( pub.phoneNum )){
 					common.prompt('请输入正确的手机号');return;
 				}
-
-				if( index == 0 ){
-					pub.password = $('#login_password').val();
-					if( pub.password == '' ){
-						common.prompt('请输入密码'); return;
-					}
+				if( pub.password == '' ){
+					common.prompt('请输入密码'); return;
 				}
-				pub.verify_code = $('#verify_code').val();
-				pub.login_type = [{
-						method:'login',
-						mobile:pub.phoneNum,
-						password : common.pwdEncrypt( pub.password )
-					},{
-						method : 'dynamic_login',
-						mobile : pub.phoneNum,
-						smsCode : pub.verify_code
-					}][index];
-
+				pub.login_type = {
+					method:'user_login',
+					mobile:pub.phoneNum,
+					password : common.pwdEncrypt( pub.password )
+				};
+console.log("log")
 				pub.login.apiHandle.init();
 			});
-			// 点击跳转
-			common.jumpLinkSpecial('.header_left','../index.html');
 
-			// 后续添加逻辑  微信授权登录
-			common.isWeiXin() && !common.openId.getKey() && pub.weixinCode && pub.get_weixin_code();
+			//后续添加逻辑  微信授权登录
+			//common.isWeiXin() && !common.openId.getKey() && pub.weixinCode && pub.get_weixin_code();
 		}
 	};
 
@@ -271,7 +205,6 @@ define(function(require, exports, module){
 				}
 				pub.register.regist.init();
 			});
-			common.jumpLinkSpecial('.header_left','login.html')
 		},
 		
 	};
@@ -281,11 +214,11 @@ define(function(require, exports, module){
 
 		init : function(){
 			var data = {
-				method:'regist',
+				method:'user_register',
 			    mobile:pub.phoneNum,					
-			    smsCode:pub.verify_code,
-			    pwd:common.pwdEncrypt( pub.password ),
-			    confirmPwd:common.pwdEncrypt( pub.repeatPassword ),
+			    randCode:pub.verify_code,
+			   	pwd:pub.password,
+			   	second_pwd:pub.repeatPassword
 			};
 			common.ajaxPost( data, function( d ){
 
@@ -296,6 +229,8 @@ define(function(require, exports, module){
 					$('.pop_makeSure').on('click',function(){
 						$('.pop').css({'display':'none'});
 					})					    
+			    }else{
+			    	common.prompt(d.statusStr)
 			    }
 			},function( d ){
 				common.prompt(d.statusStr);
@@ -303,33 +238,7 @@ define(function(require, exports, module){
 		},
 		apiData : function(d){
 
-			var data = d.data.cuserInfo,
-			user_data = {
-			    cuserInfoid : data.id,
-			    firmId : data.firmId,
-			    faceImg : data.faceImg,
-			    petName : data.petName,
-			    realName : data.realName,
-			    idCard : data.idCard,
-			    mobile : data.mobile,
-			    sex : data.sex
-			};
-			common.user_data.setItem( common.JSONStr(user_data) );
-			common.tokenId.setItem( d.data.tokenID );
-			common.secretKey.setItem( d.data.secretKey );
-			$('.regsiter_pack').css({'display':'none'});
-			$('.success').css({'display':'block'});
-			var t = 3;
-			var time = setInterval(function(){					
-				if( t == 0 ){
-					clearInterval(time);
-					time = null;
-					common.jumpLinkPlain('../index.html');
-				}else{
-					$('.regsiter_time').html( t );					
-				}
-				t--;
-			},1000);
+			common.jumpLinkPlain('login.html');
 			
 		}
 	};
@@ -338,14 +247,8 @@ define(function(require, exports, module){
 
 		init : function(){
 			// 获取验证码
-			$('.zs_get_verify_code').on('click',function(){
-
-				pub.phoneNum = $(".show .zs_phoneNumber").val();
-				pub.imgCode = $('#img_code').val();
-
-				if( pub.imgCode == '' ){
-					common.prompt('请输入图片验证码'); return;
-				}
+			$('#reg_verify_code').on('click',function(){
+				pub.phoneNum = $("#reg_phoneNumber").val();
 				if( pub.phoneNum == '' ){
 					common.prompt('请输入手机号'); return;
 				}
@@ -354,9 +257,21 @@ define(function(require, exports, module){
 				}	
 				pub.send_sms.init(); // 请求验证码
 			});
-			$('.imgCode_box .img_code').click(function(){
-				pub.verification.init(); // 获取图片验证码
-			});
+			$("input").on("focus",function(){
+				$(this).parent().find(".icon_clear").show();
+			})
+			$("input").on("blur",function(){
+				var nood= $(this)
+				setTimeout(function(){
+					nood.parent().find(".icon_clear").hide();
+				},10)
+			})
+			$(".icon_clear").on("click",function(){
+				$(this).parent().find("input").val("")
+			})
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
 		}
 	};
 
