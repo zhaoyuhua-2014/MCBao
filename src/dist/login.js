@@ -246,7 +246,7 @@ define(function(require, exports, module){
 
 		init : function(){
 			// 获取验证码
-			$('#reg_verify_code').on('click',function(){
+			$('.get_verify_code').on('click',function(){
 				pub.phoneNum = $("#reg_phoneNumber").val();
 				if( pub.phoneNum == '' ){
 					alert("请输入手机号")
