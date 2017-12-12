@@ -36,8 +36,8 @@
 					</div>
 					<div class="regsiter_item regsiter_smscode" style="position:relative">
 						<input type="tel" maxlength="6" id="verify_code" name="" placeholder="请输入手机验证码" autocomplete="off" disabled="disabled" />
-						<a id="reg_verify_code" class="get_verify_code">获取验证码</a>
-					    <a id="reg_time" style="display:none ;background: none; color: #F76A10;" class=""></a>
+						<a id="mcb_get_verify_code" class="get_verify_code">获取验证码</a>
+					    <a id="reg_time" style="display:none ;background: none; color: #F76A10;"></a>
 					    <i class="icon_clear"></i>
 					</div>
 					
@@ -64,36 +64,11 @@
 		    </div>
 		</div>
 	</body>
-	<!--<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			
-			$("input").on("focus",function(){
-				$(this).parent().find(".icon_clear").show();
-			})
-			$("input").on("blur",function(){
-				var nood= $(this)
-				setTimeout(function(){
-					nood.parent().find(".icon_clear").hide();
-				},10)
-			})
-			$(".icon_clear").on("click",function(){
-				console.log("icon_clear")
-				console.log($(this).parent().find("input").val(""))
-				$(this).parent().find("input").val("")
-			})
-			$(".callback").on("click",function(){
-				window.history.back();
-			})
-			
-		})
-	</script>-->
-	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		seajs.use(["../dist/login.js"],function(pub){
+	<script src="../seajs/2.1.1/sea.js"></script>
+	<script src="../seajs-config.js"></script>
+	<script>
+		seajs.use(['../dist/login'],function( pub ){
 			pub.init();
-		})
+		});
 	</script>
 </html>

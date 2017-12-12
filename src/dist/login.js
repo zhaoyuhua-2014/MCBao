@@ -64,7 +64,7 @@ define(function(require, exports, module){
 					common.prompt( '验证码已发送，请查收' );
 					pub.countDown();// 倒计时开始
 					$("#verify_code").removeAttr("disabled");
-					$("#reg_verify_code").hide();
+					$("#mcb_get_verify_code").hide();
 					$("#reg_time").show().css({"color":"#f76a10","background":"none"}).html('(60s后重试)'); 
 				}else{
 					common.prompt( d.statusStr );
@@ -137,7 +137,7 @@ define(function(require, exports, module){
 			// 登录
 			$('.submit_btn90').click(function(){
 				
-				var 
+				var
 				box = $('.login_center'),
 				index = box.index();
 
@@ -152,12 +152,12 @@ define(function(require, exports, module){
 				if( pub.password == '' ){
 					common.prompt('请输入密码'); return;
 				}
-				pub.login_type = {
+				pub.login_type ={
 					method:'user_login',
 					mobile:pub.phoneNum,
 					password : common.pwdEncrypt( pub.password )
 				};
-console.log("log")
+				console.log("log")
 				pub.login.apiHandle.init();
 			});
 
@@ -215,13 +215,12 @@ console.log("log")
 		init : function(){
 			var data = {
 				method:'user_register',
-			    mobile:pub.phoneNum,					
+			    mobile:pub.phoneNum,
 			    randCode:pub.verify_code,
 			   	pwd:pub.password,
 			   	second_pwd:pub.repeatPassword
 			};
 			common.ajaxPost( data, function( d ){
-
 				if ( d.statusCode == '100000' ) {
 				    pub.register.regist.apiData( d );					   
 			    } else if ( d.statusCode == '100510' ){
@@ -234,7 +233,7 @@ console.log("log")
 			    }
 			},function( d ){
 				common.prompt(d.statusStr);
-			});	
+			});
 		},
 		apiData : function(d){
 
@@ -250,9 +249,11 @@ console.log("log")
 			$('#reg_verify_code').on('click',function(){
 				pub.phoneNum = $("#reg_phoneNumber").val();
 				if( pub.phoneNum == '' ){
+					alert("请输入手机号")
 					common.prompt('请输入手机号'); return;
 				}
 				if( !common.PHONE_NUMBER_REG.test( pub.phoneNum ) ){
+					alert("请输入正确的手机号")
 					common.prompt('请输入正确的手机号'); return;
 				}	
 				pub.send_sms.init(); // 请求验证码
