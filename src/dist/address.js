@@ -2,11 +2,12 @@ define(function(require, exports, module){
 
 	require('jquery');
 	var common = require('../dist/common');
-
+	var data = require('LAreaData2');
+	console.log(data)
 	// 命名空间
 
 	var pub = {};
-		/********************************** 地址管理 模块 ******************************* */
+	/********************************** 地址管理 模块 ******************************* */
 
     // 命名空间
 
@@ -21,7 +22,7 @@ define(function(require, exports, module){
     	pub.sign = md5( pub.source + "key" + common.secretKeyfn() ).toUpperCase();
     	pub.tokenId = common.tokenIdfn();
     }else{
-        common.jumpLinkPlain( '../index.html' );
+        //common.jumpLinkPlain( '../index.html' );
     }
 
 	pub.bool = common.addressData.getKey(); // addressData 数据存储是否存在
