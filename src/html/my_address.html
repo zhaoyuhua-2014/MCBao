@@ -8,7 +8,7 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "address">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
@@ -39,7 +39,7 @@
 					<div class="list_item">
 						<span class="left">收件地址</span>
 						<span class="float_right icon">
-							<input type="text" placeholder="请选择收件地址" name="" id="" value="" />
+							<input type="text" placeholder="请选择收件地址" name="" id="" value="" disabled="disabled" />
 						</span>
 					</div>
 					<div class="list_item">
@@ -52,7 +52,7 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -60,5 +60,12 @@
 				window.history.back();
 			})
 		})
+	</script>-->
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		seajs.use(['../dist/address'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>

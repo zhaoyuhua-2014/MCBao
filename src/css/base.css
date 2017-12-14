@@ -385,11 +385,11 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 /*收件人地址列表*/
 .address_item{margin-bottom: 20px;font-size: 28px;background: #FFFFFF;}
 .address_item .address_top{border-bottom: 1px solid #EAEAEA;padding: 20px 26px;padding-right: 120px;background: url(../img/choose@2x.png) no-repeat 95% 40px;color: #303030;}
-.address_item .address_top.true{background: url(../img/choosen@2x.png) no-repeat 95% 40px;}
 .address_item .address_bottom{padding: 0 26px;line-height: 80px;}
-.address_item .address_bottom .float_left.true{color: #46d642;}
 .address_item .address_bottom .float_left{color: #F5812C;}
 .address_item .address_bottom .float_right{color: #e3142d;}
+.address_item.actived .address_top{background: url(../img/choosen@2x.png) no-repeat 95% 40px;}
+.address_item.actived .address_bottom .float_left{color: #46d642;}
 /*我的保单*/
 .my_policy_box{padding: 30px;}
 .policy_item{margin-bottom: 30px;background: url(../img/bg_bd@2x.png) no-repeat center;font-size: 28px;}
