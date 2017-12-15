@@ -2,8 +2,10 @@ define(function(require, exports, module){
 
 	require('jquery');
 	var common = require('../dist/common');
-	var data = require('LAreaData2');
-	console.log(data)
+	
+	var data2 = require('LAreaData2');
+	
+	require ("Picker");
 	// 命名空间
 
 	var pub = {};
@@ -17,7 +19,7 @@ define(function(require, exports, module){
 	
     pub.module_id = $('[data-type]').attr('data-type');
     pub.logined = common.isLogin(); // 是否登录
-	console.log(common.secretKeyfn())
+	
     if( pub.logined ){
     	pub.userId = common.user_datafn().cuserInfo.id;
     	pub.source = "userId" + pub.userId;
@@ -184,22 +186,123 @@ define(function(require, exports, module){
     }
     //地址详情
     pub.address = {
+    	getIndex:function(d){
+    		//初始化数据
+    		var n = [],m = 0;
+    		var data = LAreaData;
+    		return recursion(data);
+    	 	function recursion(data){
+    			if (data instanceof Array) {
+    				for(var i in data){
+    					if (data[i].code == d[m]) {
+    						n[m] = i;
+    						m+=1;
+    						recursion(data[i].cities)
+    					}
+    				}
+    				return n;
+    			}
+    		};
+    	},
+    	getValue:function(d){
+    		//初始化数据
+    		var n = [],m = 0;
+    		var data = LAreaData;
+    		n[0] = data[d[0]].code;
+    		n[1] = data[d[0]].cities[d[1]].code;
+    		n[2] = data[d[0]].cities[d[1]].cities[d[2]].code;
+    		return n;
+    	},
+    	getText:function(d){
+    		//初始化数据
+    		var n = [],m = 0;
+    		var data = LAreaData;
+    		return recursion(data);
+    	 	function recursion(data){
+    			if (data instanceof Array) {
+    				for(var i in data){
+    					if (data[i].code == d[m]) {
+    						n[m] = data[i].name;
+    						m+=1;
+    						recursion(data[i].cities)
+    					}
+    				}
+    				return n;
+    			}
+    		};
+    	},
+    	dataInit:function(m){
+    		//c表示索引的数组,d表述code的数组
+    		var c = [0,0,0],d = m;
+    		//城市数据
+    		var data = LAreaData;
+    		if(m){
+    			c = pub.address.getIndex(m)
+    		}else{
+    			d = pub.address.getValue(c);
+    		}
+    		//省市县的index
+    		var indexArr = [0,0,0];
+    		//省市县文字
+    		var textArr = [];
+    		
+    		pub.address.picker1 = new myPicker({
+			    cols: [{
+			    	options:data,
+			    	labelKey: 'name',
+			        valueKey: 'code',
+			    },{
+			    	options:data[c[0]].cities,
+			    	labelKey: 'name',
+			        valueKey: 'code',
+			    },{
+			    	options:data[c[0]].cities[c[1]].cities,
+			    	labelKey: 'name',
+			        valueKey: 'code',//['code','name']
+			    }],
+			    title: "请选择地址",
+			    onOkClick: function (values) {
+			        $("#addValue").val(values)
+			        $("#selectAddress").val(textArr);
+			    },
+			    fontSize:18,
+			    setValues: d,//LAreaData[0].name,LAreaData[0].cities[0].name,LAreaData[0].cities[0].cities[0].name
+			    onSelectItem: function (i, index, value) {
+					indexArr[i] = index;
+					var f = data[indexArr[0]];
+					if(i == 0){
+			      		this.setOptions(1, f.cities);
+			      		this.setOptions(2, f.cities[0].cities);
+			      	}
+			      	if (i == 1) {
+			      		this.setOptions(2, f.cities[indexArr[1]].cities);
+			      	}
+			      	textArr[0] = f.name;
+			      	textArr[1] = f.cities[indexArr[1]].name;
+			      	textArr[2] = f.cities[indexArr[1]].cities[indexArr[2]].name;
+			    }
+			});
+    	},
     	beforeInit:function(){
     		pub.address.data = JSON.parse(common.addressData.getItem());
+    		var d = [pub.address.data.provinceId,pub.address.data.cityId,pub.address.data.countyId];
     		var noods = $(".list_item");
     		noods.eq(0).find(".float_right input").val(pub.address.data.receiverName)
     		noods.eq(1).find(".float_right input").val(pub.address.data.receiverMobile)
-    		noods.eq(2).find(".float_right input").val(pub.address.data.countyId)
+    		noods.eq(2).find(".float_right input").val(pub.address.getText(d).toString())
     		noods.eq(3).find(".float_right input").val(pub.address.data.address)
+    		return d;
     	},
     	init : function (){
+    		require('LAreaData');
+    		var d = null;
     		if(common.getUrlParam("addressId")){
     			pub.address.addressId = common.getUrlParam("addressId");
-    			console.log(pub.address.addressId)
-    			pub.address.beforeInit();
+    			d = pub.address.beforeInit();
     		}else{
     			pub.address.addressId = null;
     		}
+    		pub.address.dataInit(d);
     	},
     	address_update : {
     		init : function(){
@@ -253,7 +356,16 @@ define(function(require, exports, module){
 						pub.address.addressId = null//地址ID新增则为空
 					//}
 					pub.address.address_update.init();
+				});
+				$("#selectAddress").on("click",function(e){
+					console.log("click");
+					console.log()
+					pub.address.picker1.show();
+				});
+				$("#selectAddress").on("focus",function(){
+					$(this).blur();
 				})
+				
 			}
 		}
     	

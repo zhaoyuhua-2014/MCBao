@@ -97,7 +97,7 @@
 			$(".submit_btn90").on("click",function(){
 				window.location.href = "car_info1.html"
 			})
-			var year = [2000];
+			var year = [];
 			var today = new Date();
 			var year_n = today.getFullYear();
 			for (var i = 2000; i <= year_n; i++) {
@@ -107,7 +107,8 @@
 			for (var i = 1; i <= 12; i++) {
 			    month.push(i);
 			}
-			
+			console.log(year);
+			console.log(month)
 			var picker8 = new myPicker({
 			    cols: [{
 			        options: year,
@@ -126,7 +127,9 @@
 			    },
 			    setValues: [today.getFullYear(), today.getMonth() + 1, today.getDate()],
 			    onSelectItem: function (i, index, value) {
-					
+					console.log(i);
+					console.log(index)
+					console.log(value)
 			        if (i != 2) {
 			            var year = this.getValue(0);
 			            var month = this.getValue(1);
@@ -171,7 +174,6 @@
 			    picker8.show();
 			});
 			var datacitys = LAreaData;
-			console.log(console.table(datacitys));
 		})
 	</script>
 </html>

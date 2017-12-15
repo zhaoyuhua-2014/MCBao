@@ -461,10 +461,10 @@ define(function(require, exports, module){
 		}
 	});
 
-	$(document).on('click','#prompt-node',function(){
+	/*$(document).on('click','#prompt-node',function(){
 		var nodeTemp = $(this).remove();
 		nodeTemp = null;
-	});
+	});*/
 	/*(function(){
 		var m = document.createElement("meta"),
 			h = document.getElementsByTagName("head")[0];

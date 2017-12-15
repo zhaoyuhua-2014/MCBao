@@ -803,7 +803,7 @@ var browserUtil = __webpack_require__(9);
 var tick = __webpack_require__(10)();
 
 function Wheel(picker, col, option, index) {
-
+//console.log(option)
 	///////////////////主要属性
 	//picker对象
 	this.picker = picker;
@@ -832,7 +832,8 @@ function Wheel(picker, col, option, index) {
 	this.vmin = Math.min(window.innerWidth, window.innerHeight) / 100;
 	//获得控件到body最顶端的距离,计算触摸事件的offsetY时候使用
 	this.offsetTop = 0;
-
+	//字体大小
+	this.fontSize = this.option.fontSize;
 	////////////////////滚动属性
 	//滚轮转动前初始的转角,用于计算滚轮是否转动过
 	this.originalAngle = 0;
@@ -1029,7 +1030,6 @@ Wheel.prototype.setOptions = function (list, selectedValue, isInti) {
 	height = this.radius * Math.PI * config.wheelItemAngle / 180;
 
 	this.list.forEach(function (item, index) {
-
 		//如果是对象,取labelKey对应值显示。否则直接显示它本身
 		if ((typeof item === "undefined" ? "undefined" : _typeof(item)) === 'object') {
 			label = item[that.labelKey];
@@ -1045,7 +1045,7 @@ Wheel.prototype.setOptions = function (list, selectedValue, isInti) {
 		var angle = config.wheelItemAngle * -index;
 
 		//为了解决3d放大后，文字模糊的问题，故采用zoom=2的方案，所以li的尺寸方面，统一缩小一半
-		li.css("transform", "rotateX(" + angle + "deg) translateZ(" + that.radius + "vmin)").css("height", height + "vmin").css("line-height", height + "vmin");
+		li.css("transform", "rotateX(" + angle + "deg) translateZ(" + that.radius + "vmin)").css("height", height + "vmin").css("line-height", height + "vmin").css("font-size",  that.option.fontSize+ "px");
 		//将标签的角度保存到其dom中
 		li.data("angle", angle);
 		//将标签的index保存到其dom中

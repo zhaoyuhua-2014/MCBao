@@ -9,7 +9,7 @@ var picker1 = new myPicker({
 document.querySelector('#example1').addEventListener('click', function () {
     picker1.show();
 })
-/*
+
 // 实例2  前缀和后缀使用示例
 var picker2 = new myPicker({
     cols: [{
@@ -182,7 +182,9 @@ var picker8 = new myPicker({
     },
     setValues: [today.getFullYear(), today.getMonth() + 1, today.getDate()],
     onSelectItem: function (i, index, value) {
-
+		console.log(i);
+		console.log(index);
+		console.log(value)
         if (i != 2) {
             var year = this.getValue(0);
             var month = this.getValue(1);
@@ -205,4 +207,4 @@ var picker8 = new myPicker({
 });
 document.querySelector('#example8').addEventListener('click', function () {
     picker8.show();
-})*/
+})
