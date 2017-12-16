@@ -127,7 +127,7 @@ define(function(require, exports, module){
     				addressId : pub.addressId,	
     			},pub.userBasicParam),function( d ){
     				if( d.statusCode == "100000" ){
-                    	$(".address_box address_box").eq(pub.index).remove();
+                    	$(".address_box .address_item ").eq(pub.index).remove();
                     	$.data($('body')[0],'addressList').splice(1,1)
                     } else{
 						common.prompt( d.statusStr )

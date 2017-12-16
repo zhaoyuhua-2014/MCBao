@@ -248,6 +248,21 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .garage_car_item dt{width: 200px;background: url(../img/goods_pic.png) no-repeat center;}
 .garage_car_item dd{line-height: 46px;color: #333;font-size: 28px;width: 502px;padding-top: 40px;padding-left: 24px; background: #FFFFFF url(../img/choose@2x.png) no-repeat right 46px;}
 .garage_car_item.actived dd{background-image: url(../img/choosen@2x.png);}
+
+.line-wrapper{width:100%;height:200px;overflow:hidden}
+.line-scroll-wrapper{height:200;width:950px}
+.line-normal-wrapper{float:left;width:750px;height:200px}
+.line-normal-avatar-wrapper{float:left;width:200px;height:200px;padding:20px}
+.line-normal-avatar-wrapper img{width:100%;height:100%}
+.line-normal-info-wrapper{float:left;width:550px;height:200px;padding-top:18px;border-bottom:1px solid #666}
+.often_shop_goods_top p{float:left;height:40px;font-size:30px;color:#000}
+/*.often_shop_goods_top .often_shop_goods_tit{font-weight: 700;}*/
+.often_shop_goods_top .often_shop_goods_icon{float:right;padding-right:24px}
+.often_shop_show{width:550px;height:72px;line-height:36px;padding-right:90px;color:#999;font-size:24px}
+
+.line-btn-delete{float:left;width:200px;height:200px}
+.line-btn-delete button{width:100%;height:100%;background:red;border:none;font-size:24px;font-family:'Microsoft Yahei';color:#fff}
+
 /*车辆信息*/
 .car_info_msg{height:60px;line-height: 46px;padding: 0 24px;}
 .car_info_msg .float_left{font-size: 28px;color: #9E9E9E;}
@@ -427,7 +442,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 /*商城*/
 .header_wrap.mall_header{background: transparent;border-bottom: none;}
 .main_wrap.mall_main{padding: 0;}
-.mall_header .header_search{padding: 15px 0;padding-left: 96px;padding-right: 40px;}
+.mall_header .header_search{padding: 15px 0;padding-left: 96px;padding-right: 40px;background: transparent;}
 .header_search input{width: 100%;height: 65px;border-radius: 30px;background: #FFFFFF url(../img/icon_serch@2x.png) no-repeat 30px center;padding-left: 80px;font-size: 28px;line-height: 65px;}
 .mall_main .banner_wrap{width: 100%;height: 360px;overflow: hidden;position: relative;}
 .mall_main .mall_banner{width: 100%;height: 100%;}
@@ -443,6 +458,21 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .mall_center{padding: 0 24px;background: #FFFFFF;}
 .mall_center .mall_center_item{border-bottom: 1px solid #dadada;background: #FFFFFF;}
 .mall_center .mall_center_item:last-child{border-bottom: none;}
+/*搜索页面*/
+.header_search{background: #FFF;}
+.header_search .search{padding: 15px 0;padding-left: 96px;padding-right: 98px;}
+.search .icon_clear{top: 30px;right: 104px;}
+.header_search .header_right{color: #9E9E9E;font-size: 24px;text-align: right;padding-right: 20px;width: 100px;}
+.header_search input{background-color: #EEE;}
+.search_star{padding:0 20px;font-size:30px;}
+.search_tit{padding:30px 0;}
+.search_item_list li{float:left;width:200px;height:64px;background:#FFFFFF;border-radius:32px;text-align:center;line-height:64px;margin-bottom:30px;margin-right:30px;}
+.search_item_list li:nth-child(3n){margin-right:0;}
+
+.search_none{width:100%;height:100%;text-align:center;}
+.search_none dl dt{width:100%;height:346px;padding-top:148px;}
+.search_none dl dd{line-height:50px;font-size:30px;}
+
 
 
 /*汽车品牌*/

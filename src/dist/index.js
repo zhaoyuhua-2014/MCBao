@@ -36,6 +36,8 @@ define(function(require, exports, module){
 				pub.apiHandle.get_code.init();
 			}
 			pub.apiHandle.get_code.init();
+			//系统常量接口
+			pub.apiHandle.system_config_constant.init();
 		},
 		get_code : {
 			init:function(){
@@ -56,7 +58,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost({
 					method:'main_page_show',
-					websiteNode:common.websitNode,
+					websiteNode:common.WebsiteNode,
 					sign:pub.sign,
 					source:pub.source,
 				 },function( d ){
@@ -65,6 +67,15 @@ define(function(require, exports, module){
 			},
 			apiDate:function( d ){
 				
+			}
+		},
+		system_config_constant : {
+			init:function(){
+				common.ajaxPost({
+					method:'system_config_constant',
+				 },function( d ){
+					d.statusCode == "100000" && pub.apiHandle.get_code.apiData( d );
+				});
 			}
 		}
 	};

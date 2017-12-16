@@ -59,8 +59,13 @@ define(function(require, exports, module){
 				});
 			},
 			apiData:function(d){
-				var o = d.data;
-				
+				var o = d.data,html = '';
+				for (var i in o) {
+					html += '<div class="mall_nav_item '+(i == 0 ? "actived" : "")+'" data-code="'+o[i].typeCode+'">'+o[i].typeName+'</div>'
+				}
+				$(".mall_nav").html(html);
+				pub.typeCode = o[i].typeCode;
+				pub.mall_goods.goods_second_type.init();
 			}
 		},
 		goods_second_type :{
@@ -68,8 +73,30 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'goods_second_type',
 					websiteNode:common.WebsiteNode,
+					typeCode:pub.typeCode,
 				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.mall_goods.goods_first_type.apiData( d );
+					d.statusCode == "100000" && pub.mall_goods.goods_second_type.apiData( d );
+				});
+			},
+			apiData:function(d){
+				console.log(JSON.stringify(d))
+				var o = d.data,html = '';
+				for (var i in o) {
+					html += '<div class="mall_subnav_item '+(i == 0 ? "actived" : "")+'" data-code="'+o[i].typeCode+'"><span>'+o[i].typeName+'</span></div>'
+				}
+				$(".mall_subnav").html(html);
+				pub.typeCode = o[i].typeCode;
+				pub.mall_goods.goods_second_type.init();
+			}
+		},
+		goods_info_show : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'goods_info_show',
+					websiteNode:common.WebsiteNode,
+					typeCode:pub.options.typeCode,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.mall_goods.goods_info_show.apiData( d );
 				});
 			},
 			apiData:function(d){
@@ -94,20 +121,6 @@ define(function(require, exports, module){
 				
 			}
 		},
-		goods_show_name : {
-			init:function(){
-				common.ajaxPost($.extend({
-					method:'goods_show_name',
-					websiteNode:common.WebsiteNode,
-					goodsName:pub.options.goodsName
-				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.mall_goods.user_info.apiData( d );
-				});
-			},
-			apiData:function(d){
-				var o = d.data;
-			}
-		},
 		eventHandle:{
 			init:function(){
 				var swiper = new Swiper (".mall_banner", {
@@ -124,14 +137,18 @@ define(function(require, exports, module){
 					$(this).addClass("actived").siblings().removeClass("actived")
 				})
 				mall_center.on("click",'.mall_center_item ',function(){
-					
 					window.location.href = "../html/car_mall.html"
 				})
-				
+				$(".mall_header input").on("click",function(){
+					console.log("click")
+					window.location.href = "../html/search.html"
+				})
+				$(".mall_header input").on("focus",function(){
+					$(this).blur();
+				})
 			}
 		}
 	};
-	
 	
 	//商品详情页面
 	pub.goods = {
@@ -177,6 +194,82 @@ define(function(require, exports, module){
 			}
 		}
 	}
+	//搜索页面处理;
+	pub.search = {
+		init:function(){
+			pub.search.goods_show_hot.init();
+		},
+		goods_show_hot : {
+			init:function (){
+				common.ajaxPost($.extend({
+					method:'goods_show_hot',
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.search.goods_show_hot.apiData( d );
+				});
+			},
+			apiData:function( d ){
+				var o = d.data,html = '';
+				for(i in o){ 
+					html += '<li>' + o[i].keyword + '</li>';
+				}
+				$('.search_item_list').html( html );
+			}
+		},
+		goods_show_name : {
+			init:function (){
+				common.ajaxPost($.extend({
+					method:'goods_show_name',
+					websiteNode:common.WebsiteNode,
+					goodsName:"车",
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.search.goods_show_name.apiData( d );
+				});
+			},
+			apiData:function( d ){
+				var o = d.data,html = '';
+				if (o.length == 0) {
+					$(".search_none").show().siblings().hide();
+					return;
+				}
+				for(i in o){
+					html += '<dl class="car_item mall_center_item clearfloat">'
+					html += '	<dt><img src="../img/goods_pic.png"/></dt>'
+					html += '	<dd>'
+					html += '		<h4>BMW 3系GT 一触即发</h4>'
+					html += '		<div class="description"></div>'
+					html += '		<div class="money">￥50,000.00</div>'
+					html += '	</dd>'
+					html += '</dl>'
+					html += '<li>' + o[i].keyword + '</li>';
+				}
+				$('.mall_center').html( html );
+			}
+		},
+		eventHandle : {
+			init:function(){
+				$(".header_right").on("click",function(){
+					pub.search.goods_show_name.init();
+				});
+				$(".search_item_list").on("click","li",function(){
+					
+				});
+				$("input").on("focus",function(){
+					$(this).parent().find(".icon_clear").show();
+				})
+				$("input").on("blur",function(){
+					var nood= $(this)
+					setTimeout(function(){
+						nood.parent().find(".icon_clear").hide();
+					},10)
+				})
+				$(".icon_clear").on("click",function(){
+					$(this).parent().find("input").val("");
+					$(".search_star").show().siblings().hide()
+				})
+				
+			}
+		}
+	}
 	//事件处理
 	pub.eventHandle = {
 		//事件初始化
@@ -194,6 +287,9 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "goods"){
     		pub.goods.init()
 			pub.goods.eventHandle.init();
+    	}else if (pub.module_id == "search"){
+    		pub.search.init()
+			pub.search.eventHandle.init();
     	}
     	pub.eventHandle.init()
 	};

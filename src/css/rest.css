@@ -14,7 +14,7 @@ button, input, optgroup, select, textarea { color: inherit; font: inherit; margi
 button { overflow: visible; background: none; border: none; outline: none; }
 button, select { text-transform: none; }
 button, html input[type="button"], input[type="reset"], input[type="submit"] { -webkit-appearance: none; }
-button[disabled], html input[disabled] { cursor: default;background: #FFF; }
+button[disabled], html input[disabled] { cursor: default;background-color: #FFF; }
 button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
 input,img{border: none; outline: none;}
 
