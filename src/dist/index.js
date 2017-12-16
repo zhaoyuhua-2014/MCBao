@@ -8,14 +8,65 @@ define(function(require, exports, module){
 	// 命名空间
 
 	var pub = {};
+	pub.logined = common.isLogin(); // 是否登录
+	
+    if( pub.logined ){
+    	pub.userId = common.user_datafn().cuserInfo.id;
+    	pub.source = "userId" + pub.userId;
+    	pub.sign = md5( pub.source + "key" + common.secretKeyfn() ).toUpperCase();
+    	pub.tokenId = common.tokenIdfn();
+    }
+	pub.userBasicParam = {
+		userId : pub.userId,
+		source : pub.source,
+		sign : pub.sign,
+		tokenId : pub.tokenId
+	};
+	pub.options = {
+		websitNode:'',
+		
+	}
 	
 	// 接口处理命名空间
 	pub.apiHandle = {
-		//接口初始化
 		init:function(){
-			
+			if (pub.logined) {
+				pub.apiHandle.page_show.init();
+			}else{
+				pub.apiHandle.get_code.init();
+			}
+			pub.apiHandle.get_code.init();
+		},
+		get_code : {
+			init:function(){
+				common.ajaxPost({
+					method:'business_city_get_by_area_code',
+					areaCode:common.websitNode,
+				 },function( d ){
+					d.statusCode == "100000" && pub.apiHandle.get_code.apiData( d );
+				});
+			},
+			apiData:function( d ){
+				var o = d.data;
+				pub.options.websitNode = o.websiteNode;
+				$(".index_left").html(o.websiteName)
+			}
+		},
+		page_show : {
+			init:function(){
+				common.ajaxPost({
+					method:'main_page_show',
+					websiteNode:common.websitNode,
+					sign:pub.sign,
+					source:pub.source,
+				 },function( d ){
+					d.statusCode == "100000" && pub.apiHandle.page_show.apiData( d );
+				});
+			},
+			apiDate:function( d ){
+				
+			}
 		}
-		//
 	};
 	
 	//事件处理

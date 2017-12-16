@@ -202,7 +202,8 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 
 
 .my_info_nav{display: flex;text-align: center;padding: 24px 0;}
-.my_info_nav .my_info_nav_item{flex: 1;}
+.my_info_nav .my_info_nav_item{flex: 1; background: url(../img/line_divide@2x.png) no-repeat right center;}
+.my_info_nav .my_info_nav_item:last-child{background-image: none;}
 .my_info_nav_item dd{line-height: 50px;font-size: 26px;color: #9E9E9E;}
 .my_center{border-top: 2px solid #E1E1E1;border-bottom: 2px solid #E1E1E1;}
 .my_center .my_center_line{height: 240px;border-bottom: 1px solid #e1e1e1;display: flex;text-align: center;background: #FFFFFF;}
@@ -385,9 +386,14 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 /*收件人地址列表*/
 .address_item{margin-bottom: 20px;font-size: 28px;background: #FFFFFF;}
 .address_item .address_top{border-bottom: 1px solid #EAEAEA;padding: 20px 26px;padding-right: 120px;background: url(../img/choose@2x.png) no-repeat 95% 40px;color: #303030;}
+.address_item .address_top .address_name_phone{height: 52px;line-height: 52px;}
+.address_item .address_top .address_info{line-height: 38px;}
 .address_item .address_bottom{padding: 0 26px;line-height: 80px;}
 .address_item .address_bottom .float_left{color: #F5812C;}
-.address_item .address_bottom .float_right{color: #e3142d;}
+.address_item .address_bottom .float_right{color: #666;}
+.address_item .address_bottom .float_right button{padding-left: 60px;}
+.address_item .address_bottom .float_right button.icon_del{background: url(../img/icon_delete1@2x.png) no-repeat left center;}
+.address_item .address_bottom .float_right button.icon_edit{background: url(../img/icon_edit@2x.png) no-repeat left center;margin-right: 20px;}
 .address_item.actived .address_top{background: url(../img/choosen@2x.png) no-repeat 95% 40px;}
 .address_item.actived .address_bottom .float_left{color: #46d642;}
 /*我的保单*/

@@ -1,6 +1,6 @@
 define(function(require, exports, module){
 
-	require('jquery');
+	//require('jquery');
 	var common = require('../dist/common');
 	
 	var data2 = require('LAreaData2');
@@ -67,7 +67,7 @@ define(function(require, exports, module){
     //地址列表接口及事件
     pub.address_manager = {
     	//地址设为默认数据数组
-    	add_deffer :["设为默认","","默认"],
+    	add_deffer :["设为默认","设为默认","默认"],
 		//地址列表
 		init : function(){
 			var me = this;
@@ -91,17 +91,17 @@ define(function(require, exports, module){
 				html += '	<div class="address_top">'
 				html += '		<div class="address_name_phone clearfloat">'
 				html += '			<span class="float_left">' + obj.receiverName + '</span>'
-				html += '			<span class="float_right">' + obj.receiverName + '</span>'
+				html += '			<span class="float_right">' + obj.receiverMobile + '</span>'
 				html += '		</div>'
-				html += '		<p class="address_info">' + obj.receiverName + '</p>'
+				html += '		<p class="address_info">' + obj.allAddr + '取值为allAddr，暂时为空</p>'
 				html += '	</div>'
 				html += '	<div class="address_bottom clearfloat">'
 				html += '		<button class="float_left operate">' + pub.address_manager.add_deffer[obj.isDefault + 1] + '</button>'
-				html += '		<button class="float_right operate">编辑</button>'
+				html += '		<div class="float_right"><button class = "operate icon_edit">修改</botton><button class = "operate icon_del">删除</botton></div>'
 				html += '	</div>'
 				html += '</div>'
 			}
-			$(".address_box").append(html);
+			$(".address_box").html(html);
 			$.data( $('body')[0],'addressList', d.data );
 		},
 		//设为默认地址
@@ -109,11 +109,27 @@ define(function(require, exports, module){
     		init : function(){
     			common.ajaxPost($.extend({
     				method:'user_address_default',
-    				addressId : pub.address.addressId
+    				addressId : pub.addressId,
     			},pub.userBasicParam),function( d ){
     				if ( d.statusCode == "100000" ) {
-						
+						pub.address_manager.init()
 					} else{
+						common.prompt( d.statusStr )
+					}
+    			});
+    		}
+    	},
+    	//地址删除
+    	address_delete : {
+    		init : function(){
+    			common.ajaxPost($.extend({
+    				method : 'user_address_del',
+    				addressId : pub.addressId,	
+    			},pub.userBasicParam),function( d ){
+    				if( d.statusCode == "100000" ){
+                    	$(".address_box address_box").eq(pub.index).remove();
+                    	$.data($('body')[0],'addressList').splice(1,1)
+                    } else{
 						common.prompt( d.statusStr )
 					}
     			});
@@ -130,10 +146,10 @@ define(function(require, exports, module){
 	    		$(".address_box").on('click',".operate",function(){
 					var 
 	    			$this = $(this),
-	    			isEditor = $this.is('.float_right'),
-	    			isDelete = $this.is('.delete_address'),
+	    			isEditor = $this.is('.icon_edit'),
+	    			isDelete = $this.is('.icon_del'),
 	    			isDefault = $this.is('.float_left'),
-	    			isCur = $this.is('.default_bg');
+	    			isCur = $this.parents(".address_item").is(".actived");
 	
 					pub.address.nood = $this.parents('.address_item');
 					
@@ -146,13 +162,10 @@ define(function(require, exports, module){
 	    			// 删除
 	    			if( isDelete ){  
 	    				pub.index = $this.parents('.contain_address').index();
-	    				var data = {
-							type:1,
-							title:'确认删除?',
-							canclefn:'cancleFn',
-							truefn:'trueFn'
-						}
-						common.alertMaskApp(JSON.stringify(data));
+	    				var s = confirm("确认删除该地址？")
+	    				if(s){
+	    					pub.address_manager.address_delete.init();
+	    				}
 						
 	    			}
 					//编辑
@@ -289,7 +302,8 @@ define(function(require, exports, module){
     		var noods = $(".list_item");
     		noods.eq(0).find(".float_right input").val(pub.address.data.receiverName)
     		noods.eq(1).find(".float_right input").val(pub.address.data.receiverMobile)
-    		noods.eq(2).find(".float_right input").val(pub.address.getText(d).toString())
+    		noods.eq(2).find(".float_right #selectAddress").val(pub.address.getText(d).toString())
+    		noods.eq(2).find(".float_right #addValue").val(d.toString())
     		noods.eq(3).find(".float_right input").val(pub.address.data.address)
     		return d;
     	},
@@ -313,48 +327,44 @@ define(function(require, exports, module){
     				provinceId:pub.address.provinceId,
     				cityId:pub.address.cityId,
     				countyId:pub.address.countyId,
-    				//areaName:pub.address.areaName,//社区名称
     				address:pub.address.address,//联系地址
     				addressId : pub.address.addressId,//地址ID新增则为空
     			},pub.userBasicParam),function( d ){
     				if ( d.statusCode == "100000" ) {
-						//$(".default_bg",".address_management").removeClass("default_bg");
-						//pub.defaultBtn.addClass("default_bg");
+						window.history.back();
 					} else{
 						common.prompt( d.statusStr )
 					}
     			});
     		}
     	},
-    	//地址删除
-    	address_delete : {
-    		init : function(){
-    			common.ajaxPost($.extend({
-    				method : 'user_address_delete',
-    				addressId : pub.address.addressId,	
-    			},pub.userBasicParam),function( d ){
-    				if( d.statusCode == "100000" ){
-                    	
-                    } else{
-						common.prompt( d.statusStr )
-					}
-    			});
-    		}
-    	},
+    	
     	//地址详情事件管理
     	eventHandle : {
 			init: function(){
 				$(".header_right.right_text").on("click",function(){
-					//pub.address. = {
-						pub.address.receiverName="赵玉华1";
-						pub.address.receiverMobile="14700080905";
-						pub.address.provinceId="33";
-						pub.address.cityId='3301';
-						pub.address.countyId='330109';
-						pub.address.areaName="华业大厦"//社区名称
-						pub.address.address="2302"//联系地址
-						pub.address.addressId = null//地址ID新增则为空
-					//}
+					pub.address.receiverName = $("#person_name").val(); //用户姓名
+					pub.address.receiverMobile = $("#person_phone").val(); //手机号
+					pub.address.address = $("#person_address").val(); //地址的详细信息
+	
+					var addressCode = $("#addValue").val();
+	
+					if( pub.address.receiverName == '' ){
+						common.prompt("请输入用户名"); return;
+					}
+					if( pub.address.receiverMobile == '' || !common.PHONE_NUMBER_REG.test( pub.address.receiverMobile ) ){
+						common.prompt("请输入正确的手机号"); return;
+					}
+					if( !addressCode ){
+						common.prompt("请选择城市"); return;
+					}
+					addressCode = addressCode.split(",")
+					pub.address.provinceId=addressCode[0];
+					pub.address.cityId=addressCode[1];
+					pub.address.countyId = addressCode[2];
+					if( pub.address.address == '' ){
+						common.prompt("请输入详细地址"); return;
+					}
 					pub.address.address_update.init();
 				});
 				$("#selectAddress").on("click",function(e){
@@ -374,7 +384,7 @@ define(function(require, exports, module){
     // 模块初始化
     pub.init = function(){
     	if (pub.module_id == "address_list") {
-    		 pub.address_manager.init()
+    		pub.address_manager.init()
 			pub.address_manager.eventHandle.init();
     	}else if (pub.module_id == "address"){
     		pub.address.init();

@@ -9,7 +9,7 @@
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
     	<link rel="stylesheet" type="text/css" href="../css/swiper-3.3.1.min.css"/>
 	</head>
-	<body>
+	<body data-type = "mall_goods">
 		<div class="header_wrap mall_header">
 			<div class="header_contain">
 			    <div class="header_left callback">
@@ -90,7 +90,7 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/swiper.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
@@ -112,5 +112,12 @@
 				window.history.back();
 			})
 		})
+	</script>-->
+	<script src="../seajs/2.1.1/sea.js"></script>
+	<script src="../seajs-config.js"></script>
+	<script>
+		seajs.use(['dist/goods'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>

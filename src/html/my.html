@@ -8,7 +8,7 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "user">
 		<!--<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
@@ -91,31 +91,11 @@
 			</div>
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			});
-			$(".my_center .my_center_item").on("click",function(){
-				var nood = $(this);
-				if (nood.attr("data-url")) {
-					window.location.href = nood.attr("data-url")
-				}
-			})
-			$(".my_info_nav .my_info_nav_item").on("click",function(){
-				var nood = $(this);
-				if (nood.attr("data-url")) {
-					window.location.href = nood.attr("data-url")
-				}
-			})
-			$("#foot").on("click",".footer_item",function(){
-				var isActive = $(this).is(".actived");
-				if (!isActive) {
-					window.location.href = $(this).attr("data-url");
-				}
-			})
-		})
+		seajs.use(['../dist/user'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>
