@@ -271,7 +271,8 @@ define(function(require, exports, module){
 				$(this).parent().find("input").val("")
 			})
 			$(".callback").on("click",function(){
-				window.history.back();
+				var n = pub.Back;
+    			common.jumpHistryBack(n);
 			})
 		}
 	};

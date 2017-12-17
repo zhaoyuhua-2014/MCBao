@@ -99,19 +99,19 @@ define(function(require, exports, module){
 			$("#foot").on("click",".footer_item",function(){
 				var isActive = $(this).is(".actived");
 				if (!isActive) {
-					window.location.href = $(this).attr("data-url");
+					common.jumpLinkPlain($(this).attr("data-url"))
 				}
 			})
 			/*点击进入车详情*/
 			$(".index_module").on("click",'.module_item',function(){
 				var nood = $(this);
-				window.location.href = "html/car_mall.html"
+				common.jumpLinkPlain( "html/car_mall.html" )
 			})
 			/*点击进入客服中心*//*点击进入城市定位*/
 			$(".index_left,.index_right").on("click",function(){
 				var nood = $(this);
 				if (nood.attr("data-url")) {
-					window.location.href = $(this).attr("data-url");
+					common.jumpLinkPlain( $(this).attr("data-url") )
 				}else{
 					alert("暂缺，待定");
 				}
@@ -120,7 +120,7 @@ define(function(require, exports, module){
 			$(".menu_nav dl.item").on("click",function(){
 				var nood = $(this);
 				if (nood.attr("data-url")) {
-					window.location.href = $(this).attr("data-url");
+					common.jumpLinkPlain( $(this).attr("data-url") )
 				}else{
 					alert("暂缺，待定");
 				}

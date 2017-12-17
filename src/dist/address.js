@@ -60,7 +60,8 @@ define(function(require, exports, module){
     pub.eventHandle = {
     	init : function (){
     		$(".header_left").on("click",function(){
-    			window.history.back();
+    			var n = pub.Back;
+    			common.jumpHistryBack(n);
     		})
     	}
     }
@@ -140,7 +141,8 @@ define(function(require, exports, module){
     		init : function (){
     			//新增地址
     			$(".header_right.right_text").on("click",function(){
-    				window.location.href = "../html/my_address.html"
+    				common.jumpLinkPlain("../html/my_address.html");
+    				
     			})
     			// 选择默认地址
 	    		$(".address_box").on('click',".operate",function(){
@@ -175,18 +177,11 @@ define(function(require, exports, module){
 	    				addrInfo = common.JSONStr( $.data($('body')[0],'addressList')[index] );
 	
 						common.addressData.setItem( addrInfo );
-						//common.jumpLinkPlainApp( "地址列表",!pub.searchAddr ? 'html/address.html' : 'html/address.html?addr=' + pub.searchAddr );
-						window.location.href = "../html/my_address.html?addressId="+pub.addressId
+						common.jumpLinkPlain("../html/my_address.html?addressId="+pub.addressId);
 	    			}
 				});
-				$(".add_address").on("click",function(){
-					common.addressData.removeItem();
-	                common.jumpLinkPlainApp( "地址列表",!pub.searchAddr ? 'html/address.html' : 'html/address.html?addr=' + pub.searchAddr );
-				})
-	
-				
-	
-	    		$(".address_management").on('click',".management_address",function(){
+				/*
+				$(".address_management").on('click',".management_address",function(){
 	    			var 
 	    			index = $(this).parents('.contain_address').index(),
 	    			addrInfo = common.JSONStr( $.data($('body')[0],'addressList')[index] ); // 取出数据并存储
@@ -194,6 +189,7 @@ define(function(require, exports, module){
 	                common.goBackApp(1,true,'html/order_set_charge.html')
 				});
 	    		!common.addType.getItem() && $('.address_management').off('click','.management_address'); // 判断是否从订单进入
+    			*/
     		}
     	}
     }
@@ -331,7 +327,7 @@ define(function(require, exports, module){
     				addressId : pub.address.addressId,//地址ID新增则为空
     			},pub.userBasicParam),function( d ){
     				if ( d.statusCode == "100000" ) {
-						window.history.back();
+						common.jumpHistryBack()
 					} else{
 						common.prompt( d.statusStr )
 					}

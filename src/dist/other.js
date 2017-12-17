@@ -40,7 +40,8 @@ define(function(require, exports, module){
 		//时间初始化
 		init:function(){
 			$(".callback").on("click",function(){
-				window.history.back();
+				var n = pub.Back;
+    			common.jumpHistryBack(n);
 			});
 		}
 	}

@@ -72,23 +72,23 @@ define(function(require, exports, module){
 				$(".my_center .my_center_item").on("click",function(){
 					var nood = $(this);
 					if (nood.attr("data-url")) {
-						window.location.href = nood.attr("data-url")
+						common.jumpLinkPlain( nood.attr("data-url") )
 					}
 				})
 				$(".my_info_nav .my_info_nav_item").on("click",function(){
 					var nood = $(this);
 					if (nood.attr("data-url")) {
-						window.location.href = nood.attr("data-url")
+						common.jumpLinkPlain( nood.attr("data-url") )
 					}
 				})
 				$("#foot").on("click",".footer_item",function(){
 					var isActive = $(this).is(".actived");
 					if (!isActive) {
-						window.location.href = $(this).attr("data-url");
+						common.jumpLinkPlain( $(this).attr("data-url") )
 					}
 				});
 				$(".my_info_top").on("click","img.true",function(){
-					window.location.href = "../html/my_info.html"
+					common.jumpLinkPlain( "../html/my_info.html" )
 				})
 			}
 		}
@@ -133,9 +133,9 @@ define(function(require, exports, module){
 					if (isImg) {
 						
 					} else if(isName){
-						window.location.href = "../html/edit_name.html"
+						common.jumpLinkPlain( "../html/edit_name.html" )
 					} else if(isPhone){
-						window.location.href = "../html/edit_phoneNumber.html"
+						common.jumpLinkPlain( "../html/edit_phoneNumber.html" )
 					}
 				})
 			}
@@ -253,10 +253,10 @@ define(function(require, exports, module){
 				})
 				$(".garage_box").on("click",".garage_car_item dd .float_right.color_or",function(e){
 					e.stopPropagation()
-					window.location.href = "car_authentication.html"
+					common.jumpLinkPlain( "car_authentication.html" )
 				})
 				$(".header_right").on("click",function(){
-					window.location.href = "../html/car_info.html"
+					common.jumpLinkPlain( "../html/car_info.html" )
 				})
 			}
 		}
@@ -299,7 +299,7 @@ define(function(require, exports, module){
 					$(this).blur();
 				})
 				$("#car_brand").on("click",function(){
-					window.location.href = "../html/car_brand.html"
+					common.jumpLinkPlain( "../html/car_brand.html" )
 				})
 				$("#car_model").on("click",function(){
 					
@@ -335,7 +335,8 @@ define(function(require, exports, module){
 		//时间初始化
 		init:function(){
 			$(".callback").on("click",function(){
-				window.history.back();
+				var n = pub.Back;
+    			common.jumpHistryBack(n);
 			});
 		}
 	}

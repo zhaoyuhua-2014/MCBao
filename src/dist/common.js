@@ -263,7 +263,12 @@ define(function(require, exports, module){
 			window.location.href = url;
 			return true; 
 		},
-
+		
+		//处理页面返回 
+		jumpHistryBack : function( n ){
+			var m = (n > 0 ? -n : n) || -1;
+			window.history.go(m);
+		},
 		// 处理需要事件触发
 		jumpLinkSpecial : function( ele, callback ){ 
 			$( ele ).on('click',function(){

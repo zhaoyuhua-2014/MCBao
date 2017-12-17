@@ -241,7 +241,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 /*我的车库*/
 .garage_main{padding: 24px 0;}
 .garage_box{}
-.garage_car_item{width: 100%;height: 200px;border-bottom: 1px solid #EAEAEA;padding: 0 24px;background-repeat: no-repeat;background-position: center;background-image: url(../img/bg_list_middle@2x.png);}
+.garage_car_item{width: 100%;height: 200px;border-bottom: 1px solid #EAEAEA;padding: 0 24px;background-repeat: no-repeat;background-position: center;background-image: url(../img/bg_list_middle@2x.png);position: relative;}
 .garage_car_item:first-child{background-image: url(../img/bg_list_top@2x.png);}
 .garage_car_item:last-child{background-image: url(../img/bg_list_bpt@2x.png);}
 .garage_car_item dt,.garage_car_item dd{float: left;height: 199px;}
@@ -250,11 +250,10 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .garage_car_item.actived dd{background-image: url(../img/choosen@2x.png);}
 
 .line-wrapper{width:100%;height:200px;overflow:hidden}
-.line-scroll-wrapper{height:200;width:950px}
+.line-scroll-wrapper{height:200px;width:950px}
 .line-normal-wrapper{float:left;width:750px;height:200px}
 .line-normal-avatar-wrapper{float:left;width:200px;height:200px;padding:20px}
 .line-normal-avatar-wrapper img{width:100%;height:100%}
-.line-normal-info-wrapper{float:left;width:550px;height:200px;padding-top:18px;border-bottom:1px solid #666}
 .often_shop_goods_top p{float:left;height:40px;font-size:30px;color:#000}
 /*.often_shop_goods_top .often_shop_goods_tit{font-weight: 700;}*/
 .often_shop_goods_top .often_shop_goods_icon{float:right;padding-right:24px}
@@ -570,7 +569,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .updata_card_info{padding: 0 133px;}
 .updata_card_info .updata_card_item{width: 100%;height: 279px;margin-top: 30px;position: relative;}
 .updata_card_info .updata_card_item input,.updata_card_info .updata_card_item img{width: 100%;height: 279px;position: absolute;}
-.updata_card_info .updata_card_item input{opacity: 0;}
+.updata_card_info .updata_card_item input{opacity: 0;z-index: 2;}
 .user_card_a{background: url(../img/up_sfz_a@2x.png) no-repeat center;}
 .user_card_b{background: url(../img/up_sfz_b@2x.png) no-repeat center;}
 .user_partner_card_a{background: url(../img/up_sfz_couple_a@2x.png) no-repeat center;}
