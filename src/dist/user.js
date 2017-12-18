@@ -258,7 +258,7 @@ define(function(require, exports, module){
 			},
 			apiData:function(d){
 				var o = d.data,html = '';
-				$(".garage_box .line-wrapper").eq(2).remove();
+				$(".garage_box .line-wrapper").eq(pub.nood.index()).remove();
 			}
 		},
 		eventHandle:{
@@ -278,8 +278,9 @@ define(function(require, exports, module){
 					common.jumpLinkPlain( "../html/car_info.html" )
 				})
 				$(".garage_box").on("click",".line-btn-delete",function(e){
-					var nood = $(this).parents(".line-wrapper");
-					console.log(nood.attr("dataid"))
+					pub.nood = $(this).parents(".line-wrapper");
+					console.log(pub.nood.attr("dataid"))
+					console.log(pub.nood.index())
 					//
     				var layerIndex = layer.open({
     					content: '您确定要删除该车吗？',
@@ -312,6 +313,7 @@ define(function(require, exports, module){
 					ownerName:"ownerName",
 					carType:"carType",
 					pkUser:"pkUser",
+					
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.addCar.car_info_add.apiData( d );
 				});

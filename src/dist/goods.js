@@ -230,6 +230,8 @@ define(function(require, exports, module){
 	pub.goods = {
 		init:function(){
 			pub.goods.goods_get_by_id.init();
+			pub.goods.credit_assess_rcd_query.init();
+			pub.goods.credit_assess_rcd_show.init();
 		},
 		goods_get_by_id : {
 			init:function(){
@@ -257,6 +259,35 @@ define(function(require, exports, module){
 				
 			}
 		},
+		credit_assess_rcd_query : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'credit_assess_rcd_query',
+					//goodsId:pub.options.goodsId
+					goodsId:"1"
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.goods.credit_assess_rcd_query.apiData( d );
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+			}
+		},
+		credit_assess_rcd_show : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'credit_assess_rcd_show',
+					//goodsId:pub.options.goodsId
+					id:"1"
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.goods.credit_assess_rcd_show.apiData( d );
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+			}
+		},
+		
 		eventHandle:{
 			init:function(){
 				$(".car_mall_footer li").on("click",function(){
@@ -279,36 +310,7 @@ define(function(require, exports, module){
 			}
 		}
 	}
-	//信用评估页面
-	pub.creditEvaluation = {
-		init : function(){
-			
-		},
-		idcard_img_upload : {
-			init:function(){
-				
-				common.ajaxPost($.extend({
-					method:'idcard_img_upload',
-					goodsId:"1"
-				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.creditEvaluation.idcard_img_upload.apiData( d );
-				});
-				
-			},
-			apiData:function( d ){
-				
-			}
-		},
-		eventHandle : {
-			init:function(){
-				$(".radio_marry").on("click","span",function(){
-					$(this).addClass("actived").siblings().removeClass("actived");
-					$("input[name='marry']").val($(this).index())
-				});
-				
-			}
-		}
-	}
+	
 	//事件处理
 	pub.eventHandle = {
 		//事件初始化
@@ -330,9 +332,6 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "goods"){
     		pub.goods.init()
 			pub.goods.eventHandle.init();
-    	}else if (pub.module_id == "creditEvaluation"){
-    		pub.creditEvaluation.init()
-			pub.creditEvaluation.eventHandle.init();
     	}
     	pub.eventHandle.init()
 	};

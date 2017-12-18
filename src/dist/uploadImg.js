@@ -3,6 +3,7 @@ define(function(require, exports, module){
 	
 	require('jquery');
 	var common = require('../dist/common');
+	require("EXIF");
 	// 命名空间
 	var pub = {};
 	
@@ -23,7 +24,7 @@ define(function(require, exports, module){
 		sign : pub.sign,
 		tokenId : pub.tokenId
 	};
-	
+	//上传图片通用
 	pub.upLoadImg = {
 		init:function(data){
 			$.ajax({
@@ -47,7 +48,8 @@ define(function(require, exports, module){
 		},
 		eventHandle : {
 			init:function(){
-				$(".updata_card_info").on("change",".car_img",function(){
+				console.log("12")
+				$(".updata_card_info .car_img").on("change",function(){
 					console.log($(this).attr("name"))//car_img1表示正面car_img表示反面
 					var nodes = $(this).parent();
 					var tar = this,
@@ -57,7 +59,7 @@ define(function(require, exports, module){
 					file = files[0];
 					if( !file ) return;
 					EXIF.getData(files[0], function() {  
-			            //alert(EXIF.pretty(this));  
+			        	var goodid = '0'
 			            EXIF.getAllTags(this);   
 			            //alert(EXIF.getTag(this, 'Orientation'));   
 			            Orientation = EXIF.getTag(this, 'Orientation');
@@ -102,26 +104,6 @@ define(function(require, exports, module){
 			
 			            };
 		                fr.readAsDataURL(file);
-					
-					fr.onload = function () {
-		                var result = this.result;
-		                var img = new Image();
-		                img.src = result;
-						// 图片加载完毕之后进行压缩，然后上传
-		                if (img.complete) {
-		                    callback();
-		                } else {
-		                    img.onload = callback;
-		                }
-		
-		                function callback() {
-		                	var data = compress(img)
-		                    $(span).find("img").attr("src",result);
-		                    img = null;
-		                }
-		
-		            };
-	                fr.readAsDataURL(file);
 				  	})
 
 				});
@@ -216,11 +198,12 @@ define(function(require, exports, module){
 			        formdata.append("suffix",type);
 			        formdata.append("angle",Orientation);*/
 			        var formdata = {
-			        	"method":"comment_img_upload",
+			        	"method":"car_info_upload_pics",
 			        	
 			        	"imgStr":basestr,
 			        	"suffix":type,
 			        	"angle":Orientation,
+			        	"tokenId":pub.tokenId
 			        }
 			        //pub.evaluate.apiHandle.comment_upload_img(formdata,el);
 			        pub.upLoadImg.init(formdata,el);
@@ -240,7 +223,247 @@ define(function(require, exports, module){
 			}
 		}
 	}
-	
+	//信用评估页面
+	pub.creditEvaluation = {
+		
+		init : function(){
+			require('LAreaData');
+			require ("Picker");
+			require ("PickerCss");
+			pub.creditEvaluation.dataInit();
+			pub.creditEvaluation.dataInit1();
+		},
+		getIndex:function(d){
+    		//初始化数据
+    		var n = [],m = 0;
+    		var data = LAreaData;
+    		return recursion(data);
+    	 	function recursion(data){
+    			if (data instanceof Array) {
+    				for(var i in data){
+    					if (data[i].code == d[m]) {
+    						n[m] = i;
+    						m+=1;
+    						recursion(data[i].cities)
+    					}
+    				}
+    				return n;
+    			}
+    		};
+    	},
+    	getValue:function(d){
+    		//初始化数据
+    		var n = [],m = 0;
+    		var data = LAreaData;
+    		n[0] = data[d[0]].code;
+    		n[1] = data[d[0]].cities[d[1]].code;
+    		n[2] = data[d[0]].cities[d[1]].cities[d[2]].code;
+    		return n;
+    	},
+    	getText:function(d){
+    		//初始化数据
+    		var n = [],m = 0;
+    		var data = LAreaData;
+    		return recursion(data);
+    	 	function recursion(data){
+    			if (data instanceof Array) {
+    				for(var i in data){
+    					if (data[i].code == d[m]) {
+    						n[m] = data[i].name;
+    						m+=1;
+    						recursion(data[i].cities)
+    					}
+    				}
+    				return n;
+    			}
+    		};
+    	},
+    	dataInit:function(m){
+    		//c表示索引的数组,d表述code的数组
+    		var c = [0,0,0],d = m;
+    		//城市数据
+    		var data = LAreaData;
+    		if(m){
+    			c = pub.creditEvaluation.getIndex(m)
+    		}else{
+    			d = pub.creditEvaluation.getValue(c);
+    		}
+    		//省市县的index
+    		var indexArr = [0,0,0];
+    		//省市县文字
+    		//var textArr = [];
+    		
+    		pub.picker1 = new myPicker({
+			    cols: [{
+			    	options:data,
+			    	labelKey: 'name',
+			        valueKey: 'code',
+			    },{
+			    	options:data[c[0]].cities,
+			    	labelKey: 'name',
+			        valueKey: 'code',
+			    }],
+			    title: "请选择提车城市",
+			    onOkClick: function (values) {
+			    	$("#putCarCityValue").val(values);
+					$("#putCarCity").val(pub.creditEvaluation.getText(values))
+					
+			    },
+			    fontSize:18,
+			    setValues: d,//LAreaData[0].name,LAreaData[0].cities[0].name,LAreaData[0].cities[0].cities[0].name
+			    onSelectItem: function (i, index, value) {
+					indexArr[i] = index;
+					var f = data[indexArr[0]];
+					if(i == 0){
+			      		this.setOptions(1, f.cities);
+			      		this.setOptions(2, f.cities[0].cities);
+			      	}
+			      	if (i == 1) {
+			      		this.setOptions(2, f.cities[indexArr[1]].cities);
+			      	}
+			    }
+			});
+    	},
+    	dataInit1:function(m){
+    		//c表示索引的数组,d表述code的数组
+    		var c = [0,0,0],d = m;
+    		//城市数据
+    		var data = LAreaData;
+    		if(m){
+    			c = pub.creditEvaluation.getIndex(m)
+    		}else{
+    			d = pub.creditEvaluation.getValue(c);
+    		}
+    		//省市县的index
+    		var indexArr = [0,0,0];
+    		//省市县文字
+    		//var textArr = [];
+    		
+    		pub.picker2 = new myPicker({
+			    cols: [{
+			    	options:data,
+			    	labelKey: 'name',
+			        valueKey: 'code',
+			    },{
+			    	options:data[c[0]].cities,
+			    	labelKey: 'name',
+			        valueKey: 'code',
+			    }],
+			    title: "请选择上牌城市",
+			    onOkClick: function (values) {
+			    	$("#carBrandCityValue").val(values);
+			        $("#carBrandCity").val(pub.creditEvaluation.getText(values))
+			       
+			    },
+			    fontSize:18,
+			    setValues: d,//LAreaData[0].name,LAreaData[0].cities[0].name,LAreaData[0].cities[0].cities[0].name
+			    onSelectItem: function (i, index, value) {
+					indexArr[i] = index;
+					var f = data[indexArr[0]];
+					if(i == 0){
+			      		this.setOptions(1, f.cities);
+			      		this.setOptions(2, f.cities[0].cities);
+			      	}
+			      	if (i == 1) {
+			      		this.setOptions(2, f.cities[indexArr[1]].cities);
+			      	}
+			    }
+			});
+    	},
+		idcard_img_upload : {
+			init:function(){
+				
+				common.ajaxPost($.extend({
+					method:'idcard_img_upload',
+					goodsId:"1"
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.creditEvaluation.idcard_img_upload.apiData( d );
+				});
+				
+			},
+			apiData:function( d ){
+				
+			}
+		},
+		credit_assess_rcd_add : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'credit_assess_rcd_add',
+					belongUser : '123',
+					ownerFidPicUrl:'123',//自己身份证正面图片URL
+					ownerBidPicUrl:'123',//自己身份证反面图片URL
+					isSingle : '0',//是否单身
+					spouseFidPicUrl : '123',//夫妻身份证正面图片URL
+					spouseBidPicUrl : '123',//夫妻身份证反面图片URL
+					buycarDate:'123',
+					buycarCity:'3301',//买车城市
+					regcar_city:'0012',
+					carGoodId:'1',//车id
+					carPrice:'100',//车price
+					carDeposit:'123',
+					carDownPay:'123',
+					carLoan:'123',
+					brandName:'123',
+					websiteNode:pub.WebsiteNode,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.creditEvaluation.credit_assess_rcd_add.apiData( d );
+				});
+				
+			},
+			apiData:function( d ){
+				$(".alert_msg").removeClass("hidden");
+			}
+		},
+		eventHandle : {
+			init:function(){
+				$(".radio_marry").on("click","span",function(){
+					$(this).addClass("actived").siblings().removeClass("actived");
+					$("input[name='marry']").val($(this).index())
+					if ($(this).index()== 0) {
+						$(".submit_btn90").html("确定").removeClass("next")
+					}else if ($(this).index()== 1) {
+						$(".submit_btn90").html("下一步").addClass("next")
+					}
+				});
+				$("#putCarCity,#carBrandCity").on("focus",function(){
+					$(this).blur();
+				})
+				$("#putCarCity").on("click",function(){
+					pub.picker1.show();
+				})
+				$("#carBrandCity").on("click",function(){
+					pub.picker2.show();
+				})
+				$(".submit_btn90").on("click",function(){
+					var i = $("input#marry").val();
+					if (i == 0) {
+						pub.creditEvaluation.credit_assess_rcd_add.init();
+					}else if (i == 1){
+						common.jumpLinkPlain("../html/updata_partner_card.html");
+					}
+				})
+				$(".alert_msg").on("click",".submit_btn90,.alert_del",function(){
+					common.jumpLinkPlain("../index.html")
+				});
+			}
+		}
+	}
+	//上传夫妻身份证页面
+	pub.partnerCard = {
+		init:function(){
+			
+		},
+		eventHandle : {
+			init:function(){
+				$(".cb_submit .submit_btn90").on("click",function(){
+					
+				});
+				$(".alert_msg").on("click",".submit_btn90,.alert_del",function(){
+					common.jumpLinkPlain("../index.html")
+				});
+			}
+		}
+	}
 	
 	
 	//事件处理
@@ -256,7 +479,13 @@ define(function(require, exports, module){
 	pub.init = function(){
 		if (pub.module_id == "upLoad_driverLicense"){
     		
+    	}else if (pub.module_id == "creditEvaluation"){
+    		pub.creditEvaluation.init()
+			pub.creditEvaluation.eventHandle.init();
+    	}else if (pub.module_id == "partnerCard"){
+			pub.creditEvaluation.eventHandle.init();
     	}
+		pub.eventHandle.init()
 		
 		pub.upLoadImg.eventHandle.init();
 	};

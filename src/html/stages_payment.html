@@ -8,7 +8,7 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
@@ -20,7 +20,17 @@
 		<div class="empty"></div>
 		<div class="main_wrap">
 			<div class="main">
-				<div class="stages_payment">
+				<div class="stages_boxs">
+					<div class="stages_list_box">
+						<div class="stages_list_item">
+							
+						</div>
+					</div>
+					<div class="footer" id="foot">
+						<div class="submit_btn90">查看</div>
+					</div>
+				</div>
+				<div class="stages_payment hidden">
 					<div class="payment_info">
 						<div class="payment_box clearfloat">
 							<dl class="float_left">
@@ -49,13 +59,11 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			})
-		})
+	<script src="../seajs/2.1.1/sea.js"></script>
+	<script src="../seajs-config.js"></script>
+	<script>
+		seajs.use(['dist/installment'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>

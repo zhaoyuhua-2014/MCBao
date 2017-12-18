@@ -8,7 +8,7 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "partnerCard">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
@@ -21,15 +21,20 @@
 		<div class="main_wrap">
 			<div class="main">
 				<div>
+					
 					<div class="updata_card_info margin100">
-						<div class="updata_card_item user_partner_card_a"></div>
-						<div class="updata_card_item user_partner_card_b"></div>
+						<div class="updata_card_item user_partner_card_a">
+							<input type="file" accept="image/*" class="car_img" name="car_img1" data="11">
+						</div>
+						<div class="updata_card_item user_partner_card_b">
+							<input type="file" accept="image/*" class="car_img" name="car_img2" data="12">
+						</div>
 					</div>
 					<div class="cb_submit">
 						<button class="submit_btn90">确定</button>
 					</div>
 				</div>
-				<div class="alert_msg">
+				<div class="alert_msg hidden">
 					<div class="alert_body">
 						<div class="alert_box">
 							<div class="alert_box_icon">
@@ -56,13 +61,11 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			});
-		})
+	<script src="../seajs/2.1.1/sea.js"></script>
+	<script src="../seajs-config.js"></script>
+	<script>
+		seajs.use(['dist/uploadImg'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>
