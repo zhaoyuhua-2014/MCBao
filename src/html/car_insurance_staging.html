@@ -22,6 +22,15 @@
 		<div class="empty"></div>
 		<div class="main_wrap">
 			<div class="main">
+				<div class="banner_wrap">
+					<div class="index_banner">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide"><img src="../img/banner.png"/></div>
+						    <div class="swiper-slide">slider2</div>
+						    <div class="swiper-slide">slider3</div>
+						</div>
+					</div>
+				</div>
 				<div class="car_insurance_staging">
 					<div class="car_staging_box">
 						<div class="car_staging_box_title">脉车保车险分期</div>
@@ -31,19 +40,41 @@
 						<div class="car_staging_box_center">
 							<div class="car_staging_box_c_item clearfloat">
 								<span class="float_left color_30">投保城市</span>
-								<span class="float_right color_9e icon"><input type="text" name="" id="" value="" placeholder="请输入投保城市" /></span>
+								<span class="float_right color_9e icon">
+									<input type="text" name="" id="selectAddress" value="" placeholder="请输入投保城市" />
+									<input type="hidden" name="" id="addValue" value="" />
+								</span>
 							</div>
 							<div class="car_staging_box_c_item clearfloat">
-								<span class="float_left color_30">货车保险</span>
+								<span class="float_left color_30">私家车通道</span>
 								<span class="float_right color_9e">未上牌新车</span>
 							</div>
 							<div class="car_staging_box_c_item clearfloat">
-								<span class="float_left color_30">车主姓名</span>
-								<span class="float_right color_9e"><input type="text" name="" id="" value="" placeholder="请输入车主姓名" /></span>
+								<span class="float_left color_30">车辆所有者</span>
+								<span class="float_right color_30">
+									<input type="text" name="carOwner" id="carOwner" value="公司/个人" />
+									<input type="hidden" name="carOwnerValue" id="carOwnerValue" value="" />
+								</span>
+							</div>
+							<div data-index = "0" style="display: none;">
+								<div class="car_staging_box_c_item clearfloat">
+									<span class="float_left color_30">车主姓名</span>
+									<span class="float_right color_9e"><input type="text" name="" id="" value="" placeholder="请输入车主姓名" /></span>
+								</div>
+							</div>
+							<div data-index = "1" style="display: none;">
+								<div class="car_staging_box_c_item clearfloat">
+									<span class="float_left color_30">公司名称</span>
+									<span class="float_right color_9e"><input type="text" name="" id="" value="" placeholder="请输入车牌号" /></span>
+								</div>
 							</div>
 							<div class="car_staging_box_c_item clearfloat">
 								<span class="float_left color_30">车牌号</span>
-								<span class="float_right color_9e"><input type="text" name="" id="" value="" placeholder="请输入车牌号" /></span>
+								<span class="float_right color_9e car_Numbre">
+									<!--<input type="text" name="car_province" id="car_province" value="" placeholder="京" />
+									<input type="text" name="car_Index_Letter" id="car_Index_Letter" value="" placeholder="A" />-->
+									<input type="text" name="car_Letter" id="car_Letter" value="" placeholder="请输入车牌号" />
+								</span>
 							</div>
 						</div>
 						<div class="car_staging_box_bottom">
@@ -69,111 +100,11 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../picker/my-picker.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../outside/LAreaData.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			});
-			$(".transfer_car .float_right").on("click",function(){
-				if ($(this).is(".actived")) {
-					$(this).removeClass("actived");
-					$(".transfer_time").hide();
-				}else{
-				 	$(this).addClass("actived");
-				 	$(".transfer_time").show();
-				}
-			})
-			$(".car_staging_box_agreement .icon").on("click",function(){
-				if ($(this).is(".actived")) {
-					$(this).removeClass("actived");
-				}else{
-					 $(this).addClass("actived");
-				}
-			});
-			$(".submit_btn90").on("click",function(){
-				window.location.href = "car_info1.html"
-			})
-			var year = [];
-			var today = new Date();
-			var year_n = today.getFullYear();
-			for (var i = 2000; i <= year_n; i++) {
-			    year.push(i);
-			}
-			var month = [];
-			for (var i = 1; i <= 12; i++) {
-			    month.push(i);
-			}
-			console.log(year);
-			console.log(month)
-			var picker8 = new myPicker({
-			    cols: [{
-			        options: year,
-			        suffix: "年",
-			    }, {
-			        options: month,
-			        suffix: "月",
-			    }, {
-			        options: [],
-			        suffix: "日",
-			    },],
-			    title:'请选择过户日期',
-			    onOkClick: function (values) {
-			    	var str = values[0] + "年" + values[1] + "月" + values[2] + "日";
-			        $('#example8').val(str)
-			    },
-			    setValues: [today.getFullYear(), today.getMonth() + 1, today.getDate()],
-			    onSelectItem: function (i, index, value) {
-					console.log(i);
-					console.log(index)
-					console.log(value)
-			        if (i != 2) {
-			            var year = this.getValue(0);
-			            var month = this.getValue(1);
-						
-			            if (year == null || month == null)
-			                return
-			
-			            var curDate = new Date();
-			            curDate.setYear(year);
-			            
-			            if (year == today.getFullYear()) {
-			            	var months = [];
-			            	for (var i = 1; i <= today.getMonth() + 1; i++) {
-				                months.push(i);
-				            };
-				            this.setOptions(1, months);
-			            }else{
-			            	var months = [];
-			            	for (var i = 1; i <= 12; i++) {
-							    months.push(i);
-							}
-			            	this.setOptions(1, months);
-			            }
-			            curDate.setMonth(month);
-			            curDate.setDate(0);
-			
-			            var day = [];
-			            if (year == today.getFullYear() && month == today.getMonth()+1) {
-			            	for (var i = 1; i <= today.getDate(); i++) {
-				                day.push(i);
-				            }
-			            }else{
-			            	for (var i = 1; i <= curDate.getDate(); i++) {
-				                day.push(i);
-				            }
-			            }
-			            this.setOptions(2, day);
-			        }
-			    }
-			});
-			document.querySelector('#example8').addEventListener('click', function () {
-			    picker8.show();
-			});
-			var datacitys = LAreaData;
-		})
+		seajs.use(['../dist/carInsuranceStaging'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>

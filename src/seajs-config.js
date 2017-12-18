@@ -17,6 +17,8 @@ seajs.config({
     'LAreaData2':'js/LAreaData2',
     'Picker':'picker/my-picker',
     'map':'http://webapi.amap.com/maps?v=1.3&key=68f1f7850d75a2c422f417cc77331395&plugin=AMap.DragRoute',
+    "LayerCss":"layer_mobile/need/layer.css",
+    "LayerJs":"layer_mobile/layer",
   },
   preload: [
     'mobile-util',

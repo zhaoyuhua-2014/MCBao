@@ -71,6 +71,8 @@ define(function(require, exports, module){
     	add_deffer :["设为默认","设为默认","默认"],
 		//地址列表
 		init : function(){
+			require("LayerCss");
+			require("LayerJs");
 			var me = this;
 			common.ajaxPost($.extend({
 				method:'user_address_show',
@@ -164,11 +166,15 @@ define(function(require, exports, module){
 	    			// 删除
 	    			if( isDelete ){  
 	    				pub.index = $this.parents('.contain_address').index();
-	    				var s = confirm("确认删除该地址？")
-	    				if(s){
-	    					pub.address_manager.address_delete.init();
-	    				}
-						
+	    				//
+	    				var layerIndex = layer.open({
+	    					content: '您确定要删除该地址吗？',
+	    					btn: ['确定', '取消'],
+	    					yes: function(index){
+	    						pub.address_manager.address_delete.init();
+						    	layer.close(layerIndex)
+	    					}
+	    				})
 	    			}
 					//编辑
 	    			if( isEditor ){
@@ -253,7 +259,7 @@ define(function(require, exports, module){
     		//省市县的index
     		var indexArr = [0,0,0];
     		//省市县文字
-    		var textArr = [];
+    		//var textArr = [];
     		
     		pub.address.picker1 = new myPicker({
 			    cols: [{
@@ -272,7 +278,7 @@ define(function(require, exports, module){
 			    title: "请选择地址",
 			    onOkClick: function (values) {
 			        $("#addValue").val(values)
-			        $("#selectAddress").val(textArr);
+			        $("#selectAddress").val(pub.address.getText(values));
 			    },
 			    fontSize:18,
 			    setValues: d,//LAreaData[0].name,LAreaData[0].cities[0].name,LAreaData[0].cities[0].cities[0].name
@@ -286,9 +292,6 @@ define(function(require, exports, module){
 			      	if (i == 1) {
 			      		this.setOptions(2, f.cities[indexArr[1]].cities);
 			      	}
-			      	textArr[0] = f.name;
-			      	textArr[1] = f.cities[indexArr[1]].name;
-			      	textArr[2] = f.cities[indexArr[1]].cities[indexArr[2]].name;
 			    }
 			});
     	},
@@ -364,8 +367,6 @@ define(function(require, exports, module){
 					pub.address.address_update.init();
 				});
 				$("#selectAddress").on("click",function(e){
-					console.log("click");
-					console.log()
 					pub.address.picker1.show();
 				});
 				$("#selectAddress").on("focus",function(){

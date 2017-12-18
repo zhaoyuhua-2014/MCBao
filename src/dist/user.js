@@ -25,7 +25,9 @@ define(function(require, exports, module){
 		sign : pub.sign,
 		tokenId : pub.tokenId
 	};
-	pub.options = {};
+	pub.options = {
+		histry:[],
+	};
 	//我的页面逻辑
 	pub.user = {
 		init : function (){
@@ -223,6 +225,8 @@ define(function(require, exports, module){
 	//我的车库
 	pub.garage = {
 		init : function (){
+			require("LayerCss");
+			require("LayerJs");
 			pub.garage.coupon_info_show.init();
 		},
 		coupon_info_show: {
@@ -243,10 +247,25 @@ define(function(require, exports, module){
 				init();
 			}
 		},
+		car_info_delete : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'car_info_delete',
+					carId:"01"
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.garage.car_info_delete.apiData( d );
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+				$(".garage_box .line-wrapper").eq(2).remove();
+			}
+		},
 		eventHandle:{
 			init:function(){
 				$(".garage_box").on("click",".garage_car_item dd",function(){
-					var nood = $(this).parent();
+					console.log("click")
+					var nood = $(this).parents(".line-wrapper");
 					if (!nood.is(".actived")) {
 						nood.addClass("actived").siblings().removeClass("actived")
 					}
@@ -258,34 +277,43 @@ define(function(require, exports, module){
 				$(".header_right").on("click",function(){
 					common.jumpLinkPlain( "../html/car_info.html" )
 				})
+				$(".garage_box").on("click",".line-btn-delete",function(e){
+					var nood = $(this).parents(".line-wrapper");
+					console.log(nood.attr("dataid"))
+					//
+    				var layerIndex = layer.open({
+    					content: '您确定要删除该车吗？',
+    					btn: ['确定', '取消'],
+    					yes: function(index){
+    						pub.garage.car_info_delete.init();
+					    	layer.close(layerIndex)
+    					}
+    				})
+				})
 			}
 		}
 	};
 	//添加新车
 	pub.addCar = {
 		init : function (){
-			pub.addCar.brand_version_query.init();
+			//pub.addCar.brand_version_query.init();
 		},
 		car_info_add: {
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'car_info_add',
+					carBrand:'01',
+					carBrandCode:'01',
+					carBrandKind:"01",
+					carBrandKindCode:"01",
+					carNo:"carNo",
+					carNoCity:"carNoCity",
+					carNoProvince:"carNoProvince",
+					ownerName:"ownerName",
+					carType:"carType",
+					pkUser:"pkUser",
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.addCar.car_info_add.apiData( d );
-				});
-			},
-			apiData:function(d){
-				var o = d.data,html = '';
-				
-			}
-		},
-		brand_version_query : {
-			init:function(){
-				common.ajaxPost($.extend({
-					method:'brand_version_query',
-					brandId:"1",//brandId
-				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.addCar.brand_version_query.apiData( d );
 				});
 			},
 			apiData:function(d){
@@ -302,7 +330,13 @@ define(function(require, exports, module){
 					common.jumpLinkPlain( "../html/car_brand.html" )
 				})
 				$("#car_model").on("click",function(){
-					
+					var str = $("#car_brand").val();
+					if (!str) {
+						common.prompt("请先选择品牌")
+					}
+				});
+				$(".submit_btn90").on("click",function(){
+					pub.addCar.car_info_add.init();
 				})
 			}
 		}
@@ -310,6 +344,7 @@ define(function(require, exports, module){
 	//汽车品牌选择
 	pub.carBrand = {
 		init:function(){
+			pub.carBrand.brand_hot_query.init();
 			pub.carBrand.brand_info_query.init();
 		},
 		brand_info_query:{
@@ -324,15 +359,99 @@ define(function(require, exports, module){
 				
 			}
 		},
+		brand_hot_query : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'brand_hot_query',
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.carBrand.brand_hot_query.apiData( d );
+				});
+			},
+			apiData:function( d ){
+				
+			}
+		},
+		brand_version_query:{
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'brand_version_query',
+					brandId:"1"
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.carBrand.brand_version_query.apiData( d );
+				});
+			},
+			apiData:function( d ){
+				console.log(JSON.stringify(d))
+				$("#mask").addClass("actived");
+				$("body").css("overflow-y","hidden")
+				$(".car_brand_fiexd").animate({
+					"left":"120px",
+				})
+			}
+		},
 		eventHandle:{
+			init:function(){
+				//点击热门品牌项
+				$(".car_brand_hot_wrap").on("click","dl",function(){
+					pub.carBrand.brand_version_query.init();
+				})
+				$('.car_brand_list_wrap').on("click",".car_brand_list_item",function(){
+					pub.carBrand.brand_version_query.init();
+				})
+				$("#mask").on("click",function(){
+					if ($(this).is(".actived")) {
+						$(".car_brand_fiexd").animate({
+							"left":"750px",
+						});
+						$("#mask").animate({"background":"rgba(0,0,0,0)"},function(){
+							$("#mask").removeClass("actived")
+							$("body").css("overflow-y","auto")
+						})
+					}
+				});
+				$(".car_brand_list_retrieval").on("click","a",function(){
+					var a = $(this).attr("href");
+					var l = pub.options.histry;
+					if (l.length > 0) {
+						if (l[l.length -1] != a) {
+							l.push(a);
+						}
+					}else{
+						l.push(a);
+					}
+					pub.Back = l.length + 1;
+				})
+				$(".car_brand_fiexd").on("click",".list_item",function(){
+					common.jumpHistryBack(pub.Back);
+				})
+			}
+		}
+	};
+	//车辆认证
+	pub.carAuthentication = {
+		init:function(){
+			
+		},
+		car_info_upload_pics : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'car_info_upload_pics',
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.carAuthentication.car_info_upload_pics.apiData( d );
+				});
+			},
+			apiData:function( d ){
+				
+			}
+		},
+		eventHandle : {
 			init:function(){
 				
 			}
 		}
-	}
+	};
 	//事件处理
 	pub.eventHandle = {
-		//时间初始化
 		init:function(){
 			$(".callback").on("click",function(){
 				var n = pub.Back;
@@ -366,6 +485,9 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "carBrand"){
     		pub.carBrand.init()
 			pub.carBrand.eventHandle.init();
+    	}else if (pub.module_id == "carAuthentication"){
+    		pub.carAuthentication.init()
+			pub.carAuthentication.eventHandle.init();
     	}
     	pub.eventHandle.init()
 	};

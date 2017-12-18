@@ -241,18 +241,15 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 /*我的车库*/
 .garage_main{padding: 24px 0;}
 .garage_box{}
-.garage_car_item{width: 100%;height: 200px;border-bottom: 1px solid #EAEAEA;padding: 0 24px;background-repeat: no-repeat;background-position: center;background-image: url(../img/bg_list_middle@2x.png);position: relative;}
-.garage_car_item:first-child{background-image: url(../img/bg_list_top@2x.png);}
-.garage_car_item:last-child{background-image: url(../img/bg_list_bpt@2x.png);}
+.garage_car_item{width: 100%;height: 200px;border-bottom: 1px solid #EAEAEA;padding: 0 24px;position: relative;background: #FFF;}
 .garage_car_item dt,.garage_car_item dd{float: left;height: 199px;}
-.garage_car_item dt{width: 200px;background: url(../img/goods_pic.png) no-repeat center;}
 .garage_car_item dd{line-height: 46px;color: #333;font-size: 28px;width: 502px;padding-top: 40px;padding-left: 24px; background: #FFFFFF url(../img/choose@2x.png) no-repeat right 46px;}
-.garage_car_item.actived dd{background-image: url(../img/choosen@2x.png);}
+.line-wrapper.actived .garage_car_item dd{background-image: url(../img/choosen@2x.png);}
 
 .line-wrapper{width:100%;height:200px;overflow:hidden}
 .line-scroll-wrapper{height:200px;width:950px}
 .line-normal-wrapper{float:left;width:750px;height:200px}
-.line-normal-avatar-wrapper{float:left;width:200px;height:200px;padding:20px}
+.line-normal-avatar-wrapper{float:left;width:200px;height:200px;padding:20px 0}
 .line-normal-avatar-wrapper img{width:100%;height:100%}
 .often_shop_goods_top p{float:left;height:40px;font-size:30px;color:#000}
 /*.often_shop_goods_top .often_shop_goods_tit{font-weight: 700;}*/
@@ -294,6 +291,12 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_staging_box_agreement span.icon{width: 50px;background: url(../img/agree_choose@2x.png) no-repeat center 5px;}
 .car_staging_box_agreement span.icon.actived{background: url(../img/agree_chosen@2x.png) no-repeat center 5px;}
 .car_staging_box_agreement span.text{padding-left: 6px;}
+
+.car_Numbre{position: relative;display: box;text-align: right;}
+.car_Numbre #car_province{width: 60px;}
+.car_Numbre #car_Index_Letter{width: 30px;}
+.car_Numbre #car_Letter{width: 200px;}
+
 /*保单详情*/
 .policy_details_box_top{position: relative;width: 100%;height: 150px;background: #FFFFFF;padding: 35px 50px;font-size: 30px;}
 .policy_details_box_top dt{width: 80px;height: 80px;float: left;}
@@ -475,6 +478,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 
 
 /*汽车品牌*/
+.main_wrap.car_brand{padding-top: 0;}
 .car_brand_box{position: relative;}
 .car_brand_hot_wrap{font-size: 24px;margin-bottom: 10px;}
 .car_brand_hot_tit{height: 70px;line-height: 70px;color: #9E9E9E;padding: 0 24px;}
@@ -496,6 +500,11 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_brand_list_retrieval{position: fixed;right: 0;top:120px;padding: 50px 0;width: 50px;height: 100%;}
 .car_brand_list_retrieval_box{padding: 100px 0;}
 .car_brand_list_retrieval_box a{display: block;text-align: center;line-height: 36px;font-size: 22px;color: #888;}
+
+.car_brand_fiexd{position: fixed;top: 96px;left: 750px;bottom: 0;width: 630px;z-index: 10;background-color:#EEE;overflow-y: hidden;}
+#mask{position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,0.3);display: none;}
+#mask.actived{display: block;}
+.car_brand_fiexd .car_brand_list_item{height: 112px;margin-bottom: 20px;padding: 0 20px;background: #FFF;}
 /*支付结果*/
 .pay_result_top{height: 380px;text-align: center;}
 .pay_result_icon{height: 270px;}
