@@ -94,7 +94,7 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'goods_info_show',
 					websiteNode:common.WebsiteNode,
-					typeCode:'01',
+					typeCode:'0101',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_info_show.apiData( d );
 				});

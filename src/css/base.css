@@ -269,6 +269,11 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .car_info_msg .float_right{color: #FF6E6E;font-size: 26px }
 .car_info_msg1{height: 60px;line-height: 60px;background: #ffdd83;color: #e47634;font-size: 24px;padding: 0 24px;}
 .car_info_box .list_item .float_right input{text-align: right;}
+
+.alert_car_img_box{position: absolute;width: 680px;height: 600px;left: 50%;top: 50%;background: #FFF;margin-top: -300px;margin-left: -340px;padding: 10px 20px;}
+.alert_car_img{width: 640px;height: 480px;border-radius: 24px;overflow: hidden;}
+.alert_car_img img{width: 100%;height: 100%;}
+.alert_car_img_box_bottom span{float: right;line-height: 100px;text-align: right;font-size: 36px;}
 /*车险分期-保单详情-选择投保方案-订单详情----------公用*/
 .car_staging_box{width: 100%;min-height: 500px;padding: 0 24px;position: relative;background: #FFFFFF;border-radius: 10px;font-size: 30px;}
 .car_staging_box_title{position: absolute;top: -40px;width: 418px;background: url(../img/bg_title@2x.png) no-repeat center;left: 50%;margin-left: -209px;
@@ -283,6 +288,10 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 
 .car_staging_box_c_item .float_right input{text-align: right;}
 .car_staging_box_c_item .float_right.icon{padding-right: 30px;background: url(../img/arr_left.png) no-repeat right center;}
+
+.plate_number b{font-weight: 500;}
+.plate_number b.icon_90{display: inline-block;background: url(../img/list_down@2x.png) no-repeat right center;padding-right: 38px;padding-left: 10px;}
+.plate_number input{width: 104px;}
 /*车险分期*/
 .car_insurance_staging{padding: 0 24px; padding-top: 50px;}
 

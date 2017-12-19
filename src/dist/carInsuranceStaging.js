@@ -31,6 +31,7 @@ define(function(require, exports, module){
 			pub.carInsuranceStaging.dataInit();
 			pub.carInsuranceStaging.carOwnerInit.init();
 			pub.carInsuranceStaging.timeInit.init();
+			pub.carInsuranceStaging.cityShortInit.init()
 		},
 		getIndex:function(d){
     		//初始化数据
@@ -224,15 +225,37 @@ define(function(require, exports, module){
 				});
     		}
     	},
+    	cityShortInit:{
+    		init:function(){
+    			var arr = ["京","津","冀","晋","蒙","辽","吉","黑","沪","苏","浙","皖","闽","赣","鲁","豫","鄂","湘","粤","桂","琼","渝","川","贵","云","藏","陕","甘","青","宁","新"]
+				//console.log(arr.length);
+				var arr1 = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+				//console.log(arr1.length);
+    			pub.picker3 = new myPicker({
+    				cols: arr,
+				    title: "请选择",
+				    onOkClick: function (values) {
+				        $(".car_province").html(values[0])
+				    },
+    			});
+    			pub.picker4 = new myPicker({
+				    cols: arr1,
+				    title: "请选择",
+				    onOkClick: function (values) {
+				        $(".car_Letter").html(values[0])
+				    },
+				})
+    		}
+    	},
     	eventHandle:{
     		init:function(){
     			$(".transfer_car .float_right").on("click",function(){
 					if ($(this).is(".actived")) {
 						$(this).removeClass("actived");
-						$(".transfer_time").hide();
+						$(".transfer_time").hide(500);
 					}else{
 					 	$(this).addClass("actived");
-					 	$(".transfer_time").show();
+					 	$(".transfer_time").show(500);
 					}
 				})
 				$(".car_staging_box_agreement .icon").on("click",function(){
@@ -254,13 +277,19 @@ define(function(require, exports, module){
 				
 				$("#selectAddress,#example8,#carOwner").on("focus",function(){
 					$(this).blur();
+				});
+				$(".car_province").on("click",function(){
+					pub.picker3.show();
 				})
-				$(".car_class_box").on("click",".car_class_item",function(){
+				$(".car_Letter").on("click",function(){
+					pub.picker4.show();
+				})
+				/*$(".car_class_box").on("click",".car_class_item",function(){
 					var nood = $(this);
 					if (!nood.is(".actived")) {
 						nood.addClass("actived").siblings().removeClass("actived");
 					}
-				})
+				})*/
 				$(".submit_btn90").on("click",function(){
 					var options = {
 						
@@ -286,6 +315,11 @@ define(function(require, exports, module){
 				$(".submit_btn90").on("click",function(){
 					window.location.href = "selectc_policy_programme.html"
 				});
+				$(".car_info_msg .float_right").on("click",function(){
+					$("#mask")
+				})
+				
+				
 			}
 		}
 	}

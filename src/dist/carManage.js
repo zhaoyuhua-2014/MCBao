@@ -105,18 +105,18 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'car_info_add',
+					pkUser:"3",
 					carBrand:'01',
 					carBrandCode:'01',
-					carBrandKind:"01",
-					carBrandKindCode:"01",
 					carNo:"carNo",
 					carNoCity:"carNoCity",
 					carNoProvince:"carNoProvince",
 					ownerName:"ownerName",
-					carType:"carType",
-					pkUser:"pkUser",
-					
-				}, pub.userBasicParam ),function( d ){
+					carType:"1",
+					carBrandKind:"01",
+					carBrandKindCode:"01",
+					tokenId:pub.tokenId,
+				}, {} ),function( d ){
 					d.statusCode == "100000" && pub.addCar.car_info_add.apiData( d );
 				});
 			},

@@ -255,6 +255,8 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'insurance_bill_query4car',
 					carId:"01",
+					pageNo:common.PAGE_INDEX,
+					pageSize:common.PAGE_SIZE,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.myPolicy.insurance_bill_query4car.apiData( d );
 				});
