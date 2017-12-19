@@ -243,8 +243,12 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .garage_box{}
 .garage_car_item{width: 100%;height: 200px;border-bottom: 1px solid #EAEAEA;padding: 0 24px;position: relative;background: #FFF;}
 .garage_car_item dt,.garage_car_item dd{float: left;height: 199px;}
+.garage_car_item dt{width: 200px;}
+.garage_car_item dt img{width: 100%;height: 100%;}
 .garage_car_item dd{line-height: 46px;color: #333;font-size: 28px;width: 502px;padding-top: 40px;padding-left: 24px; background: #FFFFFF url(../img/choose@2x.png) no-repeat right 46px;}
 .line-wrapper.actived .garage_car_item dd{background-image: url(../img/choosen@2x.png);}
+
+.garage_car_item.actived dd{background-image: url(../img/choosen@2x.png);}
 
 .line-wrapper{width:100%;height:200px;overflow:hidden}
 .line-scroll-wrapper{height:200px;width:950px}
@@ -297,6 +301,9 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_Numbre #car_Index_Letter{width: 30px;}
 .car_Numbre #car_Letter{width: 200px;}
 
+.car_class_box{width: 100%;}
+.car_class_box .car_class_item{width: 50%;height: 72px;float: left; line-height: 72px;background: url(../img/choose@2x.png) no-repeat 6px center;text-indent: 72px;}
+.car_class_box .car_class_item.actived{background-image:url(../img/choosen@2x.png) ;}
 /*保单详情*/
 .policy_details_box_top{position: relative;width: 100%;height: 150px;background: #FFFFFF;padding: 35px 50px;font-size: 30px;}
 .policy_details_box_top dt{width: 80px;height: 80px;float: left;}
@@ -418,8 +425,9 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .policy_item{margin-bottom: 30px;background: url(../img/bg_bd@2x.png) no-repeat center;font-size: 28px;}
 .policy_item.actived .policy_top_right{background: url(../img/choosen@2x.png) no-repeat center 20px;;}
 .policy_top{display: flex;padding: 30px 0;line-height: 48px;}
-.policy_top .policy_top_left{width: 200px;}
-.policy_top .policy_top_center{width: 370px;}
+.policy_top .policy_top_left{width: 200px;height: 144px;}
+.policy_top .policy_top_left img{width: 100%;height: 100%;}
+.policy_top .policy_top_center{width: 370px;padding-left: 24px;}
 .policy_top .policy_top_right{width: 120px;background: url(../img/choose@2x.png) no-repeat center 20px;}
 .policy_bottom{line-height: 94px;color: #ff697b;}
 .policy_bottom .policy_insurance{padding: 0 20px;}
@@ -538,7 +546,9 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .line_pay_box .item.actived{background: url(../img/choosen@2x.png) no-repeat 670px center;}
 .line_pay_box .item .float_left{padding-left:90px ;}
 .line_pay_box .item:nth-child(1) .float_left{background: url(../img/icon_wx@2x.png) no-repeat left center;}
-
+.pay_box {background: #FFF;position: fixed;left: 0;bottom: 0;right: 0;z-index: 100;}
+.pay_box .pay_title{height: 100px;border-top: 8px solid #adadad;border-bottom: 2px solid #DDDDDD;line-height: 100px;font-size: 36px;text-align: center;background: #FFFFFF;}
+.pay_box .payment_submit{padding: 50px 24px;}
 /*修改投保方案*/
 .edit_policy_programme_box_item{font-size: 30px}
 .edit_policy_programme_box_item h3{width: 100%;height: 68px;line-height: 68px;padding: 0 24px;}

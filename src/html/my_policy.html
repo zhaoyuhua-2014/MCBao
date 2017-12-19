@@ -8,16 +8,16 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "myPolicy">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
 					<img src="../img/icon_back@2x.png"/>
 			    </div>
 			    <h1 class="header_title header_title_color">我的保单</h1>
-			    <div class="header_right right_text">
+			    <!--<div class="header_right right_text">
 			    	保存
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<div class="empty"></div>
@@ -27,7 +27,7 @@
 					<div class="policy_item actived">
 						<div class="policy_top">
 							<div class="policy_top_left">
-								
+								<img src="../cars/16.png"/>
 							</div>
 							<div class="policy_top_center">
 								<p>车牌号：浙A 888U</p>
@@ -48,7 +48,7 @@
 					<div class="policy_item">
 						<div class="policy_top">
 							<div class="policy_top_left">
-								
+								<img src="../cars/43.png"/>
 							</div>
 							<div class="policy_top_center">
 								<p>车牌号：浙A 888U</p>
@@ -74,22 +74,11 @@
 			</div>
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			});
-			$(".my_policy_box").on("click",".policy_item",function(){
-				var nood = $(this);
-				if (!nood.is(".actived")) {
-					nood.addClass("actived").siblings().removeClass("actived")	
-				}
-			})
-			$(".footer_wrap .my_policy_footer .policy_footer_item").on("click",function(){
-				window.location.href
-			})
-		})
+		seajs.use(['../dist/car'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>

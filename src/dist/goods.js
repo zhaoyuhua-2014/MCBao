@@ -86,7 +86,7 @@ define(function(require, exports, module){
 				}
 				$(".mall_subnav").html(html);
 				pub.typeCode = o[i].typeCode;
-				pub.mall_goods.goods_second_type.init();
+				pub.mall_goods.goods_info_show.init();
 			}
 		},
 		goods_info_show : {
@@ -94,7 +94,7 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'goods_info_show',
 					websiteNode:common.WebsiteNode,
-					typeCode:pub.options.typeCode,
+					typeCode:'01',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_info_show.apiData( d );
 				});
@@ -229,6 +229,8 @@ define(function(require, exports, module){
 	//商品详情页面
 	pub.goods = {
 		init:function(){
+			require("LayerCss");
+			require("LayerJs");
 			pub.goods.goods_get_by_id.init();
 			pub.goods.credit_assess_rcd_query.init();
 			pub.goods.credit_assess_rcd_show.init();
@@ -299,18 +301,69 @@ define(function(require, exports, module){
 						if (status == 0) {
 							common.jumpLinkPlain("../html/credit_evaluation.html")
 						}else if(status == 1){
-							
+							layer.open({
+								content: '征信已查询但是未通过,重新认证。',
+		    					btn: ['确定', '取消'],
+		    					yes: function(index){
+		    						common.jumpLinkPlain("../html/credit_evaluation.html")
+							    	layer.close(layerIndex)
+		    					}
+							})
 						}else if(status == 2){
-							
+							common.prompt("征信正在努力审核中")
 						}else if(status == 3){
-							
+							common.jumpLinkPlain("../html/car_reserve.html");
 						}
 					}
 				})
 			}
 		}
 	}
-	
+	//车辆预定页面
+	pub.carReserve = {
+		init:function(){
+			
+		},
+		goods_get_by_id : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'goods_get_by_id',
+					//goodsId:pub.options.goodsId
+					goodsId:"1"
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.carReserve.goods_get_by_id.apiData( d );
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+				
+				//商品信息
+				html+= '<dl class="car_item clearfloat">'
+				html+= '	<dt><img src="'+ o.goodsLogo +'"/></dt>'
+				html+= '	<dd>'
+				html+= '		<h4>'+ o.goodsName +'</h4>'
+				html+= '		<div class="description">'+ o.goodsDescribe +'</div>'
+				html+= '		<div class="money">￥'+ o.mcbPrice +'</div>'
+				html+= '	</dd>'
+				html+= '</dl>'
+				$(".car_mall_info").html(html);
+				
+			}
+		},
+		eventHandle : {
+			init:function(){
+				$(".right_text").on("click",function(){
+					pub.Back = 2;
+					var n = pub.Back;
+    				common.jumpHistryBack(n);
+				})
+				$(".payment_submit .submit_btn90").on("click",function(){
+					common.jumpLinkPlain("../html/line_payment.html");
+				})
+				
+			}
+		}
+	}
 	//事件处理
 	pub.eventHandle = {
 		//事件初始化
@@ -332,6 +385,9 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "goods"){
     		pub.goods.init()
 			pub.goods.eventHandle.init();
+    	}else if (pub.module_id == "carReserve"){
+    		pub.carReserve.init()
+			pub.carReserve.eventHandle.init();
     	}
     	pub.eventHandle.init()
 	};

@@ -8,7 +8,7 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "carInfo1">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
@@ -52,7 +52,7 @@
 					<div class="list_item">
 						<span class="float_left">品牌型号</span>
 						<span class="float_right ">
-							<input type="text" name="" id="" placeholder="请填写完整品牌型号" value="" />
+							<input type="text" name="" id="car_brand" placeholder="请填写完整品牌型号" value="" />
 						</span>
 					</div>
 					<div class="list_item">
@@ -70,7 +70,7 @@
 					<div class="list_item">
 						<span class="float_left">注册日期</span>
 						<span class="float_right icon">
-							<input type="text" name="" id="" placeholder="请输入注册日期" value="" />
+							<input id="example8" type="text" name="" value="" placeholder="请选择注册日期">
 						</span>
 					</div>
 					<p class="car_info_msg1">注意：请确认以上内容与行驶证一致</p>
@@ -81,16 +81,11 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			});
-			$(".submit_btn90").on("click",function(){
-				window.location.href = "selectc_policy_programme.html"
-			});
-		})
+		seajs.use(['../dist/carInsuranceStaging'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>

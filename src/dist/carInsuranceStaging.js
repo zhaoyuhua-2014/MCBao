@@ -164,8 +164,6 @@ define(function(require, exports, module){
 				for (var i = 1; i <= 12; i++) {
 				    month.push(i);
 				}
-				console.log(year);
-				console.log(month)
 				pub.picker8 = new myPicker({
 				    cols: [{
 				        options: year,
@@ -257,6 +255,12 @@ define(function(require, exports, module){
 				$("#selectAddress,#example8,#carOwner").on("focus",function(){
 					$(this).blur();
 				})
+				$(".car_class_box").on("click",".car_class_item",function(){
+					var nood = $(this);
+					if (!nood.is(".actived")) {
+						nood.addClass("actived").siblings().removeClass("actived");
+					}
+				})
 				$(".submit_btn90").on("click",function(){
 					var options = {
 						
@@ -267,7 +271,24 @@ define(function(require, exports, module){
     		}
     	}
 	}
-	
+	//车辆信息
+	pub.carInfo1 = {
+		init:function(){
+			require ("Picker");
+			require("PickerCss")
+			pub.carInsuranceStaging.timeInit.init();
+		},
+		eventHandle : {
+			init : function(){
+				$("#example8").on("click",function(e){
+					pub.picker8.show();
+				});
+				$(".submit_btn90").on("click",function(){
+					window.location.href = "selectc_policy_programme.html"
+				});
+			}
+		}
+	}
 	
 	
 	//事件处理
@@ -281,8 +302,13 @@ define(function(require, exports, module){
 	}
 	
 	pub.init = function(){
-		pub.carInsuranceStaging.init();
-		pub.carInsuranceStaging.eventHandle.init();
+		if (pub.module_id == "carInsuranceStaging"){
+    		pub.carInsuranceStaging.init();
+			pub.carInsuranceStaging.eventHandle.init();
+    	}else if(pub.module_id == "carInfo1"){
+    		pub.carInfo1.init();
+    		pub.carInfo1.eventHandle.init();
+    	}
 		pub.eventHandle.init();
 	};
 	module.exports = pub;

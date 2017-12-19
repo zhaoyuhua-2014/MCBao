@@ -22,9 +22,39 @@
 			<div class="main">
 				<div class="stages_boxs">
 					<div class="stages_list_box">
-						<div class="stages_list_item">
-							
-						</div>
+						<dl class="garage_car_item clearfloat actived" dataId = "01">
+							<dt><img src="../cars/01.png"/></dt>
+							<dd>
+								<p>车牌号:浙A 888U</p>
+								<p>车型:奥迪A3</p>
+								<div class="clearfloat">
+									<p class="float_left">剩余期数: <span class="color_re">7期</span></p>
+									<!--<p class="float_right color_re">默认</p>-->
+								</div>
+							</dd>
+						</dl>
+						<dl class="garage_car_item clearfloat" dataId = "02">
+							<dt><img src="../cars/02.png"/></dt>
+							<dd>
+								<p>车牌号:浙A 888U</p>
+								<p>车型:奥迪A3</p>
+								<div class="clearfloat">
+									<p class="float_left">剩余期数: <span class="color_re">7期</span></p>
+									<!--<p class="float_right color_or">去认证</p>-->
+								</div>
+							</dd>
+						</dl>
+						<dl class="garage_car_item clearfloat" dataId = "03">
+							<dt><img src="../cars/04.png"/></dt>
+							<dd>
+								<p>车牌号:浙A 888U</p>
+								<p>车型:奥迪A3</p>
+								<div class="clearfloat">
+									<p class="float_left">剩余期数: <span class="color_re">7期</span></p>
+									<!--<p class="float_right color_re"></p>-->
+								</div>
+							</dd>
+						</dl>
 					</div>
 					<div class="footer" id="foot">
 						<div class="submit_btn90">查看</div>
@@ -56,6 +86,21 @@
 						<button class="submit_btn90">还款</button>
 					</div>
 				</div>
+				<div class="pay_box hidden">
+					<div class="pay_title">选择支付方式</div>
+					<div class="line_pay_box">
+						<!--<div class="item clearfloat">
+							<span class="float_left">支付宝支付</span>
+						</div>-->
+						<div class="item clearfloat actived">
+							<span class="float_left">微信支付</span>
+						</div>
+					</div>
+					<div class="payment_submit">
+						<button class="submit_btn90">确认支付</button>
+					</div>
+				</div>
+				<div id="mask"></div>
 			</div>			
 		</div>
 	</body>

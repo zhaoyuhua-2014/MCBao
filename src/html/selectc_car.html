@@ -8,13 +8,13 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "selectCar">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
 					<img src="../img/icon_back@2x.png"/>
 			    </div>
-			    <h1 class="header_title header_title_color">选择车辆</h1>
+			    <h1 class="header_title header_title_color">投保认证</h1>
 			</div>
 		</div>
 		<div class="empty"></div>
@@ -28,7 +28,7 @@
 							<p>车型:奥迪A3</p>
 							<div class="clearfloat">
 								<p class="float_left">状态: <span class="color_gr">已认证</span></p>
-								<p class="float_right color_re">默认</p>
+								<!--<p class="float_right color_re">默认</p>-->
 							</div>
 						</dd>
 					</dl>
@@ -39,7 +39,7 @@
 							<p>车型:奥迪A3</p>
 							<div class="clearfloat">
 								<p class="float_left">状态: <span class="color_or">认证有礼</span></p>
-								<p class="float_right color_or">去认证</p>
+								<!--<p class="float_right color_or">去认证</p>-->
 							</div>
 						</dd>
 					</dl>
@@ -50,7 +50,7 @@
 							<p>车型:奥迪A3</p>
 							<div class="clearfloat">
 								<p class="float_left">状态: <span class="color_gr">已认证</span></p>
-								<p class="float_right color_re"></p>
+								<!--<p class="float_right color_re"></p>-->
 							</div>
 						</dd>
 					</dl>
@@ -61,29 +61,11 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			});
-			$(".garage_box").on("click",".garage_car_item",function(){
-				var nood = $(this);
-				if (!nood.is(".actived")) {
-					nood.addClass("actived").siblings().removeClass("actived")	
-				}
-			})
-			$(".submit_btn90").on("click",function(){
-				var car_rz = true,ren_rz = true;
-				if (!car_rz) {
-					window.location.href = "car_authentication.html"
-				}else if(!ren_rz){
-					window.location.href = "updata_card.html"
-				}else{
-					window.location.href = "car_insurance_staging.html"
-				}
-			})
-		})
+		seajs.use(['../dist/carManage'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>
