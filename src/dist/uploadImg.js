@@ -32,8 +32,8 @@ define(function(require, exports, module){
 				url:common.API,
 				dataType:"JSON",
 				data:data,
-		        //processData : false, // 不处理发送的数据，因为data值是Formdata对象，不需要对数据做处理
-		        //contentType : false, // 不设置Content-type请求头
+		        processData : false, // 不处理发送的数据，因为data值是Formdata对象，不需要对数据做处理
+		        contentType : false, // 不设置Content-type请求头
 				success:function(d){
 					if( d.statusCode == "100000" ){
 						pub.upLoadImg.apiData();
@@ -165,8 +165,8 @@ define(function(require, exports, module){
 			        return ndata;
 			    };
 			    function upload(basestr, type, goodid,el,Orientation){
-		         /*function upload(basestr, type, $li) {
-			       var text = window.atob(basestr.split(",")[1]);
+		         /*function upload(basestr, type, $li) {;*/
+			        var text = window.atob(basestr.split(",")[1]);
 			        var buffer = new ArrayBuffer(text.length);
 			        var ubuffer = new Uint8Array(buffer);
 			        var pecent = 0 , loop = null;
@@ -187,24 +187,30 @@ define(function(require, exports, module){
 			        }
 					var formdata = new FormData();
 			        formdata.append('imagefile', blob);
-			        */
+			       
 			        var basestr = basestr.split(",")[1];
 			        var type = type.split("/")[1];
-					/*var formdata = new FormData();
-			        formdata.append("method","comment_img_upload");
-			        formdata.append("orderCode",pub.orderCode);
+					//var formdata = new FormData();
+			        formdata.append("method","face_img_upload");
+			        //formdata.append("imgStr",basestr);
+			        formdata.append("userId",pub.userId);
+			        /*formdata.append("orderCode",pub.orderCode);
 			        formdata.append("goodsId",goodid);
 			       	formdata.append("imgStr",basestr);
 			        formdata.append("suffix",type);
-			        formdata.append("angle",Orientation);*/
-			        var formdata = {
-			        	"method":"car_info_upload_pics",
+			        formdata.append("angle",Orientation)
+			       /* var formdata = {
+			        	"method":"face_img_upload",
 			        	
 			        	"imgStr":basestr,
 			        	"suffix":type,
+			        	
+			        	"userId" : pub.userId,
 			        	"angle":Orientation,
-			        	"tokenId":pub.tokenId
-			        }
+						"source" : pub.source,
+						"sign" : pub.sign,
+						"tokenId" : pub.tokenId
+					}*/
 			        //pub.evaluate.apiHandle.comment_upload_img(formdata,el);
 			        pub.upLoadImg.init(formdata,el);
 			        
@@ -390,11 +396,11 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'credit_assess_rcd_add',
 					belongUser : '123',
-					ownerFidPicUrl:'123',//自己身份证正面图片URL
-					ownerBidPicUrl:'123',//自己身份证反面图片URL
+					ownerFidPicUrl:'https://imgsa.baidu.com/exp/w=480/sign=c0e51c2574c6a7efb926a92ecdf8afe9/a9d3fd1f4134970a17baa9d597cad1c8a6865d7a.jpg',//自己身份证正面图片URL
+					ownerBidPicUrl:'https://imgsa.baidu.com/exp/w=480/sign=c0e51c2574c6a7efb926a92ecdf8afe9/a9d3fd1f4134970a17baa9d597cad1c8a6865d7a.jpg',//自己身份证反面图片URL
 					isSingle : '0',//是否单身
-					spouseFidPicUrl : '123',//夫妻身份证正面图片URL
-					spouseBidPicUrl : '123',//夫妻身份证反面图片URL
+					spouseFidPicUrl : 'https://imgsa.baidu.com/exp/w=480/sign=c0e51c2574c6a7efb926a92ecdf8afe9/a9d3fd1f4134970a17baa9d597cad1c8a6865d7a.jpg',//夫妻身份证正面图片URL
+					spouseBidPicUrl : 'https://imgsa.baidu.com/exp/w=480/sign=c0e51c2574c6a7efb926a92ecdf8afe9/a9d3fd1f4134970a17baa9d597cad1c8a6865d7a.jpg',//夫妻身份证反面图片URL
 					buycarDate:'123',
 					buycarCity:'3301',//买车城市
 					regcar_city:'0012',
@@ -404,7 +410,7 @@ define(function(require, exports, module){
 					carDownPay:'123',
 					carLoan:'123',
 					brandName:'123',
-					websiteNode:pub.WebsiteNode,
+					websiteNode:common.WebsiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.creditEvaluation.credit_assess_rcd_add.apiData( d );
 				});
@@ -420,9 +426,9 @@ define(function(require, exports, module){
 					$(this).addClass("actived").siblings().removeClass("actived");
 					$("input[name='marry']").val($(this).index())
 					if ($(this).index()== 0) {
-						$(".submit_btn90").html("确定").removeClass("next")
+						!$(".updata_card_info.margin100").is(".hidden") && $(".updata_card_info.margin100").addClass("hidden")
 					}else if ($(this).index()== 1) {
-						$(".submit_btn90").html("下一步").addClass("next")
+						$(".updata_card_info.margin100").is(".hidden") && $(".updata_card_info.margin100").removeClass("hidden")
 					}
 				});
 				$("#putCarCity,#carBrandCity").on("focus",function(){
@@ -435,12 +441,7 @@ define(function(require, exports, module){
 					pub.picker2.show();
 				})
 				$(".submit_btn90").on("click",function(){
-					var i = $("input#marry").val();
-					if (i == 0) {
-						pub.creditEvaluation.credit_assess_rcd_add.init();
-					}else if (i == 1){
-						common.jumpLinkPlain("../html/updata_partner_card.html");
-					}
+					pub.creditEvaluation.credit_assess_rcd_add.init();
 				})
 				$(".alert_msg").on("click",".submit_btn90,.alert_del",function(){
 					common.jumpLinkPlain("../index.html")
@@ -464,8 +465,6 @@ define(function(require, exports, module){
 			}
 		}
 	}
-	
-	
 	//事件处理
 	pub.eventHandle = {
 		init:function(){
