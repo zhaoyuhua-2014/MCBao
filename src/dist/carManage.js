@@ -24,7 +24,6 @@ define(function(require, exports, module){
 		tokenId : pub.tokenId
 	};
 	//我的车库
-	//我的车库
 	pub.garage = {
 		init : function (){
 			require("LayerCss");

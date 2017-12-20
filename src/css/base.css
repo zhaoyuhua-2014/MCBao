@@ -270,7 +270,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .car_info_msg1{height: 60px;line-height: 60px;background: #ffdd83;color: #e47634;font-size: 24px;padding: 0 24px;}
 .car_info_box .list_item .float_right input{text-align: right;}
 
-.alert_car_img_box{position: absolute;width: 680px;height: 600px;left: 50%;top: 50%;background: #FFF;margin-top: -300px;margin-left: -340px;padding: 10px 20px;}
+.alert_car_img_box{position: absolute;width: 680px;height: 600px;left: 50%;top: 50%;background: #FFF;margin-top: -300px;margin-left: -340px;padding: 10px 20px;display: none;}
 .alert_car_img{width: 640px;height: 480px;border-radius: 24px;overflow: hidden;}
 .alert_car_img img{width: 100%;height: 100%;}
 .alert_car_img_box_bottom span{float: right;line-height: 100px;text-align: right;font-size: 36px;}
@@ -528,11 +528,13 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 /*支付结果*/
 .pay_result_top{height: 380px;text-align: center;}
 .pay_result_icon{height: 270px;}
-.success .pay_result_icon{background: url(../img/pic_scuess@2x.png) no-repeat center 80px;}
-.fail .pay_result_icon.fail{background: url(../img/pic_fail@2x.png) no-repeat center 80px;}
-.success .pay_result_txt{text-align: center;font-size: 38px;color: #42b515;}
-.fail .pay_result_txt{text-align: center;font-size: 38px;color: #eb030e;}
-.pay_result_info{font-size: 24px;line-height: 36px;padding: 0 24px;}
+
+.pay_result_box.success .pay_result_icon{background: url(../img/pic_scuess@2x.png) no-repeat center 80px;}
+.pay_result_box.fail .pay_result_icon{background: url(../img/pic_fail@2x.png) no-repeat center 80px;}
+.pay_result_box.success .pay_result_txt{text-align: center;font-size: 38px;color: #42b515;}
+.pay_result_box.fail .pay_result_txt{text-align: center;font-size: 38px;color: #eb030e;}
+.pay_result_box.success .pay_result_info{font-size: 24px;line-height: 36px;padding: 0 24px;}
+.pay_result_box.fail .pay_result_info{font-size: 24px;line-height: 36px;padding: 0 24px;text-align: center;}
 /*付款*/
 .pay_item_box{padding: 10px 24px;font-size: 24px;color: #9E9E9E;}
 .pay_item_title{height: 68px;line-height: 68px;font-size: 30px;}

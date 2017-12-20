@@ -64,6 +64,7 @@ define(function(require, exports, module){
     		//初始化数据
     		var n = [],m = 0;
     		var data = LAreaData;
+    		
     		return recursion(data);
     	 	function recursion(data){
     			if (data instanceof Array) {
@@ -71,6 +72,7 @@ define(function(require, exports, module){
     					if (data[i].code == d[m]) {
     						n[m] = data[i].name;
     						m+=1;
+    						
     						recursion(data[i].cities)
     					}
     				}
@@ -105,7 +107,7 @@ define(function(require, exports, module){
 			    }],
 			    title: "请选择地址",
 			    onOkClick: function (values) {
-			        $("#addValue").val(values)
+			        $("#addValue").val(values);
 			        $("#selectAddress").val(pub.carInsuranceStaging.getText(values));
 			    },
 			    fontSize:18,
@@ -235,20 +237,21 @@ define(function(require, exports, module){
     				cols: arr,
 				    title: "请选择",
 				    onOkClick: function (values) {
-				        $(".car_province").html(values[0])
+				        $(".car_province").html(values[0]).attr("data",values[0])
 				    },
     			});
     			pub.picker4 = new myPicker({
 				    cols: arr1,
 				    title: "请选择",
 				    onOkClick: function (values) {
-				        $(".car_Letter").html(values[0])
+				        $(".car_Letter").html(values[0]).attr("data",values[0]);
 				    },
 				})
     		}
     	},
     	eventHandle:{
     		init:function(){
+    			
     			$(".transfer_car .float_right").on("click",function(){
 					if ($(this).is(".actived")) {
 						$(this).removeClass("actived");
@@ -291,6 +294,57 @@ define(function(require, exports, module){
 					}
 				})*/
 				$(".submit_btn90").on("click",function(){
+					var selectAddress = $("#selectAddress").val(),//投保城市
+						addValue = $("#addValue").val(),//投保城市的code
+						car_person = $("#car_person").val(),//车主姓名
+						car_province = $(".car_province").attr("data"),//车牌号省简称
+						car_Letter = $(".car_Letter").attr("data"),//车前面的字母
+						car_NO = $(".car_number").val(),//车后面五位
+						is_Transfer = $(".transfer_car .float_right").is(".actived"),//是否是过户车
+						transfer_time = $("#example8").val();//注册时间
+					//数据验证
+					if (addValue == "") {
+						common.prompt("请选择投保城市");
+						return;
+					}else if(car_person == ""){
+						common.prompt("请输入车主姓名");
+						return;
+					}else if(car_province == ""){
+						common.prompt("请选择车省简称");
+						return;
+					}else if(car_Letter == ""){
+						common.prompt("请选择车省简称字母");
+						return;
+					}else if(car_NO == ""){
+						common.prompt("请输入车牌号");
+						return;
+					}else if(car_NO.length != 5){
+						common.prompt("请正确的车牌号");
+						return;
+					}else if(!common.REG_Num_Letter.test(car_NO)){
+						common.prompt("请正确的车牌号");
+						return;
+					}else if(is_Transfer == true){
+						if (transfer_time == "") {
+							common.prompt("请选择过户时间");
+							return;
+						}
+					};
+					
+					
+					//保存原始数据
+					var carInfo = {
+						selectAddress : selectAddress,//投保城市
+						addValue : addValue,//投保城市的code
+						car_person : car_person,//车主姓名
+						car_province : car_province,//车牌号省简称
+						car_Letter : car_Letter,//车前面的字母
+						car_NO : car_NO,//车后面五位
+						is_Transfer :is_Transfer,//是否是过户车
+						transfer_time : transfer_time,//注册时间
+					};
+					//本地保存数据
+					localStorage.setItem("carInfo_1",carInfo);
 					var options = {
 						
 					}
@@ -309,17 +363,95 @@ define(function(require, exports, module){
 		},
 		eventHandle : {
 			init : function(){
+				//节点缓存
+				var nood_mask = $("#mask"),
+					nood_alert_box = $(".alert_car_img_box"),
+					nood_car_msg = $(".car_info_msg .float_right");
 				$("#example8").on("click",function(e){
 					pub.picker8.show();
 				});
 				$(".submit_btn90").on("click",function(){
+					var car_person = $("#car_person").val(),
+						car_person_number = $("#car_person_number").val(),
+						car_number = $("#car_number").val(),
+						car_brand = $("#car_brand").val(),
+						carBrandCode = $("#carBrandCode").val(1),
+						car_Identification_code = $("#car_Identification_code").val(),
+						car_engine_number = $("#car_engine_number").val(),
+						car_regsiter_time =$(".car_regsiter_time").val();
+					if(car_person == ""){
+						common.prompt("请输入车主姓名");
+						return;
+					}else if(car_person_number == ''){
+						common.prompt("请输入身份证号");
+						return;
+					}else if(!common.ID_CARD_REG.test(car_person_number)){
+						common.prompt("请输入正确的身份证号");
+						return;
+					}else if(carBrandCode == ''){
+						common.prompt("请选择车品牌型号");
+						return;
+					}else if(car_Identification_code.length != 17 ){
+						common.prompt("请输入17位的车辆识别码");
+						return;
+					}else if (!common.REG_Num_Letter.test(car_Identification_code)){
+						common.prompt("请输入正确的车辆识别码");
+						return;
+					}else if(car_engine_number == '' || !common.REG_Num_Letter.test(car_engine_number)){
+						common.prompt("请输入正确的发动机号");
+						return;
+					}else if(car_regsiter_time == ''){
+						common.prompt("请选择注册时间");
+						return;
+					}
+					//保存一份原始数据；
+					var carInfo = {
+						car_person : car_person,//车主姓名
+						car_person_number : car_person_number,//车主身份证号码
+						car_number : car_number,//车牌号
+						car_brand : car_brand,//车品牌型号
+						carBrandCode : carBrandCode,//车品牌型号编码
+						car_Identification_code : car_Identification_code,//车识别码
+						car_engine_number : car_engine_number,//车发动机号
+						car_regsiter_time : car_regsiter_time,//车注册日期
+					}
+					//本地保存数据
+					localStorage.setItem("carInfo_2",carInfo);
+					
+					var options1 = {
+						"carNo"	: "",//车牌号，后5位
+						"carNoCity"	: "", //车牌号，代表城市的字母
+						"carNoProvince"	: "",// 车牌号，省份简称
+					};
+					var options2 = {
+						"carId" : "",//如果是数据库已有的车，则直接传carId就可以了，其他车信息不用传。如果不是数据库的车，则carId=null，其他车信息全部都要传值
+						
+						"carBrandCode" : "", //汽车品牌代码
+						"carBrand" : "",// 品牌名称
+						"carBrandKind" : "",// 车型名称
+						"carBrandKindCode" : "",// 车型代码
+						
+						"carType" : "",// 车类型
+						
+						"carVin" : "",// 车架号
+						"engineNo" : "",// 发动机号
+					}
+					
 					window.location.href = "selectc_policy_programme.html"
 				});
-				$(".car_info_msg .float_right").on("click",function(){
-					$("#mask")
+				/*提示事件*/
+				nood_car_msg.on("click",function(){
+					nood_mask.addClass("actived");
+					nood_alert_box.show()
+				});
+				nood_alert_box.on("click","span.color_re",function(){
+					nood_mask.removeClass("actived");
+					nood_alert_box.hide()
 				})
-				
-				
+				nood_mask.on("click",function(){
+					nood_mask.removeClass("actived");
+					nood_alert_box.hide()
+				})
 			}
 		}
 	}

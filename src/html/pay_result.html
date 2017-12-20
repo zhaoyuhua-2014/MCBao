@@ -8,7 +8,7 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "payResult">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
@@ -24,9 +24,9 @@
 		<div class="main_wrap">
 			<div class="main">
 				<div class="pay_result_box">
-					<div class="pay_result_top success">
+					<div class="pay_result_top">
 						<div class="pay_result_icon"></div>
-						<p class="pay_result_txt">支付成功</p>
+						<p class="pay_result_txt"></p>
 					</div>
 					<div class="pay_result_info">
 						*根据保险公司规定您还未上传身份证及行驶证正副本，信息仅用于投保，我们将严格为你保密。<a href="">继续完善信息</a>
@@ -38,13 +38,11 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			})
-		})
+		seajs.use(['../dist/payment'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>

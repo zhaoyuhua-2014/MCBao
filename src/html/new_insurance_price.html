@@ -8,7 +8,7 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "policyNewInsurancePrice">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
@@ -43,6 +43,13 @@
 								<p>价格: <span class="color_f9">询价失败</span></p>
 							</dd>
 						</dl>
+						<dl class="garage_car_item">
+							<dt></dt>
+							<dd>
+								<p>保险公司：太平洋保险</p>
+								<p>价格: <span class="color_f9">人工询价</span></p>
+							</dd>
+						</dl>
 					</div>
 					<div class="submit">
 						<button class="submit_btn90">确定</button>
@@ -51,24 +58,11 @@
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			});
-			/*点击选择保险公司*/
-			$(".new_insurance_price_box").on("click",".garage_car_item",function(){
-				var nood = $(this);
-				if (!nood.is(".actived")) {
-					$(this).addClass("actived").siblings().removeClass("actived")
-				}
-			});
-			/*确定跳转到询价页面--或者提示人工询价*/
-			$(".submit_btn90").on("click",function(){
-				window.location.href = "payment.html";
-			});
-		})
+		seajs.use(['../dist/selectc_policy_programme'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>
