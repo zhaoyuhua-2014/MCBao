@@ -39,17 +39,21 @@
 				<div class="updata_card_info">
 					<div class="updata_card_item user_card_a">
 						<input type="file" accept="image/*" class="car_img" name="car_img1" data = "11"/>
+						<img src="../img/up_sfz_a@2x.png" onerror="console.log('img load error')" />
 					</div>
 					<div class="updata_card_item user_card_b">
 						<input type="file" accept="image/*" class="car_img" name="car_img2"  data = "12"/>
+						<img src="../img/up_sfz_b@2x.png" onerror="console.log('img load error')" />
 					</div>
 				</div>
 				<div class="updata_card_info margin100 hidden">
 					<div class="updata_card_item user_partner_card_a">
 						<input type="file" accept="image/*" class="car_img" name="car_img1" data="11">
+						<img src="../img/up_sfz_couple_a@2x.png" onerror="console.log('img load error')" />
 					</div>
 					<div class="updata_card_item user_partner_card_b">
 						<input type="file" accept="image/*" class="car_img" name="car_img2" data="12">
+						<img src="../img/up_sfz_couple_b@2x.png" onerror="console.log('img load error')" />
 					</div>
 				</div>
 				<div class="ce_apply_description description_info">
@@ -91,7 +95,7 @@
 	<script src="../seajs/2.1.1/sea.js"></script>
 	<script src="../seajs-config.js"></script>
 	<script>
-		seajs.use(['dist/uploadImg'],function( pub ){
+		seajs.use(['dist/creditEvaluation'],function( pub ){
 			pub.init();
 		});
 	</script>

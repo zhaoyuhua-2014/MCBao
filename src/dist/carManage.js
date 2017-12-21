@@ -36,6 +36,7 @@ define(function(require, exports, module){
 					method:'coupon_info_show',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.garage.coupon_info_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -55,6 +56,7 @@ define(function(require, exports, module){
 					carId:"01"
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.garage.car_info_delete.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -117,6 +119,7 @@ define(function(require, exports, module){
 					tokenId:pub.tokenId,
 				}, {} ),function( d ){
 					d.statusCode == "100000" && pub.addCar.car_info_add.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -156,6 +159,7 @@ define(function(require, exports, module){
 					method:'brand_info_query',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.carBrand.brand_info_query.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){
@@ -168,6 +172,7 @@ define(function(require, exports, module){
 					method:'brand_hot_query',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.carBrand.brand_hot_query.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){
@@ -181,6 +186,7 @@ define(function(require, exports, module){
 					brandId:"1"
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.carBrand.brand_version_query.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){

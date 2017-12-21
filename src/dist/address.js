@@ -78,6 +78,7 @@ define(function(require, exports, module){
 				method:'user_address_show',
 			}, pub.userBasicParam ),function( d ){
 				d.statusCode == "100000" && me.apiData( d );
+				d.statusCode != "100000" && common.prompt(d.statusStr)
 			});
 		},
 		//地址列表解析
@@ -114,12 +115,12 @@ define(function(require, exports, module){
     				method:'user_address_default',
     				addressId : pub.addressId,
     			},pub.userBasicParam),function( d ){
-    				if ( d.statusCode == "100000" ) {
-						pub.address_manager.init()
-					} else{
-						common.prompt( d.statusStr )
-					}
+    				d.statusCode == "100000" && pub.address_manager.address_default.apiData()
+					d.statusCode != "100000" && common.prompt(d.statusStr)
     			});
+    		},
+    		apiData : function(d){
+    			pub.address_manager.init()
     		}
     	},
     	//地址删除
@@ -129,13 +130,13 @@ define(function(require, exports, module){
     				method : 'user_address_del',
     				addressId : pub.addressId,	
     			},pub.userBasicParam),function( d ){
-    				if( d.statusCode == "100000" ){
-                    	$(".address_box .address_item ").eq(pub.index).remove();
-                    	$.data($('body')[0],'addressList').splice(1,1)
-                    } else{
-						common.prompt( d.statusStr )
-					}
+    				d.statusCode == "100000" && pub.address_manager.address_delete.apiData()
+					d.statusCode != "100000" && common.prompt(d.statusStr)
     			});
+    		},
+    		apiData:function(d){
+    			$(".address_box .address_item ").eq(pub.index).remove();
+                $.data($('body')[0],'addressList').splice(1,1)
     		}
     	},
     	//事件处理
@@ -329,12 +330,12 @@ define(function(require, exports, module){
     				address:pub.address.address,//联系地址
     				addressId : pub.address.addressId,//地址ID新增则为空
     			},pub.userBasicParam),function( d ){
-    				if ( d.statusCode == "100000" ) {
-						common.jumpHistryBack()
-					} else{
-						common.prompt( d.statusStr )
-					}
+    				d.statusCode == "100000" && pub.address.address_update.apiData(d);
+					d.statusCode != "100000" && common.prompt(d.statusStr);
     			});
+    		},
+    		apiData:function(d){
+    			common.jumpHistryBack()
     		}
     	},
     	

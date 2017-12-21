@@ -42,6 +42,7 @@ define(function(require, exports, module){
 					
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.action_page_ads.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -56,6 +57,7 @@ define(function(require, exports, module){
 					websiteNode:common.WebsiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_first_type.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -76,6 +78,7 @@ define(function(require, exports, module){
 					typeCode:pub.typeCode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_second_type.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -97,6 +100,7 @@ define(function(require, exports, module){
 					typeCode:'0101',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_info_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -114,6 +118,7 @@ define(function(require, exports, module){
 					pageSize:pub.options.pageSize,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_first_type.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -160,6 +165,7 @@ define(function(require, exports, module){
 					method:'goods_show_hot',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.search.goods_show_hot.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){
@@ -178,6 +184,7 @@ define(function(require, exports, module){
 					goodsName:"车",
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.search.goods_show_name.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){
@@ -243,6 +250,7 @@ define(function(require, exports, module){
 					goodsId:"1"
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.goods.goods_get_by_id.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -269,6 +277,7 @@ define(function(require, exports, module){
 					goodsId:"1"
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.goods.credit_assess_rcd_query.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -280,9 +289,11 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'credit_assess_rcd_show',
 					//goodsId:pub.options.goodsId
-					id:"1"
-				}, pub.userBasicParam ),function( d ){
+					id:"1",
+					tokenId:pub.tokenId,
+				}, {}),function( d ){
 					d.statusCode == "100000" && pub.goods.credit_assess_rcd_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
@@ -332,6 +343,7 @@ define(function(require, exports, module){
 					goodsId:"1"
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.carReserve.goods_get_by_id.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){

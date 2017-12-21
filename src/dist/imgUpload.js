@@ -2,8 +2,70 @@
 define(function(require, exports, module){
 	
 	
-	
+	require("EXIF");
 	imgupload = {
+		init : function(obj,API,options,callBack){
+			var file = obj[0];
+			EXIF.getData(obj[0], function() {
+	            EXIF.getAllTags(this);   
+	            //alert(EXIF.getTag(this, 'Orientation'));   
+	            Orientation = EXIF.getTag(this, 'Orientation');
+	            var fr = new FileReader();
+				//var span = nodes.find("img");
+				fr.onload = function () {
+	                var result = this.result;
+	                var img = new Image();
+	                img.src = result;
+					var ll = imgupload.imgsize(result);
+	                //如果图片大小小于200kb，则直接上传
+	                if (ll <= 200 *1024) {
+	                    img = null;
+	                    //$(span).find("img").attr("src",result);
+	                    
+	                    imgupload.upload(result, file.type,Orientation,API,options,callBack);
+	                    
+	                    return;
+	                }
+					// 图片加载完毕之后进行压缩，然后上传
+	                if (img.complete) {
+	                    callback();
+	                } else {
+	                    img.onload = callback;
+	                }
+	
+	                function callback() {
+	                    var data = imgupload.compress(img);
+	
+	                    //$(span).find("img").attr("src",result);
+						//console.log(imgupload.imgsize(data))
+	                    imgupload.upload(data, file.type,Orientation,API,options,callBack);
+	                    img = null;
+	                }
+	
+	            };
+                fr.readAsDataURL(file);
+		  	})
+		},
+		upload : function(data, type , Orientation,API,options,callBack){
+			var basestr = data.split(",")[1];
+			var type1 = type.split("/")[1];
+			var obj = $.extend(options,{
+				"imgStr":basestr,
+			    "suffix":type1,
+			    "angle":Orientation,
+			});
+			$.ajax({
+				type:"POST",
+				url:API,
+				dataType:"JSON",
+				data:obj,
+		        //processData : false, // 不处理发送的数据，因为data值是Formdata对象，不需要对数据做处理
+		        //contentType : false, // 不设置Content-type请求头
+				success:function(d){
+					callBack(d);
+				}
+			});
+		},
 		compress : function(img) {
 	        var initSize = img.src.length;
 	        var width = img.width;
@@ -22,7 +84,7 @@ define(function(require, exports, module){
 	        canvas.width = width;
 	        canvas.height = height;
 			var ctx = canvas.getContext("2d");
-			//        铺底色
+			//铺底色
 	        ctx.fillStyle = "#fff";
 	        ctx.fillRect(0, 0, canvas.width, canvas.height);
 	
@@ -74,8 +136,5 @@ define(function(require, exports, module){
 	};
 	
 	
-	imgupload.init = function(){
-			
-	}
 	module.exports = imgupload;
 })

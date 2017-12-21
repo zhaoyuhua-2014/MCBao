@@ -194,7 +194,8 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 
 .my_info_top{height: 150px;position: relative;text-align: center;padding: 15px 30px;}
 .my_info_top dt,.my_info_top dd{float: left;color: #333333;font-size: 30px;line-height: 60px;}
-.my_info_top dt{position: absolute;top: -30px;left: 30px;visibility: visible;width: 134px;height: 134px}
+.my_info_top dt{position: absolute;top: -30px;left: 30px;visibility: visible;width: 134px;height: 134px;border-radius: 100%;overflow: hidden;}
+.my_info_top dt img{width: 100%;height: 100%;}
 .my_info_top dd{display: block;width: 100%;text-align: left;text-indent: 160px;padding-top: 50px;}
 
 .login_status .my_info_top dt{top: -64px;left: 50%;margin-left: -67px;}
@@ -234,6 +235,10 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .red_packet_item dd .float_right{width: 117px;height: 23px;}
 /*个人信息*/
 .my_info .list_item:first-child{height: 170px;line-height: 170px;}
+#head_picter{position: relative;padding: 18px 0;padding-right: 24px;line-height: 1;}
+#head_picter .header_img_box{width: 134px;height: 134px;border-radius: 100%;overflow: hidden;position: relative;}
+#head_picter .header_img_box img{width: 100%;height: 100%;}
+#head_picter .header_img_box input{position: absolute;width: 100%;height: 100%;opacity: 0;top: 0;left: 0;right: 0;bottom: 0;z-index: 5;}
 /*修改昵称*/
 .revise_name{height: 100px;line-height: 60px;padding: 20px 24px;position: relative;background: #FFFFFF;}
 .revise_name input{width: 100%;height: 60px;line-height: 60px; background: #F7F7F7; font-size: 30px;color: #303030;background: #FFFFFF;}

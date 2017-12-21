@@ -1,7 +1,6 @@
 
 define(function(require, exports, module){
 	
-	//require('jquery');
 	var common = require('../dist/common');
 
 	// 命名空间
@@ -26,18 +25,11 @@ define(function(require, exports, module){
 		tokenId : pub.tokenId
 	};
 	pub.options = {};
-	//选择城市
-	pub.selectCity = {
-		init:function(){
-			
-		},
-		
-	}
+	
 	
 	
 	//事件处理
 	pub.eventHandle = {
-		//时间初始化
 		init:function(){
 			$(".callback").on("click",function(){
 				var n = pub.Back;
@@ -47,9 +39,9 @@ define(function(require, exports, module){
 	}
 	pub.init = function(){
 		
-		if (pub.module_id == "user") {
-    		pub.user.init()
-			pub.user.eventHandle.init();
+		if (pub.module_id == "creditEvaluation"){
+    		pub.creditEvaluation.init()
+			pub.creditEvaluation.eventHandle.init();
     	}else if (pub.module_id == "myInfo"){
     		pub.myInfo.init()
 			pub.myInfo.eventHandle.init();

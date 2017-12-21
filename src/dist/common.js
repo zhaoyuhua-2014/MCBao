@@ -103,6 +103,10 @@ define(function(require, exports, module){
 	common.tokenId = new Memory('tokenId','local'); // 存储 tokenId
 	common.secretKey = new Memory('secretKey','local'); // 存储 secretKey
 	common.user_data = new Memory('user_data','local'); // 存储用户信息
+	
+	common.imgUrlObj = new Memory("imgUrlObj","local");//信用评估存储图片地址
+	
+	
 	common.jumpMake = new Memory('jumpMake','local'); // 跳转
 	common.orderType = new Memory('orderType','local'); // 1.普通商品 2.秒杀商品 3.预购商品
 	common.good = new Memory('good','local'); // 购物车商品信息
@@ -140,10 +144,6 @@ define(function(require, exports, module){
 
 	common.location = new Memory('location','session');
 
-	// app 端字段
-	common.appData = new Memory('appData','local'); // 数据存储
-
-	common.timestamp = new Memory('timestamp','session'); 
 
 	// 获取 tokenId 的值
 	common.tokenIdfn = function(){

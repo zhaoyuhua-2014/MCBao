@@ -1,9 +1,8 @@
 
 define(function(require, exports, module){
 	
-	require('jquery');
 	var common = require('../dist/common');
-	require("EXIF");
+	
 	// 命名空间
 	var pub = {};
 	
@@ -24,210 +23,8 @@ define(function(require, exports, module){
 		sign : pub.sign,
 		tokenId : pub.tokenId
 	};
-	//上传图片通用
-	pub.upLoadImg = {
-		init:function(data){
-			$.ajax({
-				type:"POST",
-				url:common.API,
-				dataType:"JSON",
-				data:data,
-		        processData : false, // 不处理发送的数据，因为data值是Formdata对象，不需要对数据做处理
-		        contentType : false, // 不设置Content-type请求头
-				success:function(d){
-					if( d.statusCode == "100000" ){
-						pub.upLoadImg.apiData();
-					}else{
-						common.prompt( d.statusCode );
-					}
-				}
-			});
-		},
-		apiData:function(){
-			
-		},
-		eventHandle : {
-			init:function(){
-				console.log("12")
-				$(".updata_card_info .car_img").on("change",function(){
-					console.log($(this).attr("name"))//car_img1表示正面car_img表示反面
-					var nodes = $(this).parent();
-					var tar = this,
-					files = tar.files,
-					fNum = files.length,
-					URL = window.URL || window.webkitURL,
-					file = files[0];
-					if( !file ) return;
-					EXIF.getData(files[0], function() {  
-			        	var goodid = '0'
-			            EXIF.getAllTags(this);   
-			            //alert(EXIF.getTag(this, 'Orientation'));   
-			            Orientation = EXIF.getTag(this, 'Orientation');
-			            var fr = new FileReader();
-						if (nodes.find(".comment_good_image").length) {
-							var span = nodes.find(".comment_good_image");
-						}else{
-							var span = document.createElement("span");
-							span.className = "comment_good_image"
-			            	span.innerHTML = '<img src="../img/logo@2x.png"/>';
-			            	nodes.append(span)
-						}
-						fr.onload = function () {
-			                var result = this.result;
-			                var img = new Image();
-			                img.src = result;
-							var ll = imgsize(result);
-			                //如果图片大小小于200kb，则直接上传
-			                if (ll <= 200 *1024) {
-			                    img = null;
-			                    $(span).find("img").attr("src",result);
-			                    
-			                    upload(result, file.type,goodid,span,Orientation);
-			                    
-			                    return;
-			                }
-							// 图片加载完毕之后进行压缩，然后上传
-			                if (img.complete) {
-			                    callback();
-			                } else {
-			                    img.onload = callback;
-			                }
-			
-			                function callback() {
-			                    var data = compress(img);
-			
-			                    $(span).find("img").attr("src",result);
-								console.log(imgsize(data))
-			                    upload(data, file.type,goodid,span,Orientation);
-			                    img = null;
-			                }
-			
-			            };
-		                fr.readAsDataURL(file);
-				  	})
-
-				});
-				function compress(img) {
-			        var initSize = img.src.length;
-			        var width = img.width;
-			        var height = img.height;
-					var canvas = document.createElement("canvas");
-			        //如果图片大于四百万像素，计算压缩比并将大小压至400万以下
-			        var ratio;
-			        if ((ratio = width * height / 4000000)>1) {
-			            ratio = Math.sqrt(ratio);
-			            width /= ratio;
-			            height /= ratio;
-			        }else {
-			            ratio = 1;
-			        }
-			
-			        canvas.width = width;
-			        canvas.height = height;
-					var ctx = canvas.getContext("2d");
-					//        铺底色
-			        ctx.fillStyle = "#fff";
-			        ctx.fillRect(0, 0, canvas.width, canvas.height);
-			
-			        //如果图片像素大于100万则使用瓦片绘制
-			        var count;
-			        var tCanvas = document.createElement("canvas");
-					var tctx = tCanvas.getContext('2d')
-			        if ((count = width * height / 1000000) > 1) {
-			            count = ~~(Math.sqrt(count)+1); //计算要分成多少块瓦片
-			
-						//            计算每块瓦片的宽和高
-			            var nw = ~~(width / count);
-			            var nh = ~~(height / count);
-						
-			            tCanvas.width = nw;
-			            tCanvas.height = nh;
-			            for (var i = 0; i < count; i++) {
-			                for (var j = 0; j < count; j++) {
-			                    tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);
-			
-			                    ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
-			                }
-			            }
-			        } else {
-			            ctx.drawImage(img, 0, 0, width, height);
-			        }
-			
-			        //进行最小压缩
-			        var ndata = canvas.toDataURL('image/jpeg', 0.1);
-			
-			        console.log('压缩前：' + initSize);
-			        console.log('压缩后：' + ndata.length);
-			        console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");
-			
-			        tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
-			
-			        return ndata;
-			    };
-			    function upload(basestr, type, goodid,el,Orientation){
-		         /*function upload(basestr, type, $li) {;*/
-			        var text = window.atob(basestr.split(",")[1]);
-			        var buffer = new ArrayBuffer(text.length);
-			        var ubuffer = new Uint8Array(buffer);
-			        var pecent = 0 , loop = null;
-			
-			        for (var i = 0; i < text.length; i++) {
-			            ubuffer[i] = text.charCodeAt(i);
-			        }
-			
-			        var Builder = window.WebKitBlobBuilder || window.MozBlobBuilder;
-			        var blob;
-			
-			        if (Builder) {
-			            var builder = new Builder();
-			            builder.append(buffer);
-			            blob = builder.getBlob(type);
-			        } else {
-			            blob = new window.Blob([buffer], {type: type});
-			        }
-					var formdata = new FormData();
-			        formdata.append('imagefile', blob);
-			       
-			        var basestr = basestr.split(",")[1];
-			        var type = type.split("/")[1];
-					//var formdata = new FormData();
-			        formdata.append("method","face_img_upload");
-			        //formdata.append("imgStr",basestr);
-			        formdata.append("userId",pub.userId);
-			        /*formdata.append("orderCode",pub.orderCode);
-			        formdata.append("goodsId",goodid);
-			       	formdata.append("imgStr",basestr);
-			        formdata.append("suffix",type);
-			        formdata.append("angle",Orientation)
-			       /* var formdata = {
-			        	"method":"face_img_upload",
-			        	
-			        	"imgStr":basestr,
-			        	"suffix":type,
-			        	
-			        	"userId" : pub.userId,
-			        	"angle":Orientation,
-						"source" : pub.source,
-						"sign" : pub.sign,
-						"tokenId" : pub.tokenId
-					}*/
-			        //pub.evaluate.apiHandle.comment_upload_img(formdata,el);
-			        pub.upLoadImg.init(formdata,el);
-			        
-			    };
-		        //计算图片文件的大小
-				function imgsize(str){
-					var str=str.substring(22);
-					var equalIndex= str.indexOf('=');
-					if(str.indexOf('=')>0){
-					    str=str.substring(0, equalIndex);
-					}
-					var strLength=str.length;
-					var fileLength=parseInt(strLength-(strLength/8)*2);
-					return fileLength
-				}
-			}
-		}
+	pub.options = {
+		
 	}
 	//信用评估页面
 	pub.creditEvaluation = {
@@ -440,25 +237,59 @@ define(function(require, exports, module){
 				$("#carBrandCity").on("click",function(){
 					pub.picker2.show();
 				})
+				$(".updata_card_info input").on("change",function(){
+					require("imgUpload");
+					//nood 自己 noodparent 父元素 
+					var nodes = $(this);
+					//imgType 的值11,12,21,22 
+					//11,12表述自己的身份证正反面
+					//21,22表述配偶的身份证正反面
+					var imgObj = {
+						"11":"user_a",
+						"12":"user_b",
+						"21":"partner_a",
+						"22":"partner_b",
+					};
+					var imgType = nodes.attr("data");
+					
+					var tar = this,
+					files = tar.files,
+					file = files[0];
+					if( !file ) return;
+					var options = {
+						"method":"idcard_img_upload",
+			        	"userId" : pub.userId,
+			        	"imgType":imgType,
+			        	"tokenId":pub.tokenId,
+					}
+					var callBack = function(d){
+						console.log(JSON.stringify(d))
+						if( d.statusCode == "100000" ){
+							nodes.parent().find("img").attr("src",d.data);
+							/*将ImgUrl存储到本地*/
+							var imgUrl = common.imgUrlObj.getItem(),o = {};
+							console.log(imgType )
+							console.log(imgType instanceof String)
+							var key = "a"+imgType;
+							console.log(key)
+							if (imgUrl) {
+								o = $.extend({},JSON.parse(imgUrl),{
+									key:d.data,
+								});
+							}else{
+								o = {key:d.data}
+							}
+							console.log(o)
+							//common.user_data.setItem(JSON.stringify(o));
+						}else{
+							common.prompt( d.statusCode );
+						}
+					}
+					imgupload.init(files,common.API,options,callBack)
+				})
 				$(".submit_btn90").on("click",function(){
 					pub.creditEvaluation.credit_assess_rcd_add.init();
 				})
-				$(".alert_msg").on("click",".submit_btn90,.alert_del",function(){
-					common.jumpLinkPlain("../index.html")
-				});
-			}
-		}
-	}
-	//上传夫妻身份证页面
-	pub.partnerCard = {
-		init:function(){
-			
-		},
-		eventHandle : {
-			init:function(){
-				$(".cb_submit .submit_btn90").on("click",function(){
-					
-				});
 				$(".alert_msg").on("click",".submit_btn90,.alert_del",function(){
 					common.jumpLinkPlain("../index.html")
 				});
@@ -476,17 +307,13 @@ define(function(require, exports, module){
 	}
 	
 	pub.init = function(){
-		if (pub.module_id == "upLoad_driverLicense"){
-    		
-    	}else if (pub.module_id == "creditEvaluation"){
+		if (pub.module_id == "creditEvaluation"){
     		pub.creditEvaluation.init()
 			pub.creditEvaluation.eventHandle.init();
     	}else if (pub.module_id == "partnerCard"){
 			pub.creditEvaluation.eventHandle.init();
     	}
 		pub.eventHandle.init()
-		
-		pub.upLoadImg.eventHandle.init();
 	};
 	module.exports = pub;
 })

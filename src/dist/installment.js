@@ -43,6 +43,7 @@ define(function(require, exports, module){
 					pageSize:common.PAGE_SIZE,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.installment.installment_rcd_query.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){
@@ -64,6 +65,7 @@ define(function(require, exports, module){
 					recordId:"1"
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.installment.installment_rcd_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){
@@ -83,6 +85,7 @@ define(function(require, exports, module){
 					pageSize:common.PAGE_SIZE,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.installment.installment_return_rcd_query.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(){
@@ -97,6 +100,7 @@ define(function(require, exports, module){
 					rcdId:"1",
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.installment.installment_return_rcd_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(){
@@ -113,6 +117,7 @@ define(function(require, exports, module){
 					openId:"123456",
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.installment.installment_goto_pay_weixin.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(){

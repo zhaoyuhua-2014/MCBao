@@ -46,6 +46,7 @@ define(function(require, exports, module){
 					areaCode:common.websitNode,
 				 },function( d ){
 					d.statusCode == "100000" && pub.apiHandle.get_code.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){
@@ -63,6 +64,7 @@ define(function(require, exports, module){
 					source:pub.source,
 				 },function( d ){
 					d.statusCode == "100000" && pub.apiHandle.page_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiDate:function( d ){
@@ -75,6 +77,7 @@ define(function(require, exports, module){
 					method:'system_config_constant',
 				 },function( d ){
 					d.statusCode == "100000" && pub.apiHandle.get_code.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			}
 		}

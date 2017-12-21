@@ -60,16 +60,16 @@ define(function(require, exports, module){
 				key : pub.key,
 				authcode : pub.imgCode*/
 			},function(d){
-				if( d.statusCode == "100000" ){
-					common.prompt( '验证码已发送，请查收' );
-					pub.countDown();// 倒计时开始
-					$("#verify_code").removeAttr("disabled");
-					$("#mcb_get_verify_code").hide();
-					$("#reg_time").show().css({"color":"#f76a10","background":"none"}).html('(60s后重试)'); 
-				}else{
-					common.prompt( d.statusStr );
-				} 
+				d.statusCode == "100000" && pub.send_sms.apiData(d);
+				d.statusCode != "100000" && common.prompt(d.statusStr);
 			});
+		},
+		apiData:function(d){
+			common.prompt( '验证码已发送，请查收' );
+			pub.countDown();// 倒计时开始
+			$("#verify_code").removeAttr("disabled");
+			$("#mcb_get_verify_code").hide();
+			$("#reg_time").show().css({"color":"#f76a10","background":"none"}).html('(60s后重试)'); 
 		}
 	};
 	// weixinCode换票据
@@ -79,9 +79,7 @@ define(function(require, exports, module){
                 method: 'get_weixin_code',
                 weixinCode : pub.weixinCode
             },function( d ){
-                d.statusCode == '100000' && d.data.fromWX == 1  &&common.openId.setItem( d.data.openId ); // 存opendId
-            },function( d ){
-            	
+                d.statusCode == "100000" && d.data.fromWX == 1  &&common.openId.setItem( d.data.openId ); // 存opendId
             });
         }
 	};
@@ -91,14 +89,8 @@ define(function(require, exports, module){
 	pub.login.apiHandle = {
 		init : function(){
 			common.ajaxPost( pub.login_type, function( d ){
-				if ( d.statusCode == '100000' ) {
-					
-					pub.login.apiHandle.apiData( d );
-				} else{
-					common.prompt(d.statusStr);
-				}
-			},function( d ){
-				common.prompt(d.statusStr)
+				d.statusCode == "100000" && pub.login.apiHandle.apiData( d );
+				d.statusCode != "100000" && common.prompt(d.statusStr);
 			});
 		},
 		apiData : function( d ){
@@ -108,26 +100,8 @@ define(function(require, exports, module){
 			common.tokenId.setItem( d.data.tokenId );
 			common.secretKey.setItem( d.data.secretKey );
 			common.setMyTimeout(function(){
-				console.log(JSON.stringify(d.data))
 				common.jumpLinkPlain('../index.html');
 			},500);
-		}
-	};
-	// 图片验证码
-	pub.verification = {
-		init : function(){
-			common.ajaxPost({
-				method : 'verification'
-			},function( d ){
-				if( d.statusCode == '100000' ){
-					$('.imgCode_box .img_code').attr( 'src','data:image/jpeg;base64,' + d.data.code );
-					pub.key =  d.data.key;
-				}else{
-					common.prompt( d.statusStr );
-				}
-			},function( d ){
-				common.prompt( d.statusStr );
-			});
 		}
 	};
 	// 登录事件初始化函数
@@ -213,14 +187,13 @@ define(function(require, exports, module){
 	pub.register.regist = {
 
 		init : function(){
-			var data = {
+			common.ajaxPost( {
 				method:'user_register',
 			    mobile:pub.phoneNum,
 			    randCode:pub.verify_code,
 			   	pwd:pub.password,
 			   	second_pwd:pub.repeatPassword
-			};
-			common.ajaxPost( data, function( d ){
+			}, function( d ){
 				if ( d.statusCode == '100000' ) {
 				    pub.register.regist.apiData( d );					   
 			    } else if ( d.statusCode == '100510' ){

@@ -45,6 +45,7 @@ define(function(require, exports, module){
 					method:'user_info_show',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.user.user_info.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
@@ -63,6 +64,7 @@ define(function(require, exports, module){
 					confirmPassword:'confirmPassword',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.user.user_update_pwd.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function( d ){
@@ -98,7 +100,10 @@ define(function(require, exports, module){
 	//用户信息修改退出登录
 	pub.myInfo = {
 		init : function (){
-			
+			var data = common.user_datafn().cuserInfo;
+			$("#head_picter img").attr("src",data.faceImgUrl == '' ? "../img/bg_head@2x.png" : data.faceImgUrl);
+			$(".user_name").html(data.petName);
+			$(".user_phone").html(data.mobile);
 		},
 		face_img_upload : {
 			init:function(){
@@ -106,6 +111,7 @@ define(function(require, exports, module){
 					method:'face_img_upload',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.myInfo.face_img_upload.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
@@ -119,11 +125,16 @@ define(function(require, exports, module){
 					method:'user_logout',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.myInfo.user_logout.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
-				var o = d.data,html = '';
+				/*本地缓存数据清除*/
+				common.secretKey.removeItem();
+				common.tokenId.removeItem();
+				common.user_data.removeItem();
 				
+				common.jumpLinkPlain("../html/my.html");
 			}
 		},
 		eventHandle:{
@@ -132,32 +143,71 @@ define(function(require, exports, module){
 					var isImg = $(this).is(".img"),
 						isName = $(this).is(".user_name"),
 						isPhone = $(this).is(".user_phone");
-					if (isImg) {
-						
-					} else if(isName){
+					if(isName){
 						common.jumpLinkPlain( "../html/edit_name.html" )
-					} else if(isPhone){
-						common.jumpLinkPlain( "../html/edit_phoneNumber.html" )
 					}
+				});
+				//点击退出
+				$(".submit_btn90").on("click",function(){
+					pub.myInfo.user_logout.init()
+				});
+				
+				$("#head_picter input").on("change",function(){
+					require("imgUpload");
+					var nodes = $(this).parent();
+					var tar = this,
+					files = tar.files,
+					file = files[0];
+					if( !file ) return;
+					var options = {
+						"method":"face_img_upload",
+			        	"userId" : pub.userId,
+					}
+					var callBack = function(d){
+						if( d.statusCode == "100000" ){
+							nodes.find("img").attr("src",d.data);
+							/*将faceImgUrl存储到本地*/
+							var user_data = common.user_datafn();
+							var data = user_data.cuserInfo;
+							var result = $.extend({},data,{
+								"faceImgUrl":d.data,
+							});
+							var o = $.extend({},user_data,{
+								"cuserInfo":result
+							});
+							common.user_data.setItem(JSON.stringify(o));
+						}else{
+							common.prompt( d.statusCode );
+						}
+					}
+					imgupload.init(files,common.API,options,callBack)
 				})
 			}
 		}
 	};
 	pub.editName = {
 		init:function(){
-			
+			var data = common.user_datafn().cuserInfo;
+			$(".revise_name input").val(data.petName);
 		},
 		user_info_update: {
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'user_info_update',
+					petName:pub.options.name,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.editName.user_info_update.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
-				var o = d.data,html = '';
-				
+				/*更新数据到本地*/
+				var user_data = common.user_datafn();
+				var o = $.extend({},user_data,{
+					"cuserInfo":d.data
+				});
+				common.user_data.setItem(JSON.stringify(o));
+				common.jumpHistryBack();
 			}
 		},
 		eventHandle:{
@@ -197,6 +247,7 @@ define(function(require, exports, module){
 					method:'coupon_info_show',
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.packet.coupon_info_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
@@ -238,6 +289,7 @@ define(function(require, exports, module){
 					pageSize:common.PAGE_SIZE,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.myPolicy.insurance_bill_query4user.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
@@ -259,6 +311,7 @@ define(function(require, exports, module){
 					pageSize:common.PAGE_SIZE,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.myPolicy.insurance_bill_query4car.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
@@ -278,6 +331,7 @@ define(function(require, exports, module){
 					billId:"01",
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.myPolicy.insurance_bill_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
@@ -297,6 +351,7 @@ define(function(require, exports, module){
 					billId:"01",
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.myPolicy.insurance_bill_delete.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
 			apiData:function(d){
@@ -311,6 +366,39 @@ define(function(require, exports, module){
 		eventHandle:{
 			init:function(){
 				
+			}
+		}
+	}
+	//意见反馈
+	pub.feedback = {
+		init:function(){
+			
+		},
+		suggest_add:{
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'suggest_add',
+					context:pub.options.context,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.feedback.suggest_add.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
+				});
+				
+			},
+			apiData:function(d){
+				common.jumpHistryBack();
+			}
+		},
+		eventHandle : {
+			init:function(){
+				$(".submit_btn90").on("click",function(){
+					pub.options.context = $("textarea").val();
+					if(pub.options.context == ""){
+						common.prompt("内容不能为空");
+						return;
+					}
+					pub.feedback.suggest_add.init();
+				})
 			}
 		}
 	}
@@ -343,6 +431,9 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "myPolicy"){
     		pub.myPolicy.init()
 			pub.myPolicy.eventHandle.init();
+    	}else if (pub.module_id == "feedback"){
+    		pub.feedback.init()
+			pub.feedback.eventHandle.init();
     	}
     	pub.eventHandle.init()
 	};

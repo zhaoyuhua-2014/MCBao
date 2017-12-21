@@ -82,6 +82,7 @@ define(function(require, exports, module){
 					rebackDate:"23",//每月返款日期
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.myPolicy.insurance_bill_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(){
