@@ -35,6 +35,24 @@ define(function(require, exports, module){
 			require ("PickerCss");
 			pub.creditEvaluation.dataInit();
 			pub.creditEvaluation.dataInit1();
+			//s数据的缓存显示
+			var imgUrl = common.imgUrlObj.getItem();
+			if (imgUrl) {
+				imgUrl = JSON.parse(imgUrl);
+				if (imgUrl.user_a) {
+					$(".user_a").attr("src",imgUrl.user_a)
+				}
+				if (imgUrl.user_b) {
+					$(".user_b").attr("src",imgUrl.user_b)
+				}
+				if (imgUrl.partner_a) {
+					$(".partner_a").attr("src",imgUrl.partner_a)
+				}
+				if (imgUrl.partner_b) {
+					$(".partner_b").attr("src",imgUrl.partner_b)
+				}
+			}
+			
 		},
 		getIndex:function(d){
     		//初始化数据
@@ -267,20 +285,25 @@ define(function(require, exports, module){
 						if( d.statusCode == "100000" ){
 							nodes.parent().find("img").attr("src",d.data);
 							/*将ImgUrl存储到本地*/
-							var imgUrl = common.imgUrlObj.getItem(),o = {};
-							console.log(imgType )
-							console.log(imgType instanceof String)
-							var key = "a"+imgType;
-							console.log(key)
-							if (imgUrl) {
-								o = $.extend({},JSON.parse(imgUrl),{
-									key:d.data,
-								});
-							}else{
-								o = {key:d.data}
+							var imgUrl = common.imgUrlObj.getItem(),o = {},r={};
+							
+							if (imgType == 11) {
+								o = {"user_a":d.data}
+							} else if (imgType == 12){
+								o = {"user_b":d.data}
+							} else if (imgType == 21){
+								o = {"partner_a":d.data}
+							} else if (imgType == 22){
+								o = {"partner_b":d.data}
 							}
-							console.log(o)
-							//common.user_data.setItem(JSON.stringify(o));
+							
+							if (imgUrl) {
+								r = $.extend({},JSON.parse(imgUrl),o);
+							}else{
+								r = o;
+							}
+							console.log(r)
+							common.imgUrlObj.setItem(JSON.stringify(r));
 						}else{
 							common.prompt( d.statusCode );
 						}
@@ -293,6 +316,110 @@ define(function(require, exports, module){
 				$(".alert_msg").on("click",".submit_btn90,.alert_del",function(){
 					common.jumpLinkPlain("../index.html")
 				});
+			}
+		}
+	}
+	
+	//车辆认证
+	pub.upLoad_driverLicense = {
+		init:function(){
+			//s数据的缓存显示
+			var imgUrl = common.imgUrlObj.getItem();
+			if (imgUrl) {
+				imgUrl = JSON.parse(imgUrl);
+				if (imgUrl.user_a) {
+					$(".user_a").attr("src",imgUrl.user_a)
+				}
+				if (imgUrl.user_b) {
+					$(".user_b").attr("src",imgUrl.user_b)
+				}
+				if (imgUrl.partner_a) {
+					$(".partner_a").attr("src",imgUrl.partner_a)
+				}
+				if (imgUrl.partner_b) {
+					$(".partner_b").attr("src",imgUrl.partner_b)
+				}
+				if (imgUrl.user_drive_a) {
+					$(".user_drive_a").attr("src",imgUrl.user_drive_a)
+				}
+				if (imgUrl.user_drive_b) {
+					$(".user_drive_b").attr("src",imgUrl.user_drive_b)
+				}
+			}
+		},
+		car_renzhegn : {
+			init:function(){
+				common.prompt("缺少车辆认证接口")
+			}
+		},
+		eventHandle : {
+			init:function(){
+				$(".updata_card_info input").on("change",function(){
+					require("imgUpload");
+					//nood 自己 noodparent 父元素 
+					var nodes = $(this);
+					//imgType 的值11,12,21,22 
+					//11,12表述自己的身份证正反面
+					//21,22表述配偶的身份证正反面
+					var imgObj = {
+						"01":"user_drive_a",
+						"02":"user_drive_b",
+					};
+					var imgType = nodes.attr("data");
+					
+					var tar = this,
+					files = tar.files,
+					file = files[0];
+					if( !file ) return;
+					var options = {
+						"method":"idcard_img_upload",
+			        	"userId" : pub.userId,
+			        	"imgType":imgType,
+			        	"tokenId":pub.tokenId,
+					}
+					var callBack = function(d){
+						if( d.statusCode == "100000" ){
+							nodes.parent().find("img").attr("src",d.data);
+							/*将ImgUrl存储到本地*/
+							var imgUrl = common.imgUrlObj.getItem(),o = {},r={};
+							
+							if (imgType == 11) {
+								o = {"user_a":d.data}
+							} else if (imgType == 12){
+								o = {"user_b":d.data}
+							} else if (imgType == 21){
+								o = {"partner_a":d.data}
+							} else if (imgType == 22){
+								o = {"partner_b":d.data}
+							} else if (imgType == 01){
+								o = {"user_drive_a":d.data}
+							} else if (imgType == 02){
+								o = {"user_drive_b":d.data}
+							}
+							
+							if (imgUrl) {
+								r = $.extend({},JSON.parse(imgUrl),o);
+							}else{
+								r = o;
+							}
+							console.log(r)
+							common.imgUrlObj.setItem(JSON.stringify(r));
+						}else{
+							common.prompt( d.statusCode );
+						}
+					}
+					imgupload.init(files,common.API,options,callBack)
+				})
+				//点击提交
+				$(".submit_btn90").on("click",function(){
+					if ($(".user_drive_a").attr("src").indexOf("http:") < 0) {
+						common.prompt("请上传驾驶证正面图片")
+					} else if($(".user_drive_b").attr("src").indexOf("http:") < 0){
+						common.prompt("请上传驾驶证反面图片")
+					}else{
+						pub.upLoad_driverLicense.car_renzhegn.init();
+					}
+				})
 			}
 		}
 	}
@@ -310,8 +437,9 @@ define(function(require, exports, module){
 		if (pub.module_id == "creditEvaluation"){
     		pub.creditEvaluation.init()
 			pub.creditEvaluation.eventHandle.init();
-    	}else if (pub.module_id == "partnerCard"){
-			pub.creditEvaluation.eventHandle.init();
+    	}else if (pub.module_id == "upLoad_driverLicense"){
+    		pub.upLoad_driverLicense.init();
+			pub.upLoad_driverLicense.eventHandle.init();
     	}
 		pub.eventHandle.init()
 	};

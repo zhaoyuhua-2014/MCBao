@@ -23,6 +23,8 @@ define(function(require, exports, module){
 		sign : pub.sign,
 		tokenId : pub.tokenId
 	};
+	
+	pub.options = {}
 	//我的车库
 	pub.garage = {
 		init : function (){
@@ -163,7 +165,40 @@ define(function(require, exports, module){
 				});
 			},
 			apiData:function( d ){
-				
+				var o = d.data.brandlist,html = '';
+				console.log(o)
+				var arrLetter = [],main = $(".car_brand_list_wrap .car_brand_list_box").eq(0),boxs,tit,box,item;
+				if (o.length != 0) {
+					for (var i in o) {
+						/*if ($.inArray(o[i].word,arrLetter) >=0) {
+							item = $("<dl class='car_brand_list_item' code = '"+o[i].brandCode+"'><dt><img src="+o[i].brandLog+"></dt><dd>"+o[i].brandName	+"</dd></dl>");
+							box.append(item);
+						}else{
+							boxs = $("<div class='car_brand_list_box'></div>");
+							tit = $("<div class='car_brand_list_box_tit'><a name="+o[i].word+">"+o[i].word+"</a></div>");
+							boxs.append(tit)
+							box = $("<div class='car_brand_list_box_center'></div>");
+							item = $("<dl class='car_brand_list_item' code = '"+o[i].brandCode+"'><dt><img src="+o[i].brandLog+"></dt><dd>"+o[i].brandName	+"</dd></dl>");
+							box.append(item)
+							
+							arrLetter.push(o[i].word)
+							
+						}
+						if (o[i].word != o[i + 1].word) {
+							boxs.append(box);
+							main.append(boxs);
+							boxs = null;
+							tit = null;
+							box = null;
+							item = null;
+							
+						}*/
+						html += "<dl class='car_brand_list_item' id = '"+o[i].id+"' code = '"+o[i].brandCode+"'><dt><img src="+o[i].brandLog+"></dt><dd>"+o[i].brandName	+"</dd></dl>"
+					}
+					main.find(".car_brand_list_box_center").html(html)
+				} else{
+					
+				}
 			}
 		},
 		brand_hot_query : {
@@ -176,26 +211,38 @@ define(function(require, exports, module){
 				});
 			},
 			apiData:function( d ){
-				
+				var o = d.data.brandlist,html = '';
+				console.log(o)
+				if (o.length != 0) {
+					
+				} else{
+					$(".car_brand_hot_box").html("暂无热门品牌")
+				}
 			}
 		},
 		brand_version_query:{
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'brand_version_query',
-					brandId:"1"
+					brandId:pub.options.brandId
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.carBrand.brand_version_query.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function( d ){
-				console.log(JSON.stringify(d))
+				/*样式变化*/
 				$("#mask").addClass("actived");
 				$("body").css("overflow-y","hidden")
 				$(".car_brand_fiexd").animate({
 					"left":"120px",
 				})
+				/*内容初始化*/
+				var box = $(".car_brand_fiexd");
+				
+				
+				
+				
 			}
 		},
 		eventHandle:{
@@ -205,6 +252,7 @@ define(function(require, exports, module){
 					pub.carBrand.brand_version_query.init();
 				})
 				$('.car_brand_list_wrap').on("click",".car_brand_list_item",function(){
+					pub.options.brandId = $(this).attr("id");
 					pub.carBrand.brand_version_query.init();
 				})
 				$("#mask").on("click",function(){
