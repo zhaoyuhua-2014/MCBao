@@ -140,6 +140,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .find_password .regsiter_item{}
 
 /*首页*/
+body[data-type="index"] {background: #000000;}
 .index_left{text-align: center;color: #C30D23;background: url(../img/list_down@2x.png) no-repeat 110px center;font-size: 30px;}
 .index_right{text-align: center;padding-left: 50px;}
 .index_main{background: #000;}

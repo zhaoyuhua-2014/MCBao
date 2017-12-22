@@ -30,14 +30,8 @@ define(function(require, exports, module){
 	// 接口处理命名空间
 	pub.apiHandle = {
 		init:function(){
-			if (pub.logined) {
-				pub.apiHandle.page_show.init();
-			}else{
-				pub.apiHandle.get_code.init();
-			}
-			pub.apiHandle.get_code.init();
-			//系统常量接口
-			pub.apiHandle.system_config_constant.init();
+			
+			pub.apiHandle.page_show.init();
 		},
 		get_code : {
 			init:function(){
@@ -67,18 +61,70 @@ define(function(require, exports, module){
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
-			apiDate:function( d ){
+			apiData:function( d ){
+				var adInfoList = d.data.adInfoList;
+					mainActivityList = d.data.mainActivityList;
+				pub.apiHandle.page_show.adInfo.init(adInfoList);
 				
-			}
-		},
-		system_config_constant : {
-			init:function(){
-				common.ajaxPost({
-					method:'system_config_constant',
-				 },function( d ){
-					d.statusCode == "100000" && pub.apiHandle.get_code.apiData( d );
-					d.statusCode != "100000" && common.prompt(d.statusStr);
-				});
+				for (var i = 0; i < mainActivityList.length; i++) {
+					pub.apiHandle.page_show.mainActivity.init(mainActivityList[i])
+				}
+				
+				
+			},
+			adInfo:{
+				init:function(d){
+					var html = '';
+					for (var i in d) {
+						html += '<div class="swiper-slide"><img src="'+d[i].adPic+'"/></div>'
+					}
+					$(".banner_wrap .index_banner .swiper-wrapper").html(html);
+					pub.apiHandle.page_show.adInfo.apiData();
+				},
+				apiData:function(){
+					var swiper = new Swiper (".index_banner", {
+					    direction: 'horizontal',
+					    loop: true,
+					    loopAdditionalSlides :2,
+					    autoplay:5000,
+					    //autoplayDisableOnInteraction : false,
+					    //spaceBetween : 34,
+					    slidesPerView : 1.4,
+						centeredSlides : true,
+					    //width:618,
+					});
+				},
+			},
+			mainActivity:{
+				init:function(d){
+					console.log(d);
+					var html = '',List = d.activityDetailsList;
+					
+					html += '<div class="index_module">'
+					html += '	<h3 class="title">'+d.activityTitle+'</h3>'
+					html += '	<div class="module_box">'
+						for (var i in List) {
+							html += pub.apiHandle.page_show.mainActivity.listDetaile(List[i])
+						}
+					html += '	</div>'
+					html += '</div>'
+					
+					$(".index_module_box").append(html);
+				},
+				listDetaile:function(d){
+					var str = '';
+					str += '<dl class="module_item clearfloat" data="'+d.id+'">'
+					str += '	<dt><img src="'+d.goodsInfo.goodsLogo+'"/></dt>'
+					str += '	<dd>'
+					str += '		<h4>'+d.goodsInfo.goodsName+'</h4>'
+					str += '		<div class="description">'+d.goodsInfo.goodsDescribe+'</div>'
+					str += '	</dd>'
+					str += '</dl>'
+					return str;
+				},
+				apiData:function(){
+					
+				},
 			}
 		}
 	};
@@ -87,17 +133,7 @@ define(function(require, exports, module){
 	pub.eventHandle = {
 		//时间初始化
 		init:function(){
-			var swiper = new Swiper (".index_banner", {
-			    direction: 'horizontal',
-			    loop: true,
-			    loopAdditionalSlides :2,
-			    autoplay:5000,
-			    //autoplayDisableOnInteraction : false,
-			    //spaceBetween : 34,
-			    slidesPerView : 1.4,
-				centeredSlides : true,
-			    //width:618,
-			});
+			
 			/*点击切换主菜单*/
 			$("#foot").on("click",".footer_item",function(){
 				var isActive = $(this).is(".actived");
@@ -106,9 +142,9 @@ define(function(require, exports, module){
 				}
 			})
 			/*点击进入车详情*/
-			$(".index_module").on("click",'.module_item',function(){
+			$(".index_module_box").on("click",'.module_item',function(){
 				var nood = $(this);
-				common.jumpLinkPlain( "html/car_mall.html" )
+				common.jumpLinkPlain( "html/car_mall.html"+"?id="+nood.attr("data") )
 			})
 			/*点击进入客服中心*//*点击进入城市定位*/
 			$(".index_left,.index_right").on("click",function(){

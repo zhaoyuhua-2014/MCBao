@@ -99,25 +99,64 @@ define(function(require, exports, module){
 			}
 		}
 	};
+	//存储车信息参数
+	pub.car={}
 	//添加新车
 	pub.addCar = {
 		init : function (){
+			var car = {
+						carBrand:"奥迪",//车品牌名称
+						carBrandCode:"01",//车品牌编码
+						carBrandKind:"2017豪华版",//车品牌系名称
+						carBrandKindCode:"0101",//车品牌系编码
+						carNo:"88888",//车牌号
+						carNoCity:"A",//车牌城市代码
+						carNoProvince:"浙",//车牌省简称
+						ownerName:"赵玉华",//车主姓名
+						carType:"01",//车类型
+					};
+					
+			//暂时方便不用每次都要输入
+			var car = localStorage.getItem("car");
+			if(car){
+				car = JSON.parse(car);
+				pub.addCar.htmlInit(car);
+			}
 			//pub.addCar.brand_version_query.init();
+		},
+		htmlInit:function(d){
+			var nood = $(".car_info_box");
+			console.log(d)
+			
+			if(d.carNoProvince && d.carNoCity  && d.carNo){//车牌号
+				nood.find("#car_number").val(d.carNoProvince + d.carNoCity + d.carNo);
+				nood.find("#carNoProvince").val(d.carNoProvince);
+				nood.find("#carNoCity").val(d.carNoCity)
+				nood.find("#carNo").val(d.carNo)
+			}
+			if (d.carBrand && d.carBrandKindCode) {//车品牌
+				nood.find("#carBrand").val(d.carBrand);
+				nood.find("#carBrandCode").val(d.carBrandCode);
+			}
+			if (d.carBrandKind && d.carBrandKindCode) {//车型号
+				nood.find("#carBrandKind").val(d.carBrandKind);
+				nood.find("#carBrandKindCode").val(d.carBrandKindCode);
+			}
 		},
 		car_info_add: {
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'car_info_add',
-					pkUser:"3",
-					carBrand:'01',
-					carBrandCode:'01',
-					carNo:"carNo",
-					carNoCity:"carNoCity",
-					carNoProvince:"carNoProvince",
+					pkUser:pub.userId,
+					carBrand:pub.car.carBrand,
+					carBrandCode:pub.car.carBrandCode,
+					carNo:pub.car.carNo,
+					carNoCity:pub.car.carNoCity,
+					carNoProvince:pub.car.carNoProvince,
 					ownerName:"ownerName",
-					carType:"1",
-					carBrandKind:"01",
-					carBrandKindCode:"01",
+					carType:pub.car.carType,
+					carBrandKind:pub.car.carBrandKind,
+					carBrandKindCode:pub.car.carBrandKindCode,
 					tokenId:pub.tokenId,
 				}, {} ),function( d ){
 					d.statusCode == "100000" && pub.addCar.car_info_add.apiData( d );
@@ -134,7 +173,7 @@ define(function(require, exports, module){
 				$("#car_brand,#car_model").on("focus",function(){
 					$(this).blur();
 				})
-				$("#car_brand").on("click",function(){
+				$("#carBrand").on("click",function(){
 					common.jumpLinkPlain( "../html/car_brand.html" )
 				})
 				$("#car_model").on("click",function(){
@@ -144,6 +183,45 @@ define(function(require, exports, module){
 					}
 				});
 				$(".submit_btn90").on("click",function(){
+					var car_number = $("#car_number").val(),
+						carBrand = $("#carBrand").val(),
+						carBrandCode = $("#carBrandCode").val(),
+						carBrandKind = $("#carBrandKind").val(),
+						carBrandKindCode = $("#carBrandKindCode").val(),
+						carNoProvince = $("#carNoProvince").val(),
+						carNoCity = $("#carNoCity").val(),
+						carNo = $("#carNo").val();
+					carNoProvince = car_number.substr(0,1);
+					carNoCity = car_number.substr(1,1);
+					carNo = car_number.substr(2,5);
+					//输入信息验证
+					if (car_number == '') {
+						common.prompt("请输入车牌号");
+						return;
+					} else if (car_number.length != 7 || !common.REG_CHINESE.test(carNoProvince) || !common.REG_Letter.test(carNoCity) || !common.REG_Num_Letter.test(carNo) ){
+						//toLocaleUpperCase 字母转换为大写的方法
+						common.prompt("请输入正确的车牌号");
+						return;
+					} else if (carBrand == "" || carBrandCode == "") {
+						common.prompt("请选择车品牌");
+						return;
+					} else if(carBrandKind == "" || carBrandKindCode == ""){
+						common.prompt("将选择车系列型号");
+						return;
+					}
+					//保存原始信息
+					pub.car = {
+						carBrand:carBrand,//车品牌名称
+						carBrandCode:carBrandCode,//车品牌编码
+						carBrandKind:carBrandKind,//车品牌系名称
+						carBrandKindCode:carBrandKindCode,//车品牌系编码
+						carNo:carNo,//车牌号
+						carNoCity:carNoCity,//车牌城市代码
+						carNoProvince:carNoProvince,//车牌省简称
+						ownerName:"赵玉华",//车主姓名
+						carType:"01",//车类型
+					};
+					localStorage.setItem("car",JSON.stringify(pub.car));
 					pub.addCar.car_info_add.init();
 				})
 			}
@@ -165,39 +243,38 @@ define(function(require, exports, module){
 				});
 			},
 			apiData:function( d ){
-				var o = d.data.brandlist,html = '';
+				var o = d.data.brandlist,html = '',l = o.length;
 				console.log(o)
-				var arrLetter = [],main = $(".car_brand_list_wrap .car_brand_list_box").eq(0),boxs,tit,box,item;
-				if (o.length != 0) {
-					for (var i in o) {
-						/*if ($.inArray(o[i].word,arrLetter) >=0) {
-							item = $("<dl class='car_brand_list_item' code = '"+o[i].brandCode+"'><dt><img src="+o[i].brandLog+"></dt><dd>"+o[i].brandName	+"</dd></dl>");
-							box.append(item);
+				var arrLetter = [];//暂存一个list的数据-整体创建盒子
+				if (l != 0) {
+					console.log(l)
+					for (var i=0;i<l; i++) {
+						arrLetter.push(o[i]);
+						if ((i+1)< l) {
+							if (o[i].word != o[(i+1)].word) {
+								html += creatBox(arrLetter);
+								arrLetter = [];
+							}
 						}else{
-							boxs = $("<div class='car_brand_list_box'></div>");
-							tit = $("<div class='car_brand_list_box_tit'><a name="+o[i].word+">"+o[i].word+"</a></div>");
-							boxs.append(tit)
-							box = $("<div class='car_brand_list_box_center'></div>");
-							item = $("<dl class='car_brand_list_item' code = '"+o[i].brandCode+"'><dt><img src="+o[i].brandLog+"></dt><dd>"+o[i].brandName	+"</dd></dl>");
-							box.append(item)
-							
-							arrLetter.push(o[i].word)
-							
+							html += creatBox(arrLetter);
+							arrLetter = [];
 						}
-						if (o[i].word != o[i + 1].word) {
-							boxs.append(box);
-							main.append(boxs);
-							boxs = null;
-							tit = null;
-							box = null;
-							item = null;
-							
-						}*/
-						html += "<dl class='car_brand_list_item' id = '"+o[i].id+"' code = '"+o[i].brandCode+"'><dt><img src="+o[i].brandLog+"></dt><dd>"+o[i].brandName	+"</dd></dl>"
 					}
-					main.find(".car_brand_list_box_center").html(html)
+					$(".car_brand_box .car_brand_list_wrap").html(html);
 				} else{
 					
+				};
+				//创建盒子
+				function creatBox(arr){
+					var html = '<div class="car_brand_list_box">'
+						html += 	'<div class="car_brand_list_box_tit"><a name="'+arr[0].word+'">'+arr[0].word+'</a></div>'
+						html +=		'<div class="car_brand_list_box_center">'
+					for (var i in arr) {
+						html += 		'<dl class="car_brand_list_item"  id = "'+arr[i].id+'" code = "'+arr[i].brandCode+'"><dt><img src="'+arr[i].brandLog+'"/></dt><dd>'+arr[i].brandName+'</dd></dl>'
+					}
+						html += '	</div>'
+						html += '</div>'
+					return html;
 				}
 			}
 		},
@@ -239,7 +316,7 @@ define(function(require, exports, module){
 				})
 				/*内容初始化*/
 				var box = $(".car_brand_fiexd");
-				
+				box.find()
 				
 				
 				
@@ -253,7 +330,12 @@ define(function(require, exports, module){
 				})
 				$('.car_brand_list_wrap').on("click",".car_brand_list_item",function(){
 					pub.options.brandId = $(this).attr("id");
+					pub.options.brandCode = $(this).attr("code");
+					pub.options.brandName = $(this).find("dd").html();
+					pub.options.brandLog = $(this).find("dt img").attr("src");
+					
 					pub.carBrand.brand_version_query.init();
+					
 				})
 				$("#mask").on("click",function(){
 					if ($(this).is(".actived")) {

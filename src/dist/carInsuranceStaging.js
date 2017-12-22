@@ -28,10 +28,45 @@ define(function(require, exports, module){
 		init:function(){
 			require('LAreaData');
 			require ("Picker");
-			pub.carInsuranceStaging.dataInit();
-			pub.carInsuranceStaging.carOwnerInit.init();
-			pub.carInsuranceStaging.timeInit.init();
-			pub.carInsuranceStaging.cityShortInit.init()
+			var carInfo = localStorage.getItem("carInfo_1");
+			
+			if (carInfo) {
+				carInfo = JSON.parse(carInfo);
+				
+				pub.carInsuranceStaging.htmlInit(carInfo)
+			}
+			pub.carInsuranceStaging.dataInit();//投保城市初始化
+			pub.carInsuranceStaging.carOwnerInit.init();//车所有者初始化
+			pub.carInsuranceStaging.timeInit.init();//时间初始化
+			pub.carInsuranceStaging.cityShortInit.init();//车牌选择和号码初始化
+		
+			
+		},
+		htmlInit:function(d){
+			var nood = $(".car_staging_box");
+			console.log(d.car_person)
+			if (d.selectAddress && d.addValue) {//投保城市信息
+				nood.find("#selectAddress").val(d.selectAddress).end;
+				nood.find("#addValue").val(d.addValue);
+			}
+			if(d.car_person){//车主姓名
+				nood.find("#car_person").val(d.car_person);
+			}
+			if(d.car_province){//车牌号省
+				nood.find(".car_province").html(d.car_province).attr("data",d.car_province);
+			}
+			if(d.car_Letter){//车牌号字母
+				nood.find(".car_Letter").html(d.car_Letter).attr("data",d.car_Letter);
+			}
+			if(d.car_NO){//车牌号
+				nood.find(".car_number").val(d.car_NO)
+			}
+			if(d.is_Transfer){//是否过户车
+				nood.find(".transfer_car .float_right").addClass("actived");
+				nood.find("#example8").val(d.transfer_time)
+				nood.find(".transfer_time").show();
+			};
+			
 		},
 		getIndex:function(d){
     		//初始化数据
@@ -344,7 +379,7 @@ define(function(require, exports, module){
 						transfer_time : transfer_time,//注册时间
 					};
 					//本地保存数据
-					localStorage.setItem("carInfo_1",carInfo);
+					localStorage.setItem("carInfo_1",JSON.stringify(carInfo));
 					var options = {
 						
 					}
@@ -360,6 +395,49 @@ define(function(require, exports, module){
 			require ("Picker");
 			require("PickerCss")
 			pub.carInsuranceStaging.timeInit.init();
+			var carInfo = localStorage.getItem("carInfo_1");
+			var carInfo2 = localStorage.getItem("carInfo_2");
+			var result = {}
+			if (carInfo && carInfo2) {
+				carInfo = JSON.parse(carInfo);
+				carInfo2 = JSON.parse(carInfo2);
+				result = $.extend({},carInfo, carInfo2);
+				pub.carInfo1.htmlInit(result)
+			}else if (carInfo){
+				carInfo = JSON.parse(carInfo);
+				result = carInfo;
+				pub.carInfo1.htmlInit(result)
+			}else if (carInfo2){
+				carInfo2 = JSON.parse(carInfo2);
+				result = carInfo2;
+				pub.carInfo1.htmlInit(result)
+			}
+		},
+		htmlInit:function(d){
+			var nood = $(".car_info_box");
+			console.log(d)
+			if(d.car_person){//车主姓名
+				nood.find("#car_person").val(d.car_person).attr("disabled","disabled");
+			}
+			if(d.car_person_number){//车主身份证号
+				nood.find("#car_person_number").val(d.car_person_number);
+			}
+			if(d.car_province && d.car_Letter  && d.car_NO){//车牌号
+				nood.find("#car_number").val(d.car_province + d.car_Letter + d.car_NO);
+			}
+			if (d.car_brand && d.carBrandCode) {//车品牌型号
+				nood.find("#car_brand").val(d.car_brand);
+				nood.find("#carBrandCode").val(d.carBrandCode);
+			}
+			if (d.car_Identification_code ) {//17位识别码
+				nood.find("#car_Identification_code").val(d.car_Identification_code);
+			}
+			if (d.car_engine_number) {//车发动机号
+				nood.find("#car_engine_number").val(d.car_engine_number);
+			}
+			if (d.car_regsiter_time) {//车注册时间
+				nood.find(".car_regsiter_time").val(d.car_regsiter_time);
+			}
 		},
 		eventHandle : {
 			init : function(){
@@ -375,7 +453,7 @@ define(function(require, exports, module){
 						car_person_number = $("#car_person_number").val(),
 						car_number = $("#car_number").val(),
 						car_brand = $("#car_brand").val(),
-						carBrandCode = $("#carBrandCode").val(1),
+						carBrandCode ="1" ,//$("#carBrandCode").val()
 						car_Identification_code = $("#car_Identification_code").val(),
 						car_engine_number = $("#car_engine_number").val(),
 						car_regsiter_time =$(".car_regsiter_time").val();
@@ -405,7 +483,7 @@ define(function(require, exports, module){
 						return;
 					}
 					//保存一份原始数据；
-					var carInfo = {
+					var carInfo2 = {
 						car_person : car_person,//车主姓名
 						car_person_number : car_person_number,//车主身份证号码
 						car_number : car_number,//车牌号
@@ -416,7 +494,7 @@ define(function(require, exports, module){
 						car_regsiter_time : car_regsiter_time,//车注册日期
 					}
 					//本地保存数据
-					localStorage.setItem("carInfo_2",carInfo);
+					localStorage.setItem("carInfo_2",JSON.stringify(carInfo2));
 					
 					var options1 = {
 						"carNo"	: "",//车牌号，后5位
