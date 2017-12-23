@@ -299,8 +299,10 @@ define(function(require, exports, module){
 				$(".car_staging_box_agreement .icon").on("click",function(){
 					if ($(this).is(".actived")) {
 						$(this).removeClass("actived");
+						$(".submit_btn90").addClass("submit_isnot")
 					}else{
 						 $(this).addClass("actived");
+						 $(".submit_btn90").removeClass("submit_isnot")
 					}
 				});
 				$("#selectAddress").on("click",function(e){
@@ -329,6 +331,9 @@ define(function(require, exports, module){
 					}
 				})*/
 				$(".submit_btn90").on("click",function(){
+					if($(this).is(".submit_isnot")){
+						return;
+					}
 					var selectAddress = $("#selectAddress").val(),//投保城市
 						addValue = $("#addValue").val(),//投保城市的code
 						car_person = $("#car_person").val(),//车主姓名

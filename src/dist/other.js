@@ -81,6 +81,20 @@ define(function(require, exports, module){
 					}
 				})
 			}
+			pub.changeCity.business_city.init();
+		},
+		business_city:{
+			init:function(){
+				common.ajaxPost({
+					method:'business_city',
+				},function( d ){
+					d.statusCode == "100000" && pub.changeCity.business_city.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
+				});
+			},
+			apiData:function(d){
+				console.log(d)
+			}
 		},
 		eventHandle:{
 			init:function(){

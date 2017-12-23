@@ -41,7 +41,8 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .prompt{position: fixed;position: -ms-device-fixed;padding:20px;background:rgba(0,0,0,0.6);color:#FFF;font-size: 24px;border-radius: 12px;z-index: 1000;left: 50%;display: none;top:26%;}
 /*提交按钮90高度*/
 .submit_btn90{width: 100%;height: 90px;background-image: url(../img/bg_02.png);background-repeat: repeat;background-position: left center;background-origin: content-box;  text-align: center;line-height: 90px;color: #FFFFFF;font-size: 34px;border-radius: 6px;}
-
+/*按钮不可点击*/
+.submit_isnot{background: #909090;}
 .toast-ui {
     display: none;
     top: 350px;
@@ -326,6 +327,8 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .policy_details_box_top dd{height: 80px;padding-left: 30px;line-height: 80px;float: left;}
 .policy_details_box_top dd span{padding-right: 20px;}
 .policy_details_box_center{padding: 0 24px;padding-top: 100px;}
+/*订单详情*/
+.order_details_box .policy_details_box_top p{line-height: 40px;}
 /*车商城*/
 .car_mall_info{padding: 0 24px;background: #FFFFFF;}
 .car_item{padding: 15px 0;background: #FFFFFF;line-height: 30px;font-size: 20px;color: #6F7174;}
@@ -336,10 +339,18 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 32px;color: #303030;}
 .car_item .description{font-size: 26px;color: #9E9E9E;line-height: 46px;min-height: 76px;}
 .car_item .money{font-size: 32px;color: #ec5330;}
-.car_mall_center{padding: 36px 40px;width: 100%;padding-top: 80px;}
+.car_mall_center{padding: 24px;width: 100%;margin-top: 20px;background: #FFF;padding-top: 80px;}
 .car_mall_center .car_staging_box_title{background: url(../img/bg_title_gold@2x.png) no-repeat center;}
 
-.car_section{width: 100%;padding: 30 0px;margin-bottom: 30px;}
+.car_mall_center .car_staging_box_header{border: none;}
+.car_section_middle{margin-bottom: 30px;background: url(../img/commit@2x.png) no-repeat left top;min-height: 60px;line-height: 60px;text-indent: 80px;font-size: 30px;color: #303030;}
+.car_section{width: 100%;margin-bottom: 30px;}
+.car_mall_section_center{line-height: 60px;color: #303030;font-size: 30px;text-indent: 80px;}
+.car_mall_center .car_section{border-width: 4px ;border-style: solid;border-radius: 20px;}
+.car_mall_center .car_section:first-child{border-color: #c68b43;}
+.car_mall_center .car_section:last-child{border-color: #48412f;}
+.car_mall_context{font-size: 28px;}
+
 
 .car_mall_footer{height: 100px;line-height: 100px;font-size: 36px;color: #FFFFFF;display: flex;text-align: center;width: 100%;}
 .car_mall_footer .car_footer_item{flex: 1;}

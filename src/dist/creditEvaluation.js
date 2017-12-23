@@ -311,6 +311,7 @@ define(function(require, exports, module){
 					imgupload.init(files,common.API,options,callBack)
 				})
 				$(".submit_btn90").on("click",function(){
+					
 					pub.creditEvaluation.credit_assess_rcd_add.init();
 				})
 				$(".alert_msg").on("click",".submit_btn90,.alert_del",function(){

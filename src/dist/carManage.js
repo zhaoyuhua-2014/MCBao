@@ -29,33 +29,105 @@ define(function(require, exports, module){
 	pub.garage = {
 		init : function (){
 			require("LayerCss");
-			require("LayerJs");
-			pub.garage.coupon_info_show.init();
+			require("LayerJs");//coupon_info_show
+			pub.garage.car_info_list.init();
 		},
-		coupon_info_show: {
+		car_info_list: {
 			init:function(){
 				common.ajaxPost($.extend({
-					method:'coupon_info_show',
+					method:'car_info_list',
 				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.garage.coupon_info_show.apiData( d );
+					d.statusCode == "100000" && pub.garage.car_info_list.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
 				var o = d.data,html = '';
 				if (o.length == 0) {
-					//$(".garage_box").html("车库空空如也！").css({"text-align":"center","font-size":"50px","line-height":"80px"});
+					$(".garage_box").html("车库空空如也！").css({"text-align":"center","font-size":"50px","line-height":"80px"});
 				}else{
+					var status = '',l=o.length,html='';//status 1:表示不需要圆角；2：表示第一个，3：表示最后一个；4：表示中间的
 					
+					for(var i in o){
+						status = getstatus(i);
+						//console.log(status)
+						html += creatCar(o[i],i,status)
+					}
+					$(".garage_box").html(html)
 				}
-				init();
+				function getstatus (i) {
+					var s = '';
+					if (l == 1) {
+						s = '1'
+					}else if(l==2){
+						s = parseInt(i)+2;
+					}else{
+						if (i == '0') {
+							s = '2'
+						}else if(parseInt(l-1) == i){
+							s = '3'
+						}else{
+							s = '4'
+						}
+					};
+					return s;
+				}
+				function creatCar(d,i,status){
+					console.log(status)
+					var str = '';
+					if (i == 0) {
+						str += '<div class="line-wrapper actived" dataid="'+ d.id +'">'
+					}else{
+						str += '<div class="line-wrapper" dataid="'+ d.id +'">'
+					}
+						
+						str += '	<div class="line-scroll-wrapper clearfloat">'
+						str += '		<dl class="line-normal-wrapper garage_car_item clearfloat ">'
+						str += '			<dt class="line-normal-avatar-wrapper"><img src="'+ d.bidPicUrl +'"></dt>'
+						str += '			<dd class="line-normal-info-wrapper">'
+						str += '				<p>车牌号:'+ d.carNoProvince + d.carNoCity + d.carNo +'</p>'
+						str += '				<p>车型:'+ d.carBrandKind +'</p>'
+						str += '				<div class="clearfloat">'
+					if (d.status == 0) {
+						str += '					<p class="float_left">状态: <span class="color_or">认证有礼</span></p>'
+						str += '					<p class="float_right color_or">去认证</p>'
+					} else if(d.status == 1){
+						str += '					<p class="float_left">状态: <span class="color_gr">已认证</span></p>'
+						str += '					<p class="float_right color_re"></p>'
+					}
+						
+						
+						str += '				</div>'
+						str += '			</dd>'
+					if(status == '1'){
+						str +=''
+					}else if(status == "2"){
+						str += '			<span class="border_radius bottom_left"></span>'
+						str += '			<span class="border_radius bottom_right"></span>'
+					}else if(status == "3"){
+						str += '			<span class="border_radius top_left"></span>'
+						str += '			<span class="border_radius top_right"></span>'
+					}else if(status == "4"){
+						str += '			<span class="border_radius top_left"></span>'
+						str += '			<span class="border_radius top_right"></span>'
+						str += '			<span class="border_radius bottom_left"></span>'
+						str += '			<span class="border_radius bottom_right"></span>'
+					}
+						str += '		</dl>'
+						str += '		<div class="line-btn-delete"><button>删除</button></div>'
+						str += '	</div>'
+						str += '</div>'
+					
+					return str;
+				}
+				init()
 			}
 		},
 		car_info_delete : {
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'car_info_delete',
-					carId:"01"
+					carId:pub.options.carId,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.garage.car_info_delete.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
@@ -63,16 +135,18 @@ define(function(require, exports, module){
 			},
 			apiData:function(d){
 				var o = d.data,html = '';
-				$(".garage_box .line-wrapper").eq(pub.nood.index()).remove();
+				$(".garage_box .line-wrapper").eq(pub.options.carIndex).remove();
 			}
 		},
 		eventHandle:{
 			init:function(){
 				$(".garage_box").on("click",".garage_car_item dd",function(){
-					console.log("click")
+					
 					var nood = $(this).parents(".line-wrapper");
 					if (!nood.is(".actived")) {
-						nood.addClass("actived").siblings().removeClass("actived")
+						nood.addClass("actived").siblings().removeClass("actived");
+						//nood.find('.line-normal-info-wrapper .clearfloat .float_right').html("默认");
+						//nood.siblings().find('.line-normal-info-wrapper .clearfloat .float_right').html("")
 					}
 				})
 				$(".garage_box").on("click",".garage_car_item dd .float_right.color_or",function(e){
@@ -84,8 +158,9 @@ define(function(require, exports, module){
 				})
 				$(".garage_box").on("click",".line-btn-delete",function(e){
 					pub.nood = $(this).parents(".line-wrapper");
-					console.log(pub.nood.attr("dataid"))
-					console.log(pub.nood.index())
+					pub.options.carId = pub.nood.attr("dataid");
+					pub.options.carIndex = pub.nood.index();
+					
 					//
     				var layerIndex = layer.open({
     					content: '您确定要删除该车吗？',
@@ -105,16 +180,16 @@ define(function(require, exports, module){
 	pub.addCar = {
 		init : function (){
 			var car = {
-						carBrand:"奥迪",//车品牌名称
-						carBrandCode:"01",//车品牌编码
-						carBrandKind:"2017豪华版",//车品牌系名称
-						carBrandKindCode:"0101",//车品牌系编码
-						carNo:"88888",//车牌号
-						carNoCity:"A",//车牌城市代码
-						carNoProvince:"浙",//车牌省简称
-						ownerName:"赵玉华",//车主姓名
-						carType:"01",//车类型
-					};
+				carBrand:"奥迪",//车品牌名称
+				carBrandCode:"01",//车品牌编码
+				carBrandKind:"2017豪华版",//车品牌系名称
+				carBrandKindCode:"0101",//车品牌系编码
+				carNo:"88888",//车牌号
+				carNoCity:"A",//车牌城市代码
+				carNoProvince:"浙",//车牌省简称
+				ownerName:"赵玉华",//车主姓名
+				carType:"01",//车类型
+			};
 					
 			//暂时方便不用每次都要输入
 			var car = localStorage.getItem("car");
@@ -315,10 +390,29 @@ define(function(require, exports, module){
 					"left":"120px",
 				})
 				/*内容初始化*/
-				var box = $(".car_brand_fiexd");
-				box.find()
+				var box = $(".car_brand_fiexd"),
 				
+					tit = box.find(".car_brand_list_item"),
+					
+					center = box.find(".car_brand_list_box div"),
+					o = d.data.bversionist,
+					html = '';
+					
+					tit.find("dt img").attr("src",pub.options.brand.brandLog);
+					
+					tit.find("dd").html(pub.options.brand.brandName);
+					
+				console.log(o.length)
+				if (o.length == 0) {
+					 box.find(".car_brand_list_box div").html("<p>暂无数据</p>").css("line-height","100px").css("text-align","center");
+				} else{
+					for (var i in o) {
+						html += '<p class="list_item" data="'+o[i].brandVersionCode+'">'+o[i].brandVersionName+'</p>'
+					}
+				}
 				
+				center.html(html);	
+				html = '';
 				
 			}
 		},
@@ -329,11 +423,13 @@ define(function(require, exports, module){
 					pub.carBrand.brand_version_query.init();
 				})
 				$('.car_brand_list_wrap').on("click",".car_brand_list_item",function(){
+					pub.options.brand = {
+						brandId : $(this).attr("id"),
+						brandCode : $(this).attr("code"),
+						brandName : $(this).find("dd").html(),
+						brandLog : $(this).find("dt img").attr("src"),
+					}
 					pub.options.brandId = $(this).attr("id");
-					pub.options.brandCode = $(this).attr("code");
-					pub.options.brandName = $(this).find("dd").html();
-					pub.options.brandLog = $(this).find("dt img").attr("src");
-					
 					pub.carBrand.brand_version_query.init();
 					
 				})
@@ -361,6 +457,16 @@ define(function(require, exports, module){
 					pub.Back = l.length + 1;
 				})
 				$(".car_brand_fiexd").on("click",".list_item",function(){
+					
+					var carBrand = {
+						carBrand:pub.options.brand.brandName,//车品牌名称
+						carBrandCode:pub.options.brand.brandCode,//车品牌编码
+						carBrandKind:$(this).html(),//车品牌系名称
+						carBrandKindCode:$(this).attr("data"),//车品牌系编码
+					}
+					
+					localStorage.setItem("carBrand",JSON.stringify(carBrand))
+					
 					common.jumpHistryBack(pub.Back);
 				})
 			}
