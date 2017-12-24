@@ -23,6 +23,10 @@ define(function(require, exports, module){
 		sign : pub.sign,
 		tokenId : pub.tokenId
 	};
+	
+	pub.options = {
+		
+	}
 	//付款页面
 	pub.payment = {
 		init:function(){
@@ -56,7 +60,23 @@ define(function(require, exports, module){
 	//在线支付
 	pub.linePayment = {
 		init:function(){
-			pub.linePayment.order_insurance_submit.init();
+			pub.options.pageType = common.getUrlParam("orderType");//4表示车定金支付
+			pub.options.orderData = JSON.parse(localStorage.getItem("orderData"));
+			pub.linePayment.htmlInit();
+			//pub.linePayment.order_insurance_submit.init();
+		},
+		htmlInit:function(){
+			if (pub.options.pageType == 4) {
+				var d = pub.options.orderData,o = d.orderInfo,good = o.details[0],c = d.couponlist,
+					nood = $(".carDeposit.line_pay_top");
+				nood.find(".line_pay_ .line_pay_item").eq(0).find(".color_9e").html(o.orderCode);
+				nood.find(".line_pay_ .line_pay_item").eq(1).find(".color_9e").html(o.realPayMoney);
+				
+				nood.find('.lin_pay_packet .float_right .icon').html(c.length + "张可用");
+				
+				nood.find(".line_pay_subtotal .float_right .color_e82b21").html((o.realPayMoney ? "￥"+ o.realPayMoney : ""))
+				
+			}
 		},
 		order_insurance_submit:{
 			init:function(){
@@ -92,7 +112,9 @@ define(function(require, exports, module){
 		eventHandle : {
 			init:function(){
 				$(".submit_btn90").on("click",function(){
-					common.jumpLinkPlain("../html/pay_result.html")
+					if (pub.options.pageType == 4) {
+						common.jumpLinkPlain("../html/pay_result.html")
+					}
 				})
 				$(".lin_pay_packet").on("click",".float_right.icon",function(){
 					common.jumpLinkPlain("../html/red_packet.html")

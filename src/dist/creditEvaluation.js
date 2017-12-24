@@ -24,8 +24,10 @@ define(function(require, exports, module){
 		tokenId : pub.tokenId
 	};
 	pub.options = {
-		
-	}
+		evaluation : JSON.parse(localStorage.getItem("evaluation")),
+		imgUrlObj : JSON.parse(localStorage.getItem("imgUrlObj")),
+	};
+	
 	//信用评估页面
 	pub.creditEvaluation = {
 		
@@ -35,8 +37,11 @@ define(function(require, exports, module){
 			require ("PickerCss");
 			pub.creditEvaluation.dataInit();
 			pub.creditEvaluation.dataInit1();
+			pub.creditEvaluation.BuyCarTime();
 			//s数据的缓存显示
 			var imgUrl = common.imgUrlObj.getItem();
+			//console.log(imgUrl)
+			
 			if (imgUrl) {
 				imgUrl = JSON.parse(imgUrl);
 				if (imgUrl.user_a) {
@@ -191,6 +196,76 @@ define(function(require, exports, module){
 			    }
 			});
     	},
+    	BuyCarTime:function(){
+    		var year = [];
+			var today = new Date();
+			var year_n = today.getFullYear();
+			for (var i = year_n; i <= (year_n + 5); i++) {
+			    year.push(i);
+			}
+			var month = [];
+			for (var i = 1; i <= 12; i++) {
+			    month.push(i);
+			}
+			pub.picker8 = new myPicker({
+			    cols: [{
+			        options: year,
+			        suffix: "年",
+			    }, {
+			        options: month,
+			        suffix: "月",
+			    }, {
+			        options: [],
+			        suffix: "日",
+			    },],
+			    title:'请选择提车日期',
+			    onOkClick: function (values) {
+			    	var str = values[0] + "年" + values[1] + "月" + values[2] + "日";
+			        $('#buycarDate').val(str);
+			    },
+			    setValues: [today.getFullYear(), today.getMonth() + 1, today.getDate()],
+			    onSelectItem: function (i, index, value) {
+			        if (i != 2) {
+			            var year = this.getValue(0);
+			            var month = this.getValue(1);
+						
+			            if (year == null || month == null)
+			                return
+			
+			            var curDate = new Date();
+			            curDate.setYear(year);
+			            
+			            if (year == today.getFullYear()) {
+			            	var months = [];
+			            	for (var i = today.getMonth() + 1; i <= 12; i++) {
+				                months.push(i);
+				            };
+				            this.setOptions(1, months);
+			            }else{
+			            	var months = [];
+			            	for (var i = 1; i <= 12; i++) {
+							    months.push(i);
+							}
+			            	this.setOptions(1, months);
+			            }
+			            curDate.setMonth(month);
+			            curDate.setDate(0);
+			
+			            var day = [];
+			            if (year == today.getFullYear() && month == today.getMonth()+1) {
+			            	for (var i = today.getDate(); i <= curDate.getDate(); i++) {
+				                day.push(i);
+				            }
+			            }else{
+			            	for (var i = 1; i <= curDate.getDate(); i++) {
+				                day.push(i);
+				            }
+			            }
+			            this.setOptions(2, day);
+			        }
+			    }
+			});
+    	},
 		idcard_img_upload : {
 			init:function(){
 				
@@ -209,30 +284,31 @@ define(function(require, exports, module){
 		credit_assess_rcd_add : {
 			init:function(){
 				common.ajaxPost($.extend({
-					method:'credit_assess_rcd_add',
-					belongUser : '123',
+					method:'credit_assess_rcd_add',/*
+					belongUser : pub.userId,
 					ownerFidPicUrl:'https://imgsa.baidu.com/exp/w=480/sign=c0e51c2574c6a7efb926a92ecdf8afe9/a9d3fd1f4134970a17baa9d597cad1c8a6865d7a.jpg',//自己身份证正面图片URL
 					ownerBidPicUrl:'https://imgsa.baidu.com/exp/w=480/sign=c0e51c2574c6a7efb926a92ecdf8afe9/a9d3fd1f4134970a17baa9d597cad1c8a6865d7a.jpg',//自己身份证反面图片URL
-					isSingle : '0',//是否单身
+					isSingle : '1',//是否单身
 					spouseFidPicUrl : 'https://imgsa.baidu.com/exp/w=480/sign=c0e51c2574c6a7efb926a92ecdf8afe9/a9d3fd1f4134970a17baa9d597cad1c8a6865d7a.jpg',//夫妻身份证正面图片URL
 					spouseBidPicUrl : 'https://imgsa.baidu.com/exp/w=480/sign=c0e51c2574c6a7efb926a92ecdf8afe9/a9d3fd1f4134970a17baa9d597cad1c8a6865d7a.jpg',//夫妻身份证反面图片URL
+					
 					buycarDate:'123',
-					buycarCity:'3301',//买车城市
-					regcar_city:'0012',
+					buycarCity:'浙江省，杭州市',//买车城市
+					regcar_city:'浙江省，杭州市',
 					carGoodId:'1',//车id
 					carPrice:'100',//车price
 					carDeposit:'123',
-					carDownPay:'123',
-					carLoan:'123',
-					brandName:'123',
+					brandName:'123',*/
 					websiteNode:common.WebsiteNode,
-				}, pub.userBasicParam ),function( d ){
+				}, pub.userBasicParam , pub.options.evaluation),function( d ){
 					d.statusCode == "100000" && pub.creditEvaluation.credit_assess_rcd_add.apiData( d );
 				});
 				
 			},
 			apiData:function( d ){
 				$(".alert_msg").removeClass("hidden");
+				common.imgUrlObj.removeItem();
+				localStorage.removeItem("evaluation");
 			}
 		},
 		eventHandle : {
@@ -246,15 +322,20 @@ define(function(require, exports, module){
 						$(".updata_card_info.margin100").is(".hidden") && $(".updata_card_info.margin100").removeClass("hidden")
 					}
 				});
-				$("#putCarCity,#carBrandCity").on("focus",function(){
+				$("#putCarCity,#carBrandCity,#buycarDate").on("focus",function(){
 					$(this).blur();
 				})
+				$("#buycarDate").on("click",function(){
+					pub.picker8.show();
+				})
+				
 				$("#putCarCity").on("click",function(){
 					pub.picker1.show();
 				})
 				$("#carBrandCity").on("click",function(){
 					pub.picker2.show();
 				})
+				
 				$(".updata_card_info input").on("change",function(){
 					require("imgUpload");
 					//nood 自己 noodparent 父元素 
@@ -302,7 +383,6 @@ define(function(require, exports, module){
 							}else{
 								r = o;
 							}
-							console.log(r)
 							common.imgUrlObj.setItem(JSON.stringify(r));
 						}else{
 							common.prompt( d.statusCode );
@@ -311,6 +391,64 @@ define(function(require, exports, module){
 					imgupload.init(files,common.API,options,callBack)
 				})
 				$(".submit_btn90").on("click",function(){
+					var obj = {
+						
+						isSingle : $("input[name='marry']").val(),//是否单身
+						
+						buycarDate:$("#buycarDate").val(),//买车日期
+						buycarCity:$("#putCarCity").val(),//提车城市
+						regcar_city:$("#carBrandCity").val(),//上牌城市
+						
+						belongUser : pub.userId,
+					};
+					//输入信息验证
+					if (!obj.buycarDate) {
+						common.prompt("请选择提车日期");
+						return;
+					}else if(!obj.buycarCity){
+						common.prompt("请选择期望提车城市");
+						return;
+					}else if(!obj.regcar_city){
+						common.prompt("请输入期望上牌地");
+						return;
+					}
+					pub.options.imgUrlObj = JSON.parse(localStorage.getItem("imgUrlObj"))
+					
+					if (!pub.options.imgUrlObj) {
+						common.prompt("请上传身份证信息");
+						return;
+					}else if(!pub.options.imgUrlObj.user_a){
+						common.prompt("请上传身份证正面信息");
+						return;
+					}else if(!pub.options.imgUrlObj.user_b){
+						common.prompt("请上传身份证反面信息");
+						return;
+					}else if (obj.isSingle == '1'){
+						if(!pub.options.imgUrlObj.partner_a){
+							common.prompt("请上传伴侣身份证正面信息");
+							return;
+						}else if(!pub.options.imgUrlObj.partner_b){
+							common.prompt("请上传伴侣身份证反面信息");
+							return;
+						}
+					}
+					
+					
+					
+					if (obj.isSingle == '0') {
+						obj.ownerFidPicUrl = pub.options.imgUrlObj.user_a;//自己身份证正面图片URL
+						obj.ownerBidPicUrl = pub.options.imgUrlObj.user_b;//自己身份证反面图片URL
+						obj.spouseFidPicUrl = '';//夫妻身份证正面图片URL
+						obj.spouseBidPicUrl = '';//夫妻身份证反面图片URL
+					}else if(obj.isSingle == "1"){
+						obj.ownerFidPicUrl = pub.options.imgUrlObj.user_a;//自己身份证正面图片URL
+						obj.ownerBidPicUrl = pub.options.imgUrlObj.user_b;//自己身份证反面图片URL
+						obj.spouseFidPicUrl = pub.options.imgUrlObj.partner_a;//夫妻身份证正面图片URL
+						obj.spouseBidPicUrl = pub.options.imgUrlObj.partner_b;//夫妻身份证反面图片URL
+					}
+					pub.options.evaluation = $.extend({},obj, pub.options.evaluation);
+					
+					console.log(pub.options.evaluation);
 					
 					pub.creditEvaluation.credit_assess_rcd_add.init();
 				})
@@ -324,33 +462,39 @@ define(function(require, exports, module){
 	//车辆认证
 	pub.upLoad_driverLicense = {
 		init:function(){
-			//s数据的缓存显示
-			var imgUrl = common.imgUrlObj.getItem();
-			if (imgUrl) {
-				imgUrl = JSON.parse(imgUrl);
-				if (imgUrl.user_a) {
-					$(".user_a").attr("src",imgUrl.user_a)
-				}
-				if (imgUrl.user_b) {
-					$(".user_b").attr("src",imgUrl.user_b)
-				}
-				if (imgUrl.partner_a) {
-					$(".partner_a").attr("src",imgUrl.partner_a)
-				}
-				if (imgUrl.partner_b) {
-					$(".partner_b").attr("src",imgUrl.partner_b)
-				}
-				if (imgUrl.user_drive_a) {
-					$(".user_drive_a").attr("src",imgUrl.user_drive_a)
-				}
-				if (imgUrl.user_drive_b) {
-					$(".user_drive_b").attr("src",imgUrl.user_drive_b)
-				}
+			pub.options.carId = common.getUrlParam("id");
+			pub.upLoad_driverLicense.car_info_show.init();
+			
+		},
+		car_info_show : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'car_info_show',
+					carId:pub.options.carId,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.upLoad_driverLicense.car_info_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				
 			}
 		},
-		car_renzhegn : {
+		car_info_update : {
 			init:function(){
-				common.prompt("缺少车辆认证接口")
+				common.ajaxPost($.extend({
+					method:'car_info_update',
+					carId:pub.options.carId,
+					bdriverPicUrl:pub.options.bdriverPicUrl,
+					fdriverPicUrl:pub.options.fdriverPicUrl,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.upLoad_driverLicense.car_info_update.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				
+				common.jumpHistryBack();
 			}
 		},
 		eventHandle : {
@@ -382,7 +526,7 @@ define(function(require, exports, module){
 						if( d.statusCode == "100000" ){
 							nodes.parent().find("img").attr("src",d.data);
 							/*将ImgUrl存储到本地*/
-							var imgUrl = common.imgUrlObj.getItem(),o = {},r={};
+							/*var imgUrl = common.imgUrlObj.getItem(),o = {},r={};
 							
 							if (imgType == 11) {
 								o = {"user_a":d.data}
@@ -404,7 +548,7 @@ define(function(require, exports, module){
 								r = o;
 							}
 							console.log(r)
-							common.imgUrlObj.setItem(JSON.stringify(r));
+							common.imgUrlObj.setItem(JSON.stringify(r));*/
 						}else{
 							common.prompt( d.statusCode );
 						}
@@ -418,12 +562,57 @@ define(function(require, exports, module){
 					} else if($(".user_drive_b").attr("src").indexOf("http:") < 0){
 						common.prompt("请上传驾驶证反面图片")
 					}else{
-						pub.upLoad_driverLicense.car_renzhegn.init();
+						pub.options.bdriverPicUrl = $(".user_drive_a").attr("src");
+						pub.options.fdriverPicUrl = $(".user_drive_b").attr("src");
+						pub.upLoad_driverLicense.car_info_update.init();
 					}
 				})
 			}
 		}
 	}
+	//信用评估列表页面
+	pub.evaluationList = {
+		init:function(){
+			pub.evaluationList.credit_assess_rcd_query.init();
+		},
+		credit_assess_rcd_query : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'credit_assess_rcd_query',
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.evaluationList.credit_assess_rcd_query.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+			}
+		},
+		credit_assess_rcd_show : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'credit_assess_rcd_show',
+					//goodsId:pub.options.goodsId
+					id:"1",
+					tokenId:pub.tokenId,
+				}, {}),function( d ){
+					d.statusCode == "100000" && pub.evaluationList.credit_assess_rcd_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+			}
+		},
+		eventHandle:{
+			init:function(){
+				
+			}
+		}
+	}
+	
+	
+	
 	//事件处理
 	pub.eventHandle = {
 		init:function(){
@@ -441,6 +630,9 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "upLoad_driverLicense"){
     		pub.upLoad_driverLicense.init();
 			pub.upLoad_driverLicense.eventHandle.init();
+    	}else if (pub.module_id == "evaluationList"){
+    		pub.evaluationList.init();
+			pub.evaluationList.eventHandle.init();
     	}
 		pub.eventHandle.init()
 	};

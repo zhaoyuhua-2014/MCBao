@@ -178,7 +178,8 @@ body[data-type="index"] {background: #000000;}
 .changecity_content .hot_title{height: 72px;line-height: 60px;color: #9E9E9E;padding: 0 24px;}
 .changecity_content .city_box{padding-left: 24px;}
 .hot_city{border-bottom: 1px solid #E1E1E1;}
-.city_item{width: 204px;height: 80px;float: left;text-align: center;line-height: 80px;border: 1px solid #ebebeb;border-radius: 8px;margin-right: 20px;margin-bottom: 20px;background: #FFFFFF;}
+.city_item{width: 204px;height: 80px;float: left;text-align: center;line-height: 75px;border: 1px solid #ebebeb;border-radius: 8px;margin-right: 20px;margin-bottom: 20px;background: #FFFFFF;}
+.city_item.icon{background-image: url(../img/map_icon.png);background-repeat: no-repeat;background-position: 24% center;}
 .city_first_letter{height: 55px;line-height: 55px;padding-left:24px ;}
 .city_list_box{padding-left: 24px;background: #FFFFFF;}
 .city_list_item{height: 90px;line-height: 90px;border-bottom: 1px solid #c8c7cc;}
@@ -252,8 +253,8 @@ body[data-type="index"] {background: #000000;}
 .garage_car_item dt,.garage_car_item dd{float: left;height: 199px;}
 .garage_car_item dt{width: 200px;}
 .garage_car_item dt img{width: 100%;height: 100%;}
-.garage_car_item dd{line-height: 46px;color: #333;font-size: 28px;width: 502px;padding-top: 40px;padding-left: 24px; background: #FFFFFF url(../img/choose@2x.png) no-repeat right 46px;}
-.line-wrapper.actived .garage_car_item dd{background-image: url(../img/choosen@2x.png);}
+.garage_car_item dd{line-height: 46px;color: #333;font-size: 28px;width: 502px;padding-top: 40px;padding-left: 24px; /*background: #FFFFFF url(../img/choose@2x.png) no-repeat right 46px;*/}
+/*.line-wrapper.actived .garage_car_item dd{background-image: url(../img/choosen@2x.png);}*/
 
 .garage_car_item.actived dd{background-image: url(../img/choosen@2x.png);}
 
@@ -282,7 +283,7 @@ body[data-type="index"] {background: #000000;}
 .alert_car_img img{width: 100%;height: 100%;}
 .alert_car_img_box_bottom span{float: right;line-height: 100px;text-align: right;font-size: 36px;}
 /*车险分期-保单详情-选择投保方案-订单详情----------公用*/
-.car_staging_box{width: 100%;min-height: 500px;padding: 0 24px;position: relative;background: #FFFFFF;border-radius: 10px;font-size: 30px;}
+.car_staging_box{width: 100%;min-height: 250px;padding: 0 24px;position: relative;background: #FFFFFF;border-radius: 10px;font-size: 30px;}
 .car_staging_box_title{position: absolute;top: -40px;width: 418px;background: url(../img/bg_title@2x.png) no-repeat center;left: 50%;margin-left: -209px;
 height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_staging_box_header{border-bottom: 2px dashed #ff8b84;}
@@ -329,6 +330,8 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .policy_details_box_center{padding: 0 24px;padding-top: 100px;}
 /*订单详情*/
 .order_details_box .policy_details_box_top p{line-height: 40px;}
+.order_details_box .car_staging_item_box .float_right {max-width: 350px;white-space: pre-wrap;}
+.order_details_box .car_staging_item_box .car_staging_box_c_item {height: auto;}
 /*车商城*/
 .car_mall_info{padding: 0 24px;background: #FFFFFF;}
 .car_item{padding: 15px 0;background: #FFFFFF;line-height: 30px;font-size: 20px;color: #6F7174;}
@@ -497,6 +500,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .mall_center{padding: 0 24px;background: #FFFFFF;}
 .mall_center .mall_center_item{border-bottom: 1px solid #dadada;background: #FFFFFF;}
 .mall_center .mall_center_item:last-child{border-bottom: none;}
+.click_load {height:60px;line-height:60px;text-align:center;font-size:28px;}
 /*搜索页面*/
 .header_search{background: #FFF;}
 .header_search .search{padding: 15px 0;padding-left: 96px;padding-right: 98px;}
@@ -562,7 +566,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .pay_detailes{padding: 0 24px;}
 .pay_detailes .msg{color: #fc7c7c;font-size: 24px;line-height: 50px;}
 /*在线支付*/
-.line_pay_top{min-height: 400px;width: 100%;background: url(../img/bg_pay_list@2x.png) no-repeat center bottom;font-size: 30px;}
+.line_pay_top{min-height: 200px;width: 100%;background: url(../img/bg_pay_list@2x.png) no-repeat center bottom;font-size: 30px;}
 .line_pay_top ul{background: #FFFFFF;padding: 0 24px;padding-top: 30px;}
 .line_pay_item{height: 60px;line-height: 60px;}
 .line_pay_msg{height: 52px;line-height: 38px;padding: 14px 24px 0 24px;background: #FFFFFF;font-size: 24px;color: #FC7C7C;}
@@ -638,7 +642,8 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .order_item_top .float_right{font-size: 28px;color: #999999;}
 .order_item_top .float_right.color_or{color: #F5812C;}
 .order_item_bottom{padding: 20px 0;display: flex;height: 140px;}
-.oreder_item_b_left{width: 120px;}
+.oreder_item_b_left{width: 100px;}
+.oreder_item_b_left img{width: 100%;height: 100%;}
 .oreder_item_b_center{width: 460px;padding-left: 30px;}
 .order_item_title{height: 50px;color: #303030;font-size: 30px;}
 .order_item_money{color: #ff5959;font-size: 36px;}

@@ -93,7 +93,32 @@ define(function(require, exports, module){
 				});
 			},
 			apiData:function(d){
-				console.log(d)
+				var d = d.data,all = d.allCity,hot = d.hotCity;
+				pub.changeCity.business_city.allCity(all);
+				pub.changeCity.business_city.hotCity(hot);
+			},
+			allCity:function(d){
+				var html = '';
+				html +='<div class="citys_letter">'
+				html +='	<div class="city_first_letter">'
+				html +='		<a name="A">所有站点</a>'
+				html +='	</div>'
+				html +='	<div class="city_list_box">'
+				
+				for (var i in d) {
+				html +='		<div class="city_list_item" data = "'+d[i].websiteNode+'">'+d[i].websiteName+'</div>'
+				}
+				html +='	</div>'
+				html +='</div>'
+				
+				$(".all_city").html(html);
+			},
+			hotCity:function(d){
+				var html = '';
+				for (var i in d) {
+					html += '<span class="city_item" data = "'+d[i].websiteNode+'">'+d[i].websiteName+'</span>'
+				}
+				$(".hot_city .city_box").html(html);
 			}
 		},
 		eventHandle:{
@@ -102,13 +127,18 @@ define(function(require, exports, module){
 				wh = document.documentElement.clientHeight;
 				$(".changecity_content").css("overflow-y","auto")
 				$(".changecity_content").height(wh-186);
-				
+				console.log("124")
 				$("#position").on("click",function(){
-					if ($("#position").is("success")) {
+					if ($("#position").is(".success")) {
 						console.log("带回城市:"+$(this).html()+"返回首页")
 					}
+				});
+				$('.hot_city').on("click",".city_item",function(){
+					common.jumpHistryBack();
 				})
-				
+				$(".all_city").on("click",".city_list_item",function(){
+					common.jumpHistryBack();
+				})
 			}
 		}
 	}

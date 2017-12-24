@@ -82,7 +82,7 @@ define(function(require, exports, module){
 					}
 						
 						str += '	<div class="line-scroll-wrapper clearfloat">'
-						str += '		<dl class="line-normal-wrapper garage_car_item clearfloat ">'
+						str += '		<dl class="line-normal-wrapper garage_car_item clearfloat " status = "'+d.status+'">'
 						str += '			<dt class="line-normal-avatar-wrapper"><img src="'+ d.bidPicUrl +'"></dt>'
 						str += '			<dd class="line-normal-info-wrapper">'
 						str += '				<p>车牌号:'+ d.carNoProvince + d.carNoCity + d.carNo +'</p>'
@@ -92,11 +92,15 @@ define(function(require, exports, module){
 						str += '					<p class="float_left">状态: <span class="color_or">认证有礼</span></p>'
 						str += '					<p class="float_right color_or">去认证</p>'
 					} else if(d.status == 1){
-						str += '					<p class="float_left">状态: <span class="color_gr">已认证</span></p>'
+						str += '					<p class="float_left">状态: <span class="color_gr">认证中</span></p>'
+						str += '					<p class="float_right color_re"></p>'
+					} else if(d.status == 2){
+						str += '					<p class="float_left">状态: <span class="color_gr">认证通过</span></p>'
+						str += '					<p class="float_right color_re"></p>'
+					} else if(d.status == -1){
+						str += '					<p class="float_left">状态: <span class="color_gr">认证失败</span></p>'
 						str += '					<p class="float_right color_re"></p>'
 					}
-						
-						
 						str += '				</div>'
 						str += '			</dd>'
 					if(status == '1'){
@@ -152,6 +156,17 @@ define(function(require, exports, module){
 				$(".garage_box").on("click",".garage_car_item dd .float_right.color_or",function(e){
 					e.stopPropagation()
 					common.jumpLinkPlain( "car_authentication.html" )
+				});
+				$(".garage_box").on("click",".garage_car_item",function(){
+					var nood = $(this),
+						status = nood.attr("status");
+						id = nood.parents(".line-wrapper").attr("dataid")
+					
+					if (status == 0) {
+						common.jumpLinkPlain("../html/car_authentication.html"+"?id="+id)
+					} else if(status == 1){
+						common.prompt("该车已认证！")
+					}
 				})
 				$(".header_right").on("click",function(){
 					common.jumpLinkPlain( "../html/car_info.html" )
@@ -160,7 +175,7 @@ define(function(require, exports, module){
 					pub.nood = $(this).parents(".line-wrapper");
 					pub.options.carId = pub.nood.attr("dataid");
 					pub.options.carIndex = pub.nood.index();
-					
+					//
 					//
     				var layerIndex = layer.open({
     					content: '您确定要删除该车吗？',

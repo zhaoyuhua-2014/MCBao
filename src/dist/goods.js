@@ -26,13 +26,17 @@ define(function(require, exports, module){
 		tokenId : pub.tokenId
 	};
 	
-	pub.options = {}
+	pub.options = {
+		pageNo:common.PAGE_INDEX,
+		pageSize:common.PAGE_SIZE,
+		isEnd:'',
+	}
 	
 	//商品相关逻辑
 	pub.mall_goods = {
 		init : function (){
-			
-			pub.mall_goods.action_page_ads.init();
+			pub.loading = $(".click_load");
+			//pub.mall_goods.action_page_ads.init();
 			pub.mall_goods.goods_first_type.init();
 		},
 		action_page_ads: {
@@ -67,7 +71,7 @@ define(function(require, exports, module){
 					html += '<div class="mall_nav_item '+(i == 0 ? "actived" : "")+'" data-code="'+o[i].typeCode+'">'+o[i].typeName+'</div>'
 				}
 				$(".mall_nav").html(html);
-				pub.typeCode = o[0].typeCode;
+				pub.first_type = o[0].typeCode;
 				pub.mall_goods.goods_second_type.init();
 			}
 		},
@@ -76,7 +80,7 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'goods_second_type',
 					websiteNode:common.WebsiteNode,
-					typeCode:pub.typeCode,
+					typeCode:pub.first_type,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_second_type.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
@@ -89,16 +93,16 @@ define(function(require, exports, module){
 					html += '<div class="mall_subnav_item '+(i == 0 ? "actived" : "")+'" data-code="'+o[i].typeCode+'"><span>'+o[i].typeName+'</span></div>'
 				}
 				$(".mall_subnav").html(html);
-				pub.typeCode = o[i].typeCode;
-				pub.mall_goods.goods_info_show.init();
+				pub.second_type = o[i].typeCode;
+				pub.mall_goods.goods_info_show2.init();
 			}
 		},
-		goods_info_show : {
+		goods_info_show : {//商品不分页
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'goods_info_show',
 					websiteNode:common.WebsiteNode,
-					typeCode:'0103',
+					typeCode:pub.second_type,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_info_show.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
@@ -109,22 +113,50 @@ define(function(require, exports, module){
 				
 			}
 		},
-		goods_info_show2 : {
+		goods_info_show2 : {//商品不分页
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'goods_info_show2',
 					websiteNode:common.WebsiteNode,
-					typeCode:pub.options.typeCode,
+					typeCode:pub.second_type,
 					pageNo:pub.options.pageNo,
 					pageSize:pub.options.pageSize,
 				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.mall_goods.goods_first_type.apiData( d );
+					d.statusCode == "100000" && pub.mall_goods.goods_info_show2.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
-				var o = d.data;
-				
+				var d = d.data,html = '';
+				pub.options.isEnd = d.isLast;
+				if (pub.options.pageNo == 1) {
+					$(".mall_center_box").html('');
+				}
+				var html = '';
+				console.log(d.objects)
+				if (d.objects.length == '0') {
+					pub.loading.hide();
+					$(".mall_center_box").html("暂无商品数据！").css("line-height","100px").css("text-align","center").css("font-size","30px");
+					return;
+				} else{
+					$(".mall_center_box").removeAttr("style")
+					for ( i in d.objects ) {
+						html +='<dl class="car_item mall_center_item clearfloat" data ="'+d.objects[i].id+'">'
+						html +='	<dt><img src="'+d.objects[i].goodsLogo+'"/></dt>'
+						html +='	<dd>'
+						html +='		<h4>'+d.objects[i].goodsName+'</h4>'
+						html +='		<div class="description">'+d.objects[i].goodsDescribe+'</div>'
+						html +='		<div class="money">￥'+d.objects[i].mcbPrice+'</div>'
+						html +='	</dd>'
+						html +='</dl>'
+					}
+					$(".mall_center_box").append(html).find('.mall_center_item:last dd').css("border-bottom","none");
+					if( pub.options.isEnd ){
+						pub.loading.show().html("没有更多数据了！");
+					}else{
+						pub.loading.show().html("点击加载更多！");
+					};
+				}
 			}
 		},
 		eventHandle:{
@@ -137,13 +169,23 @@ define(function(require, exports, module){
 				/*事件*/
 				var nav = $(".mall_nav"),subNav = $(".mall_subnav"),mall_center = $(".mall_center");
 				nav.on("click",'.mall_nav_item',function(){
-					$(this).addClass("actived").siblings().removeClass("actived")
-				})
+					$(this).addClass("actived").siblings().removeClass("actived");
+					pub.first_type = $(this).attr("data-code");
+					pub.options.pageNo = '1';
+					pub.options.pageSize = '10';
+					pub.mall_goods.goods_second_type.init();
+				});
 				subNav.on("click",'.mall_subnav_item',function(){
-					$(this).addClass("actived").siblings().removeClass("actived")
+					$(this).addClass("actived").siblings().removeClass("actived");
+					pub.second_type = $(this).attr("data-code");
+					pub.options.pageNo = '1';
+					pub.options.pageSize = '10';
+					pub.mall_goods.goods_info_show2.init();
 				})
 				mall_center.on("click",'.mall_center_item ',function(){
-					common.jumpLinkPlain("../html/car_mall.html")
+					var nood = $(this),
+						id = nood.attr("data");
+					common.jumpLinkPlain("../html/car_mall.html"+"?id="+id)
 				})
 				$(".mall_header input").on("click",function(){
 					common.jumpLinkPlain("../html/search.html")
@@ -239,16 +281,17 @@ define(function(require, exports, module){
 		init:function(){
 			require("LayerCss");
 			require("LayerJs");
+			pub.options.goodsId = common.getUrlParam('id');
 			pub.goods.goods_get_by_id.init();
-			pub.goods.credit_assess_rcd_query.init();
-			pub.goods.credit_assess_rcd_show.init();
+			//pub.goods.credit_assess_rcd_query.init();
+			//pub.goods.credit_assess_rcd_show.init();
 		},
 		goods_get_by_id : {
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'goods_get_by_id',
 					//goodsId:pub.options.goodsId
-					goodsId:"1"
+					goodsId:pub.options.goodsId,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.goods.goods_get_by_id.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
@@ -269,7 +312,14 @@ define(function(require, exports, module){
 				$(".car_mall_info").html(html);
 				
 				console.log(JSON.stringify(d));
-				$(".car_mall_context").html(o.goodsContext)
+				$(".car_mall_context").html(o.goodsContext);
+				
+				pub.options.evaluation = {
+					carGoodId:o.id,//车id
+					carPrice:o.mcbPrice,//车价格
+					carDeposit:o.earnestDeposit,//车定金
+					brandName:o.belongBrandName,//p品牌名称
+				}
 				
 			}
 		},
@@ -287,37 +337,7 @@ define(function(require, exports, module){
 				$(".alert_msg").removeClass("hidden");
 			}
 		},
-		credit_assess_rcd_query : {
-			init:function(){
-				common.ajaxPost($.extend({
-					method:'credit_assess_rcd_query',
-					//goodsId:pub.options.goodsId
-					goodsId:"1"
-				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.goods.credit_assess_rcd_query.apiData( d );
-					d.statusCode != "100000" && common.prompt(d.statusStr);
-				});
-			},
-			apiData:function(d){
-				var o = d.data,html = '';
-			}
-		},
-		credit_assess_rcd_show : {
-			init:function(){
-				common.ajaxPost($.extend({
-					method:'credit_assess_rcd_show',
-					//goodsId:pub.options.goodsId
-					id:"1",
-					tokenId:pub.tokenId,
-				}, {}),function( d ){
-					d.statusCode == "100000" && pub.goods.credit_assess_rcd_show.apiData( d );
-					d.statusCode != "100000" && common.prompt(d.statusStr);
-				});
-			},
-			apiData:function(d){
-				var o = d.data,html = '';
-			}
-		},
+		
 		
 		eventHandle:{
 			init:function(){
@@ -328,31 +348,30 @@ define(function(require, exports, module){
 					}else{
 						//创建信用评估
 						var evaluation = {
-							belongUser : '123',//属于哪个用户
-							ownerFidPicUrl:'',//自己身份证正面图片URL
-							ownerBidPicUrl:'',//自己身份证反面图片URL
-							isSingle : '0',//是否单身
-							spouseFidPicUrl : '',//夫妻身份证正面图片URL
-							spouseBidPicUrl : '',//夫妻身份证反面图片URL
+							//belongUser : '123',//属于哪个用户
+							//ownerFidPicUrl:'',//自己身份证正面图片URL
+							//ownerBidPicUrl:'',//自己身份证反面图片URL
+							//isSingle : '0',//是否单身
+							//spouseFidPicUrl : '',//夫妻身份证正面图片URL
+							//spouseBidPicUrl : '',//夫妻身份证反面图片URL
 							
-							buycarDate:'123',//买车日期
+							//buycarDate:'123',//买车日期
 							
-							buycarCity:'3301',//提车城市
-							regcar_city:'0012',//上牌城市
-							carGoodId:'1',//车id
+							//buycarCity:'3301',//提车城市
+							//regcar_city:'0012',//上牌城市
+							//carGoodId:'1',//车id
 							
 							carPrice:'100',//车价格
 							carDeposit:'123',//车定金
-							carDownPay:'123',//车首付
-							carLoan:'123',//车贷款
 							brandName:'123',//p品牌名称
 							
 						};
-						
-						
-						var status = prompt("输入对应的状态？\n 0表示还没有上传身份证信息;\n 1表示征信已查询未通过（15日内）\n 2表示审核中 \n 3表示征信已查询良好（15日内有效）");
+						localStorage.setItem("evaluation",JSON.stringify(pub.options.evaluation))
+						common.jumpLinkPlain("../html/credit_evaluation.html");
+						/*var status = prompt("输入对应的状态？\n 0表示还没有上传身份证信息;\n 1表示征信已查询未通过（15日内）\n 2表示审核中 \n 3表示征信已查询良好（15日内有效）");
 						if (status == 0) {
-							common.jumpLinkPlain("../html/credit_evaluation.html")
+							common.jumpLinkPlain("../html/credit_evaluation.html");
+							
 						}else if(status == 1){
 							layer.open({
 								content: '征信已查询但是未通过,重新认证。',
@@ -366,7 +385,7 @@ define(function(require, exports, module){
 							common.prompt("征信正在努力审核中")
 						}else if(status == 3){
 							common.jumpLinkPlain("../html/car_reserve.html");
-						};
+						};*/
 						
 					}
 				})

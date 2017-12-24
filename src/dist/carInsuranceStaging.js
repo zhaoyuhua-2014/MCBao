@@ -24,6 +24,7 @@ define(function(require, exports, module){
 		tokenId : pub.tokenId
 	};
 	
+	
 	pub.carInsuranceStaging = {
 		init:function(){
 			require('LAreaData');
