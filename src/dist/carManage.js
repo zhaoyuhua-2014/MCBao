@@ -26,6 +26,7 @@ define(function(require, exports, module){
 	
 	pub.options = {}
 	//我的车库
+	//status 0待认证，1车库认证中，2车库已认证()，3车库认证失败；4投保认证中，5投保已认证 ,6投保认证失败
 	pub.garage = {
 		init : function (){
 			require("LayerCss");
@@ -75,15 +76,10 @@ define(function(require, exports, module){
 				function creatCar(d,i,status){
 					console.log(status)
 					var str = '';
-					if (i == 0) {
-						str += '<div class="line-wrapper actived" dataid="'+ d.id +'">'
-					}else{
 						str += '<div class="line-wrapper" dataid="'+ d.id +'">'
-					}
-						
 						str += '	<div class="line-scroll-wrapper clearfloat">'
 						str += '		<dl class="line-normal-wrapper garage_car_item clearfloat " status = "'+d.status+'">'
-						str += '			<dt class="line-normal-avatar-wrapper"><img src="'+ d.bidPicUrl +'"></dt>'
+						str += '			<dt class="line-normal-avatar-wrapper"><img src="../carimg/'+d.carBrandKindCode+'.jpg"></dt>'
 						str += '			<dd class="line-normal-info-wrapper">'
 						str += '				<p>车牌号:'+ d.carNoProvince + d.carNoCity + d.carNo +'</p>'
 						str += '				<p>车型:'+ d.carBrandKind +'</p>'
@@ -97,8 +93,11 @@ define(function(require, exports, module){
 					} else if(d.status == 2){
 						str += '					<p class="float_left">状态: <span class="color_gr">认证通过</span></p>'
 						str += '					<p class="float_right color_re"></p>'
-					} else if(d.status == -1){
+					} else if(d.status == 3){
 						str += '					<p class="float_left">状态: <span class="color_gr">认证失败</span></p>'
+						str += '					<p class="float_right color_re"></p>'
+					} else if(d.status == 4 || d.status == 5 || d.status == 6){
+						str += '					<p class="float_left">状态: <span class="color_gr">认证通过</span></p>'
 						str += '					<p class="float_right color_re"></p>'
 					}
 						str += '				</div>'
@@ -153,10 +152,7 @@ define(function(require, exports, module){
 						//nood.siblings().find('.line-normal-info-wrapper .clearfloat .float_right').html("")
 					}
 				})
-				$(".garage_box").on("click",".garage_car_item dd .float_right.color_or",function(e){
-					e.stopPropagation()
-					common.jumpLinkPlain( "car_authentication.html" )
-				});
+				
 				$(".garage_box").on("click",".garage_car_item",function(){
 					var nood = $(this),
 						status = nood.attr("status");
@@ -164,8 +160,24 @@ define(function(require, exports, module){
 					
 					if (status == 0) {
 						common.jumpLinkPlain("../html/car_authentication.html"+"?id="+id)
-					} else if(status == 1){
+					} else if(status == 2 || status == 4 || status == 5 || status == 6){
 						common.prompt("该车已认证！")
+					} else if(status == 1){
+						var layerIndex = layer.open({
+	    					content: '车辆认证中，请耐心等待。<br/><a href="tel:4008001234">4008001234</a>',
+	    					btn: ['确定', '取消'],
+	    					yes: function(index){
+						    	layer.close(layerIndex)
+	    					}
+	    				});
+					} else if(status == 3){
+						var layerIndex = layer.open({
+	    					content: '认证未通过可咨询客服解决<br/><a href="tel:4008001234">4008001234</a>',
+	    					btn: ['<a href="tel:4008001234" style="display:block;text-align:center">确定</a>', '取消'],
+	    					yes: function(index){
+						    	layer.close(layerIndex)
+	    					}
+	    				});
 					}
 				})
 				$(".header_right").on("click",function(){
@@ -194,7 +206,9 @@ define(function(require, exports, module){
 	//添加新车
 	pub.addCar = {
 		init : function (){
-			var car = {
+			require ("Picker");
+			require ("PickerCss");
+			/*var car = {
 				carBrand:"奥迪",//车品牌名称
 				carBrandCode:"01",//车品牌编码
 				carBrandKind:"2017豪华版",//车品牌系名称
@@ -203,21 +217,37 @@ define(function(require, exports, module){
 				carNoCity:"A",//车牌城市代码
 				carNoProvince:"浙",//车牌省简称
 				ownerName:"赵玉华",//车主姓名
-				carType:"01",//车类型
-			};
-					
+				carType:"person",//车类型
+			};*/
 			//暂时方便不用每次都要输入
 			var car = localStorage.getItem("car");
 			if(car){
 				car = JSON.parse(car);
 				pub.addCar.htmlInit(car);
 			}
-			//pub.addCar.brand_version_query.init();
+			pub.addCar.carOwnerInit.init();
 		},
 		htmlInit:function(d){
 			var nood = $(".car_info_box");
 			console.log(d)
 			
+			if (d.carType) {
+				nood.find("#carTypeValue").val(d.carType);
+				if (d.carType == "person") {
+					nood.find("#carType").val("个人车");
+					nood.find(".carOwner .float_left").html("车主姓名")
+					nood.find("#ownerName").removeAttr("disabled").attr("placeholder","请输入车主姓名")
+				} else if (d.carType == "com"){
+					nood.find("#carType").val("公司车")
+					nood.find(".carOwner .float_left").html("公司名称")
+					nood.find("#ownerName").removeAttr("disabled").attr("placeholder","请输入公司名称")
+				}
+				
+				if (d.ownerName) {
+					nood.find("#ownerName").val(d.ownerName)
+				}
+				nood.find(".carOwner").show();
+			}
 			if(d.carNoProvince && d.carNoCity  && d.carNo){//车牌号
 				nood.find("#car_number").val(d.carNoProvince + d.carNoCity + d.carNo);
 				nood.find("#carNoProvince").val(d.carNoProvince);
@@ -233,20 +263,38 @@ define(function(require, exports, module){
 				nood.find("#carBrandKindCode").val(d.carBrandKindCode);
 			}
 		},
+		carOwnerInit:{
+    		init:function(){
+    			pub.picker2 = new myPicker({
+    				cols: ['公司车',"个人车"],
+    				title:"请选择车辆所有者",
+    				fontSize:18,
+    				onOkClick: function (values) {
+				    	$("#carType").val(values[0])
+				    	var nood = $(".carOwner");
+				    	if (values[0] == "个人车") {
+				    		$("#carTypeValue").val("person")
+				    		nood.find(".float_left").html("车主姓名");
+				    		nood.find(".float_right input").attr("placeholder","请输入车主姓名")
+				    	} else if (values[0] == "公司车"){
+				    		$("#carTypeValue").val("com")
+				    		nood.find(".float_left").html("公司名称");
+				    		nood.find(".float_right input").attr("placeholder","请输入公司名称")
+				    	}
+				    	nood.show();
+				    	$("#ownerName").removeAttr("disabled");
+				    },
+				    onSelectItem: function (i, index, value) {
+				    	
+				    }
+				})
+    		}
+    	},
 		car_info_add: {
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'car_info_add',
 					pkUser:pub.userId,
-					carBrand:pub.car.carBrand,
-					carBrandCode:pub.car.carBrandCode,
-					carNo:pub.car.carNo,
-					carNoCity:pub.car.carNoCity,
-					carNoProvince:pub.car.carNoProvince,
-					ownerName:"ownerName",
-					carType:pub.car.carType,
-					carBrandKind:pub.car.carBrandKind,
-					carBrandKindCode:pub.car.carBrandKindCode,
 					tokenId:pub.tokenId,
 				}, {} ),function( d ){
 					d.statusCode == "100000" && pub.addCar.car_info_add.apiData( d );
@@ -260,10 +308,33 @@ define(function(require, exports, module){
 		},
 		eventHandle:{
 			init:function(){
-				$("#car_brand,#car_model").on("focus",function(){
+				$("#car_brand,#car_model,#carType").on("focus",function(){
 					$(this).blur();
+				});
+				$("#carType").on("click",function(){
+					
+					pub.picker2.show();
 				})
 				$("#carBrand").on("click",function(){
+					var car_number = $("#car_number").val(),
+						ownerName = $("#ownerName").val(),
+						carType = $("#carTypeValue").val(),
+						carTypeValue = $("#carType").val(),
+						carNoProvince = $("#carNoProvince").val(),
+						carNoCity = $("#carNoCity").val(),
+						carNo = $("#carNo").val();
+					carNoProvince = car_number.substr(0,1);
+					carNoCity = car_number.substr(1,1);
+					carNo = car_number.substr(2,5);
+					//保存原始信息
+					pub.car = {
+						carNo:carNo,//车牌号
+						carNoCity:carNoCity,//车牌城市代码
+						carNoProvince:carNoProvince,//车牌省简称
+						ownerName:ownerName,//车主姓名
+						carType:carType,//车类型
+					};
+					localStorage.setItem("car",JSON.stringify(pub.car))
 					common.jumpLinkPlain( "../html/car_brand.html" )
 				})
 				$("#car_model").on("click",function(){
@@ -274,6 +345,8 @@ define(function(require, exports, module){
 				});
 				$(".submit_btn90").on("click",function(){
 					var car_number = $("#car_number").val(),
+						ownerName = $("#ownerName").val(),
+						carType = $("#carTypeValue").val(),
 						carBrand = $("#carBrand").val(),
 						carBrandCode = $("#carBrandCode").val(),
 						carBrandKind = $("#carBrandKind").val(),
@@ -291,6 +364,15 @@ define(function(require, exports, module){
 					} else if (car_number.length != 7 || !common.REG_CHINESE.test(carNoProvince) || !common.REG_Letter.test(carNoCity) || !common.REG_Num_Letter.test(carNo) ){
 						//toLocaleUpperCase 字母转换为大写的方法
 						common.prompt("请输入正确的车牌号");
+						return;
+					} else if( carType == '' ){
+						common.prompt("请选择车性质");
+						return;
+					} else if( carType == 'com' && ownerName == ""){
+						common.prompt("请输入公司名称");
+						return;
+					} else if( carType == 'person' && ownerName == ""){
+						common.prompt("请输入车主姓名");
 						return;
 					} else if (carBrand == "" || carBrandCode == "") {
 						common.prompt("请选择车品牌");
@@ -360,7 +442,7 @@ define(function(require, exports, module){
 						html += 	'<div class="car_brand_list_box_tit"><a name="'+arr[0].word+'">'+arr[0].word+'</a></div>'
 						html +=		'<div class="car_brand_list_box_center">'
 					for (var i in arr) {
-						html += 		'<dl class="car_brand_list_item"  id = "'+arr[i].id+'" code = "'+arr[i].brandCode+'"><dt><img src="'+arr[i].brandLog+'"/></dt><dd>'+arr[i].brandName+'</dd></dl>'
+						html += 		'<dl class="car_brand_list_item"  id = "'+arr[i].id+'" code = "'+arr[i].brandCode+'"><dt><img src="../carimg/'+arr[i].brandCode+'.jpg"/></dt><dd>'+arr[i].brandName+'</dd></dl>'
 					}
 						html += '	</div>'
 						html += '</div>'
@@ -416,8 +498,7 @@ define(function(require, exports, module){
 					tit.find("dt img").attr("src",pub.options.brand.brandLog);
 					
 					tit.find("dd").html(pub.options.brand.brandName);
-					
-				console.log(o.length)
+				
 				if (o.length == 0) {
 					 box.find(".car_brand_list_box div").html("<p>暂无数据</p>").css("line-height","100px").css("text-align","center");
 				} else{
@@ -479,18 +560,114 @@ define(function(require, exports, module){
 						carBrandKind:$(this).html(),//车品牌系名称
 						carBrandKindCode:$(this).attr("data"),//车品牌系编码
 					}
-					
-					localStorage.setItem("carBrand",JSON.stringify(carBrand))
-					
+					var car = $.extend({},JSON.parse(localStorage.getItem("car")), carBrand);
+					localStorage.setItem("car",JSON.stringify(car))
 					common.jumpHistryBack(pub.Back);
 				})
 			}
 		}
 	};
 	//投保认证选择车辆
+	//status 0待认证，1车库认证中，2车库已认证()，3车库认证失败；4投保认证中，5投保已认证 ,6投保认证失败
 	pub.selectCar = {
 		init:function(){
-			
+			require("LayerCss");
+			require("LayerJs");//coupon_info_show
+			pub.selectCar.car_info_list.init()
+		},
+		car_info_list: {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'car_info_list',
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.selectCar.car_info_list.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+				if (o.length == 0) {
+					$(".garage_box").html("车库空空如也！").css({"text-align":"center","font-size":"50px","line-height":"80px"});
+				}else{
+					var status = '',l=o.length,html='';//status 1:表示不需要圆角；2：表示第一个，3：表示最后一个；4：表示中间的
+					
+					for(var i in o){
+						status = getstatus(i);
+						//console.log(status)
+						html += creatCar(o[i],i,status)
+					}
+					pub.carId = o[0].id;
+					pub.carStatus = o[0].status;
+					$(".garage_box").html(html)
+				}
+				function getstatus (i) {
+					var s = '';
+					if (l == 1) {
+						s = '1'
+					}else if(l==2){
+						s = parseInt(i)+2;
+					}else{
+						if (i == '0') {
+							s = '2'
+						}else if(parseInt(l-1) == i){
+							s = '3'
+						}else{
+							s = '4'
+						}
+					};
+					return s;
+				}
+				function creatCar(d,i,status){
+					console.log(status)
+					var str = '';
+					if (i == 0) {
+						str += '		<dl class="line-normal-wrapper garage_car_item actived clearfloat " status = "'+d.status+'" dataid="'+ d.id +'">'
+					}else{
+						str += '		<dl class="line-normal-wrapper garage_car_item clearfloat " status = "'+d.status+'" dataid="'+ d.id +'">'
+					}
+						str += '			<dt class="line-normal-avatar-wrapper"><img src="../carimg/'+d.carBrandKindCode+'.jpg"></dt>'
+						str += '			<dd class="line-normal-info-wrapper">'
+						str += '				<p>车牌号:'+ d.carNoProvince + d.carNoCity + d.carNo +'</p>'
+						str += '				<p>车型:'+ d.carBrandKind +'</p>'
+						str += '				<div class="clearfloat">'
+					if (d.status == 2) {
+						str += '					<p class="float_left">状态: <span class="color_or">认证有礼</span></p>'
+						str += '					<p class="float_right color_or">去认证</p>'
+					} else if(d.status == 4){
+						str += '					<p class="float_left">状态: <span class="color_gr">认证中</span></p>'
+						str += '					<p class="float_right color_re"></p>'
+					} else if(d.status == 5){
+						str += '					<p class="float_left">状态: <span class="color_gr">认证通过</span></p>'
+						str += '					<p class="float_right color_re"></p>'
+					} else if(d.status == 6){
+						str += '					<p class="float_left">状态: <span class="color_gr">认证失败</span></p>'
+						str += '					<p class="float_right color_re"></p>'
+					} else if(d.status == 0 || d.status == 1 || d.status == 3){
+						str += '					<p class="float_left">请先通过车认证</p>'
+						str += '					<p class="float_right color_re"></p>'
+					}
+						str += '				</div>'
+						str += '			</dd>'
+					if(status == '1'){
+						str +=''
+					}else if(status == "2"){
+						str += '			<span class="border_radius bottom_left"></span>'
+						str += '			<span class="border_radius bottom_right"></span>'
+					}else if(status == "3"){
+						str += '			<span class="border_radius top_left"></span>'
+						str += '			<span class="border_radius top_right"></span>'
+					}else if(status == "4"){
+						str += '			<span class="border_radius top_left"></span>'
+						str += '			<span class="border_radius top_right"></span>'
+						str += '			<span class="border_radius bottom_left"></span>'
+						str += '			<span class="border_radius bottom_right"></span>'
+					}
+						str += '		</dl>'
+					
+					return str;
+				}
+				
+			}
 		},
 		eventHandle : {
 			init:function(){
@@ -499,22 +676,42 @@ define(function(require, exports, module){
 					if (!nood.is(".actived")) {
 						nood.addClass("actived").siblings().removeClass("actived")	
 					}
+					pub.carId = nood.attr("dataid");
+					pub.carStatus = nood.attr("status");
 				})
 				$(".submit_btn90").on("click",function(){
-					var status = prompt("输入对应的状态？\n 0表示车和身份证信息都没有认证;\n 1表示车认证，身份证信息没有认证\n 2表示表示车没有认证，身份证信息已认证 \n 3表示认证中");
-						if (status == 0) {
-							alert("0表示车和身份证信息都没有认证");
-							common.jumpLinkPlain("../html/updata_card.html?status="+status)
-						}else if(status == 1){
-							alert("表示车认证，身份证信息没有认证");
-							common.jumpLinkPlain("../html/updata_card.html?status="+status)
-						}else if(status == 2){
-							alert("2表示表示车没有认证，身份证信息已认证 ");
-							common.jumpLinkPlain("../html/updata_card.html?status="+status)
-						}else if(status == 3){
-							common.prompt("认证审核中")
-						}
 					
+					if (pub.carStatus == '1' || pub.carStatus == '3' || pub.carStatus == "0") {
+						var layerIndex = layer.open({
+	    					content: '请先到我的爱车完成车认证',
+	    					btn: ['确定', '取消'],
+	    					yes: function(index){
+	    						common.jumpHistryBack();
+						    	layer.close(layerIndex)
+	    					}
+	    				});
+					} else if(pub.carStatus == '2'){
+						alert("车投保认证条状页面待定")
+						//common.jumpLinkPlain("../html/car_authentication.html"+"?id="+pub.carId)
+					} else if(pub.carStatus == '4'){
+						var layerIndex = layer.open({
+	    					content: '车辆认证中，请耐心等待。<br/><a href="tel:4008001234">4008001234</a>',
+	    					btn: ['确定', '取消'],
+	    					yes: function(index){
+						    	layer.close(layerIndex)
+	    					}
+	    				});
+					} else if(pub.carStatus == '5'){
+						common.prompt("该车已认证！")
+					} else if(pub.carStatus == '6'){
+						var layerIndex = layer.open({
+	    					content: '认证未通过可咨询客服解决<br/><a href="tel:4008001234">4008001234</a>',
+	    					btn: ['<a href="tel:4008001234" style="display:block;text-align:center">确定</a>', '取消'],
+	    					yes: function(index){
+						    	layer.close(layerIndex)
+	    					}
+	    				});
+					}
 				})
 			}
 		}

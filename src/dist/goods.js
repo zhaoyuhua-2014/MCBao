@@ -36,9 +36,33 @@ define(function(require, exports, module){
 	pub.mall_goods = {
 		init : function (){
 			pub.loading = $(".click_load");
-			//pub.mall_goods.action_page_ads.init();
+			pub.mall_goods.ads_show.init();
 			pub.mall_goods.goods_first_type.init();
 		},
+		ads_show: {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'ads_show',
+					websiteNode:common.WebsiteNode,
+					adPositions:"app_home",//app_home-app_goods
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.mall_goods.ads_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+				for (var i in o) {
+					html += '<div class="swiper-slide"><img src="'+o[i].adPic+'"/></div>'
+				}
+				$(".banner_wrap .mall_banner .swiper-wrapper").html(html);
+				var swiper = new Swiper (".mall_banner", {
+				    direction: 'horizontal',
+				    loop: true,
+				    autoplay:5000,
+				});
+			}
+		}, 
 		action_page_ads: {
 			init:function(){
 				common.ajaxPost($.extend({
@@ -67,12 +91,16 @@ define(function(require, exports, module){
 			},
 			apiData:function(d){
 				var o = d.data,html = '';
-				for (var i in o) {
-					html += '<div class="mall_nav_item '+(i == 0 ? "actived" : "")+'" data-code="'+o[i].typeCode+'">'+o[i].typeName+'</div>'
+				if (o.length != 0) {
+					for (var i in o) {
+						html += '<div class="mall_nav_item '+(i == 0 ? "actived" : "")+'" data-code="'+o[i].typeCode+'">'+o[i].typeName+'</div>'
+					}
+					$(".mall_nav").html(html);
+					pub.first_type = o[0].typeCode;
+					pub.mall_goods.goods_second_type.init();
+				}else{
+					$(".mall_nav").html(html);
 				}
-				$(".mall_nav").html(html);
-				pub.first_type = o[0].typeCode;
-				pub.mall_goods.goods_second_type.init();
 			}
 		},
 		goods_second_type :{
@@ -89,12 +117,16 @@ define(function(require, exports, module){
 			apiData:function(d){
 				console.log(JSON.stringify(d))
 				var o = d.data,html = '';
-				for (var i in o) {
-					html += '<div class="mall_subnav_item '+(i == 0 ? "actived" : "")+'" data-code="'+o[i].typeCode+'"><span>'+o[i].typeName+'</span></div>'
+				if (o.length != 0) {
+					for (var i in o) {
+						html += '<div class="mall_subnav_item '+(i == 0 ? "actived" : "")+'" data-code="'+o[i].typeCode+'"><span>'+o[i].typeName+'</span></div>'
+					}
+					$(".mall_subnav").html(html);
+					pub.second_type = o[0].typeCode;
+					pub.mall_goods.goods_info_show2.init();
+				}else{
+					$(".mall_subnav").html(html);
 				}
-				$(".mall_subnav").html(html);
-				pub.second_type = o[i].typeCode;
-				pub.mall_goods.goods_info_show2.init();
 			}
 		},
 		goods_info_show : {//商品不分页
@@ -161,11 +193,7 @@ define(function(require, exports, module){
 		},
 		eventHandle:{
 			init:function(){
-				var swiper = new Swiper (".mall_banner", {
-				    direction: 'horizontal',
-				    loop: true,
-				    autoplay:5000,
-				});
+				
 				/*事件*/
 				var nav = $(".mall_nav"),subNav = $(".mall_subnav"),mall_center = $(".mall_center");
 				nav.on("click",'.mall_nav_item',function(){
@@ -174,6 +202,8 @@ define(function(require, exports, module){
 					pub.options.pageNo = '1';
 					pub.options.pageSize = '10';
 					pub.mall_goods.goods_second_type.init();
+					subNav.html("");
+					$(".mall_center_box").html("");
 				});
 				subNav.on("click",'.mall_subnav_item',function(){
 					$(this).addClass("actived").siblings().removeClass("actived");
@@ -181,11 +211,22 @@ define(function(require, exports, module){
 					pub.options.pageNo = '1';
 					pub.options.pageSize = '10';
 					pub.mall_goods.goods_info_show2.init();
+					$(".mall_center_box").html("");
 				})
 				mall_center.on("click",'.mall_center_item ',function(){
 					var nood = $(this),
 						id = nood.attr("data");
 					common.jumpLinkPlain("../html/car_mall.html"+"?id="+id)
+				});
+				mall_center.on("click",".click_load",function(){
+					//点击加载更多
+					/*e.stopPropagation()*/
+					if (!pub.options.isEnd) {
+						pub.options.pageNo ++;
+						pub.mall_goods.goods_info_show2.init();
+					}else{
+						pub.loading.show().html("没有更多数据了！");
+					}
 				})
 				$(".mall_header input").on("click",function(){
 					common.jumpLinkPlain("../html/search.html")
@@ -200,6 +241,8 @@ define(function(require, exports, module){
 	//搜索页面处理;
 	pub.search = {
 		init:function(){
+			pub.loading = $(".click_load");
+			pub.loading.hide();
 			pub.search.goods_show_hot.init();
 		},
 		goods_show_hot : {
@@ -224,7 +267,7 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'goods_show_name',
 					websiteNode:common.WebsiteNode,
-					goodsName:"车",
+					goodsName:pub.options.goodsName,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.search.goods_show_name.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
@@ -235,33 +278,59 @@ define(function(require, exports, module){
 				if (o.length == 0) {
 					$(".search_none").show().siblings().hide();
 					return;
+				}else{
+					for(i in o){
+						html += '<dl class="car_item mall_center_item clearfloat" data="'+o[i].id+'">'
+						html += '	<dt><img src="'+o[i].goodsLogo+'"/></dt>'
+						html += '	<dd>'
+						html += '		<h4>'+o[i].goodsName+'</h4>'
+						html += '		<div class="description">'+o[i].goodsName+'</div>'
+						html += '		<div class="money">￥'+o[i].goodsName+'</div>'
+						html += '	</dd>'
+						html += '</dl>'
+					}
+					$('.mall_center').html( html ).show().siblings().hide();
 				}
-				for(i in o){
-					html += '<dl class="car_item mall_center_item clearfloat">'
-					html += '	<dt><img src="../img/goods_pic.png"/></dt>'
-					html += '	<dd>'
-					html += '		<h4>BMW 3系GT 一触即发</h4>'
-					html += '		<div class="description"></div>'
-					html += '		<div class="money">￥50,000.00</div>'
-					html += '	</dd>'
-					html += '</dl>'
-					html += '<li>' + o[i].keyword + '</li>';
-				}
-				$('.mall_center').html( html );
 			}
 		},
 		eventHandle : {
 			init:function(){
-				$(".header_right").on("click",function(){
+				/*$(".header_right").on("click",function(){
 					pub.search.goods_show_name.init();
-				});
+				});*/
+				//点击热门搜索
 				$(".search_item_list").on("click","li",function(){
-					
+					pub.options.goodsName = $(this).html();
+					$("#search").val(pub.options.goodsName)
+					searchText()
 				});
-				$("input").on("focus",function(){
+				//点击搜索按钮
+				$(".header_right").on("click",function(){
+					pub.options.goodsName = $("#search").val().replace(/\s+/g,'');
+					searchText()
+				});
+				//点击搜索键盘
+				$("#search").on("keydown",function(e){
+					if (e.which == 13) {
+						pub.options.goodsName = $("#search").val().replace(/\s+/g,'');
+						searchText()
+					}
+					if ($(this).val() == '') {
+						$(".search_star").show().siblings().hide();
+					}
+				})
+				//统一处理搜索
+				function searchText (){
+					if (pub.options.goodsName == '') {
+						common.prompt("输入内容不能为空")
+					} else{
+						pub.search.goods_show_name.init();
+					}
+				}
+				$("#search").on("focus",function(){
 					$(this).parent().find(".icon_clear").show();
 				})
-				$("input").on("blur",function(){
+				$("#search").on("blur",function(){
 					var nood= $(this)
 					setTimeout(function(){
 						nood.parent().find(".icon_clear").hide();
@@ -323,22 +392,6 @@ define(function(require, exports, module){
 				
 			}
 		},
-		credit_assess_rcd_add : {
-			init:function(){
-				common.ajaxPost($.extend({
-					method:'credit_assess_rcd_add',
-					websiteNode:common.WebsiteNode,
-				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.goods.credit_assess_rcd_add.apiData( d );
-				});
-				
-			},
-			apiData:function( d ){
-				$(".alert_msg").removeClass("hidden");
-			}
-		},
-		
-		
 		eventHandle:{
 			init:function(){
 				$(".car_mall_footer li").on("click",function(){

@@ -573,6 +573,8 @@ define(function(require, exports, module){
 	//信用评估列表页面
 	pub.evaluationList = {
 		init:function(){
+			pub.loading = $(".click_load");
+			pub.loading.hide();
 			pub.evaluationList.credit_assess_rcd_query.init();
 		},
 		credit_assess_rcd_query : {
@@ -586,17 +588,74 @@ define(function(require, exports, module){
 			},
 			apiData:function(d){
 				var o = d.data,html = '';
+				//private Integer assessStatus;//评估结果，0 标识：待评估，-1标识：不通过，1标识：通过
+				//console.log(JSON.stringify(d));
+				if (o.length == 0) {
+					$(".evaluationList_center").html("暂无信用评估信息").css("line-height","100px").css("text-align","center").css("font-size","30px");
+				} else{
+					for (var i in o) {
+						html+='<dl class="evaluation_item clearfloat" data="'+o[i].id+'" status = "'+o[i].assessStatus+'">'
+						html+='	<dt class="float_left"><img src="'+o[i].goodsInfo.goodsLogo+'"></dt>'
+						html+='	<dd class="float_left">'+o[i].goodsInfo.goodsName+'</dd>'
+						if (o[i].assessStatus == 0) {
+							html+='	<dd class="float_right color_or">信用审核中</dd>'
+						} else if (o[i].assessStatus == -1){
+							html+='	<dd class="float_right color_re">信用审核未通过</dd>'
+						} else if (o[i].assessStatus == 1){
+							html+='	<dd class="float_right color_gr">信用审核已通过</dd>'
+						}
+						html+='</dl>'
+					}
+					$(".evaluationList_center").html(html);
+				}
 			}
+		},
+		
+		eventHandle:{
+			init:function(){
+				$(".evaluationList_box").on("click",".evaluation_item",function(){
+					require("LayerCss");
+					require("LayerJs");
+					var nood = $(this),
+						id = nood.attr("data"),
+						status = nood.attr("status");
+					if (status == -1) {
+						var layerIndex = layer.open({
+	    					content: '认证未通过可咨询客服解决<br/><a href="tel:4008001234">4008001234</a>',
+	    					btn: ['<a href="tel:4008001234" style="display:block;text-align:center">确定</a>', '取消'],
+	    					yes: function(index){
+						    	layer.close(layerIndex)
+	    					}
+	    				});
+					}else if(status == 0){
+						var layerIndex = layer.open({
+	    					content: '信用评估正在审核中？<br/>请耐心等待...',
+	    					btn: ['确定'],
+	    					yes: function(index){
+						    	layer.close(layerIndex)
+	    					}
+	    				})
+					}else if(status == 1){
+						common.jumpLinkPlain("../html/car_evaluation_details.html"+"?id="+id)
+					}
+				})
+			}
+		}
+	}
+	//工单详情页面
+	pub.evaluationDetails = {
+		init:function(){
+			pub.options.evaluationId = common.getUrlParam("id");
+			pub.evaluationDetails.credit_assess_rcd_show.init();
 		},
 		credit_assess_rcd_show : {
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'credit_assess_rcd_show',
-					//goodsId:pub.options.goodsId
-					id:"1",
+					id:pub.options.evaluationId,
 					tokenId:pub.tokenId,
 				}, {}),function( d ){
-					d.statusCode == "100000" && pub.evaluationList.credit_assess_rcd_show.apiData( d );
+					d.statusCode == "100000" && pub.evaluationDetails.credit_assess_rcd_show.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
@@ -610,8 +669,6 @@ define(function(require, exports, module){
 			}
 		}
 	}
-	
-	
 	
 	//事件处理
 	pub.eventHandle = {
@@ -633,7 +690,10 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "evaluationList"){
     		pub.evaluationList.init();
 			pub.evaluationList.eventHandle.init();
-    	}
+    	}else if (pub.module_id == "evaluationDetails"){
+    		pub.evaluationDetails.init();
+			pub.evaluationDetails.eventHandle.init();
+    	};
 		pub.eventHandle.init()
 	};
 	module.exports = pub;
