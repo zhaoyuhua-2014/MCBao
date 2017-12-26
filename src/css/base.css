@@ -141,7 +141,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .find_password .regsiter_item{}
 
 /*首页*/
-body[data-type="index"] {background: #000000;}
+/*body[data-type="index"] {background: #000000;}*/
 .index_left{text-align: center;color: #C30D23;background: url(../img/list_down@2x.png) no-repeat 110px center;font-size: 30px;}
 .index_right{text-align: center;padding-left: 50px;}
 .index_main{background: #000;}
@@ -199,13 +199,13 @@ body[data-type="index"] {background: #000000;}
 .my_info_top dt,.my_info_top dd{float: left;color: #333333;font-size: 30px;line-height: 60px;}
 .my_info_top dt{position: absolute;top: -30px;left: 30px;visibility: visible;width: 134px;height: 134px;border-radius: 100%;overflow: hidden;}
 .my_info_top dt img{width: 100%;height: 100%;}
-.my_info_top dd{display: block;width: 100%;text-align: left;text-indent: 160px;padding-top: 50px;}
+.my_info_top dd{display: block;width: 100%;text-align: left;text-indent: 160px;}
 
 .login_status .my_info_top dt{top: -64px;left: 50%;margin-left: -67px;}
-.login_status .my_info_top dd{text-align: center;text-indent: 0;}
+.login_status .my_info_top dd{text-align: center;text-indent: 0;padding-top: 50px;}
 
 
-.my_info_nav{display: flex;text-align: center;padding: 24px 0;}
+.my_info_nav{display: flex;text-align: center;}
 .my_info_nav .my_info_nav_item{flex: 1; background: url(../img/line_divide@2x.png) no-repeat right center;}
 .my_info_nav .my_info_nav_item:last-child{background-image: none;}
 .my_info_nav_item dd{line-height: 50px;font-size: 26px;color: #9E9E9E;}
@@ -303,6 +303,10 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .plate_number input{width: 104px;}
 /*车险分期*/
 .car_insurance_staging{padding: 0 24px; padding-top: 50px;}
+.carInsuranceStaging .banner_wrap{width: 100%;height: 360px;overflow: hidden;position: relative;}
+.carInsuranceStaging .mall_banner{width: 100%;height: 100%;}
+.carInsuranceStaging .mall_banner .swiper-slide{height: 360px;background: red;line-height: 360px;text-align: center;font-size: 150px;}
+.carInsuranceStaging .swiper-slide img{width: 100%;height: 100%;vertical-align: inherit;}
 
 .car_staging_box_bottom{padding: 20px 12px;border-top: 1px solid #e8e6f3;}
 .transfer_car .float_right{width: 110px;background: url(../img/Switch-off@2x.png) no-repeat center center;height: 72px;}
@@ -487,10 +491,12 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .main_wrap.mall_main{padding: 0;}
 .mall_header .header_search{padding: 15px 0;padding-left: 96px;padding-right: 40px;background: transparent;}
 .header_search input{width: 100%;height: 65px;border-radius: 30px;background: #FFFFFF url(../img/icon_serch@2x.png) no-repeat 30px center;padding-left: 80px;font-size: 28px;line-height: 65px;}
+
 .mall_main .banner_wrap{width: 100%;height: 360px;overflow: hidden;position: relative;}
 .mall_main .mall_banner{width: 100%;height: 100%;}
 .mall_main .mall_banner .swiper-slide{height: 360px;background: red;line-height: 360px;text-align: center;font-size: 150px;}
 .mall_main .swiper-slide img{width: 100%;height: 100%;vertical-align: inherit;}
+
 .mall_nav{display: flex;text-align: center;background:#FFFFFF;}
 .mall_nav_item{flex: 1;border-bottom: 6px solid transparent;font-size: 30px;color: #303030;height: 80px;line-height: 80px;}
 .mall_nav_item.actived{border-bottom-color: #ef253d;color: #ef253d;}
@@ -544,6 +550,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_brand_list_retrieval_box a{display: block;text-align: center;line-height: 36px;font-size: 22px;color: #888;}
 
 .car_brand_fiexd{position: fixed;top: 96px;left: 750px;bottom: 0;width: 630px;z-index: 10;background-color:#EEE;overflow-y: hidden;}
+.car_brand_fiexd .list_item{text-align: left;}
 #mask{position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,0.3);display: none;}
 #mask.actived{display: block;}
 .car_brand_fiexd .car_brand_list_item{height: 112px;margin-bottom: 20px;padding: 0 20px;background: #FFF;}
@@ -656,8 +663,23 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .evaluation_item dd {line-height: 120px;font-size: 30px;}
 .evaluation_item dd.float_left{padding-left: 20px;}
 .evaluation_item dd.float_right{font-size: 28px;}
-
-
+/*信用评估工单详情*/
+.evaluationDetails.main_wrap{padding-top:0 ;}
+.evaluationDetails_box{width: 100%;padding-left: 90px;position: relative;height: auto;min-height: 500px;background: #FFF;}
+.evaluationDetails_box_item{position: relative;border-left: 2px dashed #e5e5e5;padding-bottom: 120px;}
+.evaluationDetails_box_item.actived{border-left-style: solid;}
+.evaluationDetails_box_item:first-child{padding-top: 70px;}
+.evaluationDetails_box_item:last-child{border-left: none;}
+.evaluationDetails_box_item dl{height: 100px;width: 100%;}
+.evaluationDetails_box_item dl dt,.evaluationDetails_box_item dl dd{float: left;}
+.evaluationDetails_box_item dl dt{width: 100px;height: 100px;background: #aeaeae;border-radius: 50%;position: absolute;left: -50px;color: #FFF;text-align: center;line-height: 100px;font-size: 28px;}
+.evaluationDetails_box_item.actived dl dt{background: #56a6fd;}
+.evaluationDetails_box_item dl dd{padding-left: 86px;}
+.evaluationDetails_box_item .dd_top{font-size: 30px;line-height: 46px;}
+.evaluationDetails_box_item .dd_bottom{line-height: 34px;padding-top: 20px;font-size: 26px}
+.evaluationDetails_box_item:last-child dd{line-height: 100px;font-size: 30px;color: #bcbbbb;}
+.evaluationDetails_box_item .btn_wrap{padding-right: 24px;text-align: right;height: 56px;padding-top: 20px;}
+.evaluationDetails_box_item .btn_wrap button{width: 160px;height: 56px;border: 1px solid #a8d5ff;text-align: center;line-height: 56px;font-size: 28px;color: #57acfc;border-radius: 10px;}
 /*说明描述信息*/
 .description_info{font-size: 24px;line-height: 36px;color: #9E9E9E;}
 
@@ -665,6 +687,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .color_or{color: #F5812C;}
 .color_gr{color: #46d642;}
 .color_re{color: #e3142d;}
+.color_re1{color: #f25f5f;}
 .color_f9{color: #f96268;}
 .color_9e{color: #9E9E9E;}
 .color_30{color: #303030;}

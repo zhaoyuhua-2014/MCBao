@@ -32,6 +32,7 @@ define(function(require, exports, module){
 	pub.user = {
 		init : function (){
 			if (pub.logined) {
+				$(".my_top_info").addClass("login_status")
 				pub.user.user_info.init();
 			}else{
 				var nood = $(".my_info_top");

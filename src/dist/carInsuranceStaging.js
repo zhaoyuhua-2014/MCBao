@@ -29,6 +29,8 @@ define(function(require, exports, module){
 		init:function(){
 			require('LAreaData');
 			require ("Picker");
+			require("swiper");
+			require("swiperCSS");
 			var carInfo = localStorage.getItem("carInfo_1");
 			
 			if (carInfo) {
@@ -41,7 +43,7 @@ define(function(require, exports, module){
 			pub.carInsuranceStaging.timeInit.init();//时间初始化
 			pub.carInsuranceStaging.cityShortInit.init();//车牌选择和号码初始化
 		
-			
+			pub.carInsuranceStaging.ads_show.init();
 		},
 		htmlInit:function(d){
 			var nood = $(".car_staging_box");
@@ -284,7 +286,31 @@ define(function(require, exports, module){
 				    },
 				})
     		}
-    	},
+    	},//app_insurance  车险分期
+    	ads_show: {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'ads_show',
+					websiteNode:common.WebsiteNode,
+					adPositions:"app_insurance",//app_home-app_goods-app_insurance-车险分期
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.carInsuranceStaging.ads_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+				for (var i in o) {
+					html += '<div class="swiper-slide"><img src="'+o[i].adPic+'"/></div>'
+				}
+				$(".banner_wrap .index_banner .swiper-wrapper").html(html);
+				var swiper = new Swiper (".index_banner", {
+				    direction: 'horizontal',
+				    loop: true,
+				    autoplay:5000,
+				});
+			}
+		},
     	eventHandle:{
     		init:function(){
     			

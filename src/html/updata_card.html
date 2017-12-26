@@ -8,44 +8,68 @@
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
 	</head>
-	<body>
+	<body data-type = "updataCard">
 		<div class="header_wrap">
 			<div class="header_contain">
 			    <div class="header_left callback">
 					<img src="../img/icon_back@2x.png"/>
 			    </div>
 			    <h1 class="header_title header_title_color">证件上传</h1>
-			    <div class="header_right right_text">
-			    	下一步
-				</div>
 			</div>
 		</div>
 		<div class="empty"></div>
 		<div class="main_wrap">
 			<div class="main">
+				<div class="ce_aplly_top">
+					<div class="list_item radio_marry">
+						<span class="actived" data="person">个人车</span><span data="com">公司车</span>
+						<input type="hidden" name="marry" id="marry" value="person" />
+					</div>
+					<div class="list_item person">
+						<label>车主姓名</label>
+						<input type="text" class="ownerName" name="" id="person" placeholder="请输入车主姓名" value="" />
+					</div>
+					<div class="list_item com" style="display: none;">
+						<label>公司名称</label>
+						<input type="text" name="ownerName" id="com" placeholder="请输入公司名称" value="" />
+					</div>
+				</div>
 				<div class="authentication_top">
 					<p>1.请提供清晰照片,拍照时防止反光</p>
 					<p>2.信息仅用于投保,我们将为您严格保密</p>
 				</div>
-				<div class="updata_card_info margin100">
+				<!--个人车-->
+				<div class="updata_card_info margin100 person">
 					<div class="updata_card_item user_card_a">
-						<input type="" name="" id="" value="" />
+						<input type="file" accept="image/*" class="car_img" name="car_img1" data = "11"/>
+						<img class="user_a" src="../img/up_sfz_a@2x.png" onerror="console.log('img load error')" />
 					</div>
-					<div class="updata_card_item user_card_b"></div>
+					<div class="updata_card_item user_card_b">
+						<input type="file" accept="image/*" class="car_img" name="car_img2"  data = "12"/>
+						<img class="user_b" src="../img/up_sfz_b@2x.png" onerror="console.log('img load error')" />
+					</div>
 				</div>
-				<div class="footer_pic">
+				<!--公司车-->
+				<div class="updata_card_info margin100 com hidden">
+					<div class="updata_card_item user_card_a">
+						<input type="file" accept="image/*" class="car_img" name="car_img1" data = "11"/>
+						<img class="user_a" src="../img/up_sfz_a@2x.png" onerror="console.log('img load error')" />
+					</div>
+				</div>
+				<div class="footer_pic hidden">
 					
+				</div>
+				<div class="payment_submit">
+					<button class="submit_btn90">确认</button>
 				</div>
 			</div>			
 		</div>
 	</body>
-	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".callback").on("click",function(){
-				window.history.back();
-			})
-		})
+	<script src="../seajs/2.1.1/sea.js"></script>
+	<script src="../seajs-config.js"></script>
+	<script>
+		seajs.use(['dist/creditEvaluation'],function( pub ){
+			pub.init();
+		});
 	</script>
 </html>

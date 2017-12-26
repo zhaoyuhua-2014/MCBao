@@ -44,7 +44,7 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'ads_show',
 					websiteNode:common.WebsiteNode,
-					adPositions:"app_home",//app_home-app_goods
+					adPositions:"app_home",//app_home-app_goods-app_insurance-车险分期
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.ads_show.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);

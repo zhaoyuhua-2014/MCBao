@@ -569,6 +569,132 @@ define(function(require, exports, module){
 				})
 			}
 		}
+	};
+	//投保认证个人身份证信息或者公司营业执照
+	pub.updataCard = {
+		init:function(){
+			pub.options.carId = common.getUrlParam("id");
+			pub.upLoad_driverLicense.car_info_show.init();
+		},
+		car_info_show : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'car_info_show',
+					carId:pub.options.carId,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.updataCard.car_info_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				
+			}
+		},
+		car_info_update : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'car_info_update',
+					carId:pub.options.carId,
+				}, pub.userBasicParam ,pub.options.carUpdate),function( d ){
+					d.statusCode == "100000" && pub.updataCard.car_info_update.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				common.jumpHistryBack();
+			}
+		},
+		eventHandle:{
+			init:function(){
+				$(".radio_marry").on("click","span",function(){
+					$(this).addClass("actived").siblings().removeClass("actived");
+					$("input[name='marry']").val($(this).attr("data"))
+					if ($(this).attr("data")== "person") {
+						//$(".list_item.person").show();
+						//$(".list_item.com").hide();
+						$(".person").show();
+						$(".com").hide();
+					}else if ($(this).attr("data")== "com") {
+						//$(".list_item.person").hide();
+						//$(".list_item.com").show();
+						$(".person").hide();
+						$(".com").show();
+					}
+				});
+				$(".updata_card_info input").on("change",function(){
+					require("imgUpload");
+					//nood 自己 noodparent 父元素 
+					var nodes = $(this);
+					//imgType 的值11,12,21,22 
+					//11,12表述自己的身份证正反面
+					//21,22表述配偶的身份证正反面
+					
+					var imgType = nodes.attr("data");
+					
+					var tar = this,
+					files = tar.files,
+					file = files[0];
+					if( !file ) return;
+					var options = {
+						"method":"idcard_img_upload",
+			        	"userId" : pub.userId,
+			        	"imgType":imgType,
+			        	"tokenId":pub.tokenId,
+					}
+					var callBack = function(d){
+						if( d.statusCode == "100000" ){
+							nodes.parent().find("img").attr("src",d.data);
+						}else{
+							common.prompt( d.statusCode );
+						}
+					}
+					imgupload.init(files,common.API,options,callBack)
+				})
+				
+				$(".submit_btn90").on("click",function(){
+					var ownerType = $("input[name='marry']").val(),bidPicUrl = "",fidPicUrl = "",
+						ownerName = $("input.ownerName").val();
+					if (ownerType == "person") {
+						bidPicUrl = $(".person.updata_card_info .user_a").attr("src");
+						fidPicUrl = $(".person.updata_card_info .user_b").attr("src");
+						
+						if(ownerName == ''){
+							common.prompt("请输入车主姓名");
+						} else if (bidPicUrl.indexOf("http:") < 0) {
+							common.prompt("请上传身份证正面图片")
+							return;
+						} else if(fidPicUrl.indexOf("http:") < 0){
+							common.prompt("请上传身份证反面图片");
+							return;
+						}else{
+							pub.options.carUpdate = {
+								ownerType : ownerType,
+								ownerName : ownerName,
+								bidPicUrl : bidPicUrl,
+								fidPicUrl : fidPicUrl,
+							};
+							pub.updataCard.car_info_update.init();
+						}
+					} else if(ownerType == "com"){
+						bidPicUrl = $(".com.updata_card_info .user_a").attr("src");
+						if(ownerName == ''){
+							common.prompt("请输入公司名称");
+							return;
+						} else if (bidPicUrl.indexOf("http:") < 0) {
+							common.prompt("请上传公司营业执照");
+							return;
+						} else{
+							pub.options.carUpdate = {
+								ownerType : ownerType,
+								ownerName : ownerName,
+								bidPicUrl : bidPicUrl,
+							};
+							pub.updataCard.car_info_update.init();
+						}
+					}
+				})
+			}
+		}
 	}
 	//信用评估列表页面
 	pub.evaluationList = {
@@ -687,6 +813,9 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "upLoad_driverLicense"){
     		pub.upLoad_driverLicense.init();
 			pub.upLoad_driverLicense.eventHandle.init();
+    	}else if (pub.module_id == "updataCard"){
+    		pub.updataCard.init();
+			pub.updataCard.eventHandle.init();
     	}else if (pub.module_id == "evaluationList"){
     		pub.evaluationList.init();
 			pub.evaluationList.eventHandle.init();

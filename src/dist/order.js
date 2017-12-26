@@ -42,7 +42,7 @@ define(function(require, exports, module){
 		orders_manage:{//orders_page_manage-orders_manage2-orders_manage
 			init:function(){
 				common.ajaxPost($.extend({
-					method:'orders_manage2',
+					method:'orders_page_manage',
 					orderStatus:pub.options.status,
 					pageNo:pub.options.pageNo,
 					pageSize:pub.options.pageSize,
@@ -64,7 +64,7 @@ define(function(require, exports, module){
 				}else{
 					nood.removeAttr("style");
 					for (var i in o) {
-						html +='<div class="order_item" data="'+o[i].orderCode+'">'
+						html +='<div class="order_item" data="'+o[i].orderCode+'" orderType = "'+o[i].orderType+'">'
 						html +='	<div class="order_item_top">'
 						html +='		<span class="float_left">订单编号：'+o[i].orderCode+'</span>'
 						if (o[i].orderStatus == "1") {
@@ -111,15 +111,36 @@ define(function(require, exports, module){
 					
 				})
 				order_list.on("click",'.order_item',function(){
+					//orderType 保险订单=1 ，油卡订单=2， ETC订单=3， 新车订单=4
 					var nood =$(this),
-					orderCode = nood.attr("data");
-					common.jumpLinkPlain("../html/order_details.html"+"?orderCode="+orderCode)
+					orderCode = nood.attr("data"),
+					orderType = nood.attr("orderType");
+					if (orderType == 1) {
+						common.jumpLinkPlain("../html/policy_details.html"+"?orderCode="+orderCode)
+					} else if(orderType == 2){
+						
+					} else if(orderType == 3){
+						
+					} else if(orderType == 4){
+						common.jumpLinkPlain("../html/order_details.html"+"?orderCode="+orderCode)
+					}
+				});
+				//点击加载更多
+				pub.loading.on("click",".click_load",function(){
+					
+					/*e.stopPropagation()*/
+					if (!pub.options.isEnd) {
+						pub.options.pageNo ++;
+						pub.orderList.orders_manage.init();
+					}else{
+						pub.loading.show().html("没有更多数据了！");
+					}
 				})
 			}
 		}
 	}
 	
-	//订单详情
+	//车订单详情
 	pub.orderDetails = {
 		init:function(){
 			pub.options.orderCode = common.getUrlParam("orderCode");
@@ -246,7 +267,63 @@ define(function(require, exports, module){
 			}
 		}
 	}
-	
+	//保单订单
+	pub.policyDetails = {
+		init:function(){
+			
+		},
+		order_details:{
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'order_details',
+					orderCode:pub.options.orderCode,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.policyDetails.order_details.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				console.log(d);
+				var o = d.data.orderInfo,c = d.data.couponlist,html='';
+				pub.options.orderData = d.data;
+				pub.options.orderType = o.orderType;//orderType 保险订单=1 ，油卡订单=2， ETC订单=3， 新车订单=4
+													//由于订单类型不同，订单内容也不相同，订单业务快照数据不同。同步设计不同的订单快照数据表。
+				//pub.options.orderStatus = o.orderStatus//		/**	新建--待配货 1*/
+															/**	已付款--待发货 2*/
+														//	/**	已发货--待签收 3*/
+															/**	已完成--交易成功 4*/
+															/**	作废 -1*/
+				
+				//给据不同订单的类型创建不同的订单详情页面
+				if(pub.options.orderType == '1'){
+					//pub.policyDetails.order_details.car_order(d);
+				} else if(pub.options.orderType == '2'){
+					
+				} else if(pub.options.orderType == '3'){
+					
+				} else if(pub.options.orderType == '4'){
+					//pub.policyDetails.order_details.car_order(d);
+				}
+				/*给据不同的订单状态判断显示按钮*/
+				var nood = $(".payment_submit"),
+					btn = nood.find(".submit_btn90");
+				if (o.orderStatus == '1') {
+					btn.html("立即支付").addClass("pay");
+				} else if(o.orderStatus == '2' || o.orderStatus == '3' || o.orderStatus == '4' ){
+					nood.addClass("hidden");
+				} else if(o.orderStatus == '-1'){
+					btn.html("删除").addClass("del");
+				}
+				
+				
+			},
+		},
+		eventHandle : {
+			init:function(){
+				
+			}
+		}
+	}
 	
 	//事件处理
 	pub.eventHandle = {

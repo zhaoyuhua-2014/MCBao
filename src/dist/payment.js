@@ -69,10 +69,11 @@ define(function(require, exports, module){
 			if (pub.options.pageType == 4) {
 				var d = pub.options.orderData,o = d.orderInfo,good = o.details[0],c = d.couponlist,
 					nood = $(".carDeposit.line_pay_top");
+				console.log(c.length)
 				nood.find(".line_pay_ .line_pay_item").eq(0).find(".color_9e").html(o.orderCode);
 				nood.find(".line_pay_ .line_pay_item").eq(1).find(".color_9e").html(o.realPayMoney);
 				
-				nood.find('.lin_pay_packet .float_right .icon').html(c.length + "张可用");
+				nood.find('.lin_pay_packet .float_right.icon').html(c.length + "张可用");
 				
 				nood.find(".line_pay_subtotal .float_right .color_e82b21").html((o.realPayMoney ? "￥"+ o.realPayMoney : ""))
 				
@@ -109,10 +110,12 @@ define(function(require, exports, module){
 				
 			}
 		},
+		
 		eventHandle : {
 			init:function(){
 				$(".submit_btn90").on("click",function(){
 					if (pub.options.pageType == 4) {
+						
 						common.jumpLinkPlain("../html/pay_result.html")
 					}
 				})
