@@ -196,12 +196,12 @@ define(function(require, exports, module){
 			}, function( d ){
 				if ( d.statusCode == '100000' ) {
 				    pub.register.regist.apiData( d );					   
-			    } else if ( d.statusCode == '100510' ){
+			    } /*else if ( d.statusCode == '100510' ){
 				    $('.pop').css({'display':'block'});
 					$('.pop_makeSure').on('click',function(){
 						$('.pop').css({'display':'none'});
 					})					    
-			    }else{
+			    }*/else{
 			    	common.prompt(d.statusStr)
 			    }
 			},function( d ){

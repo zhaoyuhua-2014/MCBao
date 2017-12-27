@@ -257,7 +257,7 @@ define(function(require, exports, module){
 			init:function (){
 				common.ajaxPost($.extend({
 					method:'goods_show_hot',
-				}, pub.userBasicParam ),function( d ){
+				}, {} ),function( d ){
 					d.statusCode == "100000" && pub.search.goods_show_hot.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
@@ -276,7 +276,7 @@ define(function(require, exports, module){
 					method:'goods_show_name',
 					websiteNode:pub.options.websiteNode,
 					goodsName:pub.options.goodsName,
-				}, pub.userBasicParam ),function( d ){
+				}, {} ),function( d ){
 					d.statusCode == "100000" && pub.search.goods_show_name.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
@@ -407,26 +407,7 @@ define(function(require, exports, module){
 					if (index == 0) {
 						window.history.back();
 					}else{
-						//创建信用评估
-						var evaluation = {
-							//belongUser : '123',//属于哪个用户
-							//ownerFidPicUrl:'',//自己身份证正面图片URL
-							//ownerBidPicUrl:'',//自己身份证反面图片URL
-							//isSingle : '0',//是否单身
-							//spouseFidPicUrl : '',//夫妻身份证正面图片URL
-							//spouseBidPicUrl : '',//夫妻身份证反面图片URL
-							
-							//buycarDate:'123',//买车日期
-							
-							//buycarCity:'3301',//提车城市
-							//regcar_city:'0012',//上牌城市
-							//carGoodId:'1',//车id
-							
-							carPrice:'100',//车价格
-							carDeposit:'123',//车定金
-							brandName:'123',//p品牌名称
-							
-						};
+						
 						localStorage.setItem("evaluation",JSON.stringify(pub.options.evaluation))
 						common.jumpLinkPlain("../html/credit_evaluation.html");
 						/*var status = prompt("输入对应的状态？\n 0表示还没有上传身份证信息;\n 1表示征信已查询未通过（15日内）\n 2表示审核中 \n 3表示征信已查询良好（15日内有效）");

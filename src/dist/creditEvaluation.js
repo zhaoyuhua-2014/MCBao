@@ -858,7 +858,33 @@ define(function(require, exports, module){
 			},
 			apiData:function(d){
 				var o = d.data,html = '';
-				console.log(d)
+				pub.options.workId = o.id;
+				/** 选车 0; 支付定金 *= 1;签订购车合同  = 2; 提车 = 3; 完成  4;作废  = -1;*/
+				var noods = $(".evaluationDetails_box .evaluationDetails_box_item");
+				noods.eq(0).find("dl dd .dd_top").html(o.goodsName);
+				noods.eq(0).find("dl dd .dd_bottom span").html("￥"+o.mcbPrice);
+				noods.eq(1).find("dl dd .dd_top span").html("￥"+o.earnestDeposit);
+				noods.eq(1).find(".btn_wrap button").attr("data",o.linkOrderCode);
+				if (o.status == 0) {
+					
+				}else if (o.status == 1) {
+					noods.eq(2).find("#SignTime").removeAttr("disabled");
+					noods.eq(2).find(".btn_wrap").removeClass("hidden")
+				}else if (o.status == 2) {
+					noods.eq(2).addClass("actived");
+					noods.eq(2).find("#SignTime").val(o.preSignTime);
+				}else if (o.status == 3) {
+					noods.eq(2).addClass("actived");
+					noods.eq(3).addClass("actived");
+					noods.eq(3).find("dl dd .dd_top").html(o.buyTime ? );
+				}else if (o.status == 4) {
+					noods.eq(2).addClass("actived");
+					noods.eq(3).addClass("actived");
+					noods.eq(4).addClass("actived");
+				}else if (o.status == -1) {
+					
+				}
+						
 			}
 		},
 		newcar_workorder_update : {
@@ -894,6 +920,9 @@ define(function(require, exports, module){
 					}
 					pub.options.preSignTime = preSignTime;
 					pub.evaluationDetails.newcar_workorder_update.init();
+				});
+				$("#toPay").on("click",function(){
+					common.jumpLinkPlain("../html/line_payment.html"+"?orderCode="+ $(this).attr("data"));
 				})
 			}
 		}

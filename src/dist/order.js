@@ -253,8 +253,7 @@ define(function(require, exports, module){
 						del = nood.is(".del");
 					
 					if (pay) {
-						localStorage.setItem("orderData",JSON.stringify(pub.options.orderData))
-						common.jumpLinkPlain("../html/line_payment.html"+"?orderType="+ pub.options.orderType);
+						common.jumpLinkPlain("../html/line_payment.html"+"?orderCode="+ pub.options.orderCode);
 					}else if(del){
 						
 						

@@ -35,7 +35,12 @@ define(function(require, exports, module){
 			init:function(){
 				//点击进入意见反馈
 				$(".right_text").on("click",function(){
-					common.jumpLinkPlain("../html/feedback.html")
+					if (pub.logined) {
+						common.jumpLinkPlain("../html/feedback.html")
+					}else{
+						common.jumpLinkPlain("../html/login.html")
+					}
+					
 				});
 				//点击跳转具体问题
 				$(".client_server_center_top").on("click",".client_server_center_top_item",function(){

@@ -61,17 +61,35 @@ define(function(require, exports, module){
 	pub.linePayment = {
 		init:function(){
 			pub.openId = common.openId.getItem();
-			pub.options.pageType = common.getUrlParam("orderType");//4表示车定金支付
+			pub.options.orderCode = common.getUrlParam("orderCode");
 			pub.options.orderData = JSON.parse(localStorage.getItem("orderData"));
-			pub.linePayment.htmlInit();
+			pub.linePayment.order_details.init();
+			
 			//pub.linePayment.order_insurance_submit.init();
+		},
+		order_details:{
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'order_details',
+					orderCode:pub.options.orderCode,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.linePayment.order_details.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data.orderInfo,c = d.data.couponlist;
+				pub.options.orderInfo = o;
+				pub.options.couponlist = c;
+				pub.options.pageType = o.orderType;
+				pub.linePayment.htmlInit();
+			}
 		},
 		htmlInit:function(){
 			if (pub.options.pageType == 4) {
-				var d = pub.options.orderData,o = d.orderInfo,good = o.details[0],c = d.couponlist,
+				var o = pub.options.orderInfo,c = pub.options.couponlist,d = o.details[0],
 					nood = $(".carDeposit.line_pay_top");
-				console.log(c.length)
-				pub.orderCode = o.orderCode;
+				
 				nood.find(".line_pay_ .line_pay_item").eq(0).find(".color_9e").html(o.orderCode);
 				nood.find(".line_pay_ .line_pay_item").eq(1).find(".color_9e").html(o.realPayMoney);
 				
@@ -85,7 +103,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:"goto_pay_weixin",
-					orderCode:pub.orderCode,
+					orderCode:pub.options.orderCode,
 					couponId:pub.couponId,
 					notifyUrl:common.API,
 					openId:pub.openId,
@@ -95,7 +113,7 @@ define(function(require, exports, module){
 				});
 			},
 			apiData:function(data){
-				alert(JSON.stringify(data))
+			
 				//获取PrepayId
 				//调用微信支付JSAPI
 				var result = data.data;
@@ -103,11 +121,9 @@ define(function(require, exports, module){
 				var nonceStr = result.nonceStr;
 				var timeStamp = result.timeStamp;
 				var packages = result.package;//"prepay_id="+prepayId;
-				alert(packages)
 				var paySign = result.paySign;
 				var appId = result.appId;
 				var signType = result.signType;
-				alert(signType)
 				var configSign = result.configSign;
 				var timestamp = result.timestamp;
 				var noncestr = result.noncestr;						
@@ -128,12 +144,11 @@ define(function(require, exports, module){
 			    	    paySign: paySign, // 支付签名
 			    	    success: function (res) {
 			    	        //支付成功后的回调函数
-			    	        //alert(res)
-							//window.location.href='order_management.html';
-							alert("success")
+			    	        common.jumpLinkPlain("../html/pay_result.html?type="+pub.options.pageType)
+							
 			    	    },
 			    	    cancel:function(res){  
-					        alert("cancel") 
+					        common.prompt("取消支付");
 					    }  
 			    	})
 			    });
@@ -188,12 +203,14 @@ define(function(require, exports, module){
 	//支付结果
 	pub.payResult = {
 		init:function(){
-			var status = prompt("输入对应的状态？\n 0表示支付失败;\n 1表示支付成功");
+			pub.type = common.getUrlParam("type");
+			pub.payResult.htmlInit.init(1);
+			/*var status = prompt("输入对应的状态？\n 0表示支付失败;\n 1表示支付成功");
 				if (status != 0 && status != 1) {
 					alert("status is error")
 				}else{
-					pub.payResult.htmlInit.init(status);
-				}
+					
+				}*/
 		},
 		htmlInit:{
 			init:function(d){
@@ -202,11 +219,8 @@ define(function(require, exports, module){
 				var arrStatus = ["fail","success"]
 				var arrInfoText = ["联系官方客服：<a href=''>400-4576-8888</a>","*根据保险公司规定您还未上传身份证及行驶证正副本，信息仅用于投保，我们将严格为你保密。<a href=''>继续完善信息</a>"]
 				var nood = $(".pay_result_box");
-				console.log(arrStatus)
 				$(".header_title").html(arrTitle[d]);
-				//$(".right_text").attr("data-url",arrUrl[d])
 				nood.addClass(arrStatus[d]).end().find(".pay_result_txt").html(arrTitle[d]).end().find(".pay_result_info").html(arrInfoText[d]);
-
 			}
 		},
 		eventHandle : {
