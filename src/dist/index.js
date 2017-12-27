@@ -10,11 +10,21 @@ define(function(require, exports, module){
 	var pub = {};
 	pub.logined = common.isLogin(); // 是否登录
 	
+	pub.weixinCode = common.getUrlParam("code");
+	
+	pub.openId = common.openId.getItem();
+	
+	pub.local_websiteNode = common.websiteNode.getItem();//本地存储的websiteNode
+	
     if( pub.logined ){
     	pub.userId = common.user_datafn().cuserInfo.id;
     	pub.source = "userId" + pub.userId;
     	pub.sign = md5( pub.source + "key" + common.secretKeyfn() ).toUpperCase();
     	pub.tokenId = common.tokenIdfn();
+    	pub.user_websiteNode = common.user_datafn().cuserInfo.websiteNode;//用户的websiteNode
+    	//pub.user_websiteNode = "3301";//用户的websiteNode
+    }else{
+    	$("#foot .footer_item").eq(2).attr("data-url","html/login.html");
     }
 	pub.userBasicParam = {
 		userId : pub.userId,
@@ -22,22 +32,25 @@ define(function(require, exports, module){
 		sign : pub.sign,
 		tokenId : pub.tokenId
 	};
-	pub.options = {
-		websitNode:'',
-		
+	
+	pub.options = {}
+	if(pub.logined){
+		pub.options.websiteNode =  pub.user_websiteNode;
+	}else{
+		pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
 	}
 	
 	// 接口处理命名空间
 	pub.apiHandle = {
 		init:function(){
-			
 			pub.apiHandle.page_show.init();
+			!pub.openId && common.isWeiXin() && pub.weixinCode && pub.apiHandle.get_weixin_code.init();
 		},
 		get_code : {
 			init:function(){
 				common.ajaxPost({
 					method:'business_city_get_by_area_code',
-					areaCode:common.websitNode,
+					areaCode:pub.options.websitNode,
 				 },function( d ){
 					d.statusCode == "100000" && pub.apiHandle.get_code.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
@@ -49,11 +62,28 @@ define(function(require, exports, module){
 				$(".index_left").html(o.websiteName)
 			}
 		},
+		get_weixin_code : {
+			init:function(){
+				common.ajaxPost({
+					method:'get_weixin_code',
+					weixinCode:pub.weixinCode,
+				 },function( d ){
+					d.statusCode == "100000" && pub.apiHandle.get_weixin_code.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				if (d.data.fromWX == 1 ) {
+					pub.openId = d.data.openId;
+					common.openId.setItem(pub.openId);
+				}
+			}
+		},
 		page_show : {
 			init:function(){
 				common.ajaxPost({
 					method:'main_page_show',
-					websiteNode:common.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 					sign:pub.sign,
 					source:pub.source,
 				 },function( d ){

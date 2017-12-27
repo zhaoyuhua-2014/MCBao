@@ -11,11 +11,16 @@ define(function(require, exports, module){
 	pub.module_id = $('[data-type]').attr('data-type');
     pub.logined = common.isLogin(); // 是否登录
 	
+	pub.local_websiteNode = common.websiteNode.getItem();//本地存储的websiteNode
+	
     if( pub.logined ){
     	pub.userId = common.user_datafn().cuserInfo.id;
     	pub.source = "userId" + pub.userId;
     	pub.sign = md5( pub.source + "key" + common.secretKeyfn() ).toUpperCase();
     	pub.tokenId = common.tokenIdfn();
+    	
+    	pub.user_websiteNode = common.user_datafn().cuserInfo.websiteNode;//用户的websiteNode
+    	
     }else{
         //common.jumpLinkPlain( '../index.html' );
     }
@@ -31,7 +36,11 @@ define(function(require, exports, module){
 		pageSize:common.PAGE_SIZE,
 		isEnd:'',
 	}
-	
+	if(pub.logined){
+		pub.options.websiteNode =  pub.user_websiteNode;
+	}else{
+		pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
+	}
 	//商品相关逻辑
 	pub.mall_goods = {
 		init : function (){
@@ -43,7 +52,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'ads_show',
-					websiteNode:common.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 					adPositions:"app_home",//app_home-app_goods-app_insurance-车险分期
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.ads_show.apiData( d );
@@ -67,8 +76,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'action_page_ads',
-					websiteNode:common.WebsiteNode,
-					
+					websiteNode:pub.options.websiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.action_page_ads.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
@@ -83,7 +91,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'goods_first_type',
-					websiteNode:common.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_first_type.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
@@ -107,7 +115,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'goods_second_type',
-					websiteNode:common.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 					typeCode:pub.first_type,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_second_type.apiData( d );
@@ -133,7 +141,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'goods_info_show',
-					websiteNode:common.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 					typeCode:pub.second_type,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.mall_goods.goods_info_show.apiData( d );
@@ -149,7 +157,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'goods_info_show2',
-					websiteNode:common.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 					typeCode:pub.second_type,
 					pageNo:pub.options.pageNo,
 					pageSize:pub.options.pageSize,
@@ -266,7 +274,7 @@ define(function(require, exports, module){
 			init:function (){
 				common.ajaxPost($.extend({
 					method:'goods_show_name',
-					websiteNode:common.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 					goodsName:pub.options.goodsName,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.search.goods_show_name.apiData( d );

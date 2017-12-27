@@ -433,8 +433,6 @@ define(function(require, exports, module){
 						}
 					}
 					
-					
-					
 					if (obj.isSingle == '0') {
 						obj.ownerFidPicUrl = pub.options.imgUrlObj.user_a;//自己身份证正面图片URL
 						obj.ownerBidPicUrl = pub.options.imgUrlObj.user_b;//自己身份证反面图片URL
@@ -771,27 +769,132 @@ define(function(require, exports, module){
 	//工单详情页面
 	pub.evaluationDetails = {
 		init:function(){
+			require ("Picker");
+			require ("PickerCss");
+			pub.evaluationDetails.preSignTime();
 			pub.options.evaluationId = common.getUrlParam("id");
-			pub.evaluationDetails.credit_assess_rcd_show.init();
+			pub.evaluationDetails.newcar_workorder_show.init();
 		},
-		credit_assess_rcd_show : {
+		preSignTime:function(){
+			var year = [];
+			var today = new Date();
+			var year_n = today.getFullYear();
+			for (var i = year_n; i <= (year_n + 5); i++) {
+			    year.push(i);
+			}
+			var month = [];
+			for (var i = 1; i <= 12; i++) {
+			    month.push(i);
+			}
+			pub.picker8 = new myPicker({
+			    cols: [{
+			        options: year,
+			        suffix: "年",
+			    }, {
+			        options: month,
+			        suffix: "月",
+			    }, {
+			        options: [],
+			        suffix: "日",
+			    },],
+			    title:'请选择提车日期',
+			    onOkClick: function (values) {
+			    	var str = values[0] + "年" + values[1] + "月" + values[2] + "日";
+			        $('#SignTime').val(str);
+			    },
+			    setValues: [today.getFullYear(), today.getMonth() + 1, today.getDate()],
+			    onSelectItem: function (i, index, value) {
+			        if (i != 2) {
+			            var year = this.getValue(0);
+			            var month = this.getValue(1);
+						
+			            if (year == null || month == null)
+			                return
+			
+			            var curDate = new Date();
+			            curDate.setYear(year);
+			            
+			            if (year == today.getFullYear()) {
+			            	var months = [];
+			            	for (var i = today.getMonth() + 1; i <= 12; i++) {
+				                months.push(i);
+				            };
+				            this.setOptions(1, months);
+			            }else{
+			            	var months = [];
+			            	for (var i = 1; i <= 12; i++) {
+							    months.push(i);
+							}
+			            	this.setOptions(1, months);
+			            }
+			            curDate.setMonth(month);
+			            curDate.setDate(0);
+			
+			            var day = [];
+			            if (year == today.getFullYear() && month == today.getMonth()+1) {
+			            	for (var i = today.getDate(); i <= curDate.getDate(); i++) {
+				                day.push(i);
+				            }
+			            }else{
+			            	for (var i = 1; i <= curDate.getDate(); i++) {
+				                day.push(i);
+				            }
+			            }
+			            this.setOptions(2, day);
+			        }
+			    }
+			});
+		},
+		newcar_workorder_show : {
 			init:function(){
 				common.ajaxPost($.extend({
-					method:'credit_assess_rcd_show',
-					id:pub.options.evaluationId,
+					method:'newcar_workorder_show',
+					creditId:pub.options.evaluationId,
 					tokenId:pub.tokenId,
 				}, {}),function( d ){
-					d.statusCode == "100000" && pub.evaluationDetails.credit_assess_rcd_show.apiData( d );
+					d.statusCode == "100000" && pub.evaluationDetails.newcar_workorder_show.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
 			apiData:function(d){
 				var o = d.data,html = '';
+				console.log(d)
+			}
+		},
+		newcar_workorder_update : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'newcar_workorder_update',
+					workId:pub.options.workId,
+					preSignTime: pub.options.preSignTime,
+					tokenId:pub.tokenId,
+				}, {}),function( d ){
+					d.statusCode == "100000" && pub.evaluationDetails.newcar_workorder_update.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+				console.log(d)
 			}
 		},
 		eventHandle:{
 			init:function(){
-				
+				$("#SignTime").on("focus",function(){
+					$(this).blur();
+				})
+				$("#SignTime").on("click",function(){
+					pub.picker8.show();
+				});
+				$("#SignTimeBtn").on("click",function(){
+					var preSignTime = $("SignTime").val();
+					if (preSignTime == "") {
+						common.prompt("请选择签约日期");
+						return;
+					}
+					pub.options.preSignTime = preSignTime;
+					pub.evaluationDetails.newcar_workorder_update.init();
+				})
 			}
 		}
 	}

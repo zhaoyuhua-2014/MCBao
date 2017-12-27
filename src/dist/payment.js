@@ -60,6 +60,7 @@ define(function(require, exports, module){
 	//在线支付
 	pub.linePayment = {
 		init:function(){
+			pub.openId = common.openId.getItem();
 			pub.options.pageType = common.getUrlParam("orderType");//4表示车定金支付
 			pub.options.orderData = JSON.parse(localStorage.getItem("orderData"));
 			pub.linePayment.htmlInit();
@@ -70,6 +71,7 @@ define(function(require, exports, module){
 				var d = pub.options.orderData,o = d.orderInfo,good = o.details[0],c = d.couponlist,
 					nood = $(".carDeposit.line_pay_top");
 				console.log(c.length)
+				pub.orderCode = o.orderCode;
 				nood.find(".line_pay_ .line_pay_item").eq(0).find(".color_9e").html(o.orderCode);
 				nood.find(".line_pay_ .line_pay_item").eq(1).find(".color_9e").html(o.realPayMoney);
 				
@@ -77,6 +79,64 @@ define(function(require, exports, module){
 				
 				nood.find(".line_pay_subtotal .float_right .color_e82b21").html((o.realPayMoney ? "￥"+ o.realPayMoney : ""))
 				
+			}
+		},
+		goto_pay_weixin : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:"goto_pay_weixin",
+					orderCode:pub.orderCode,
+					couponId:pub.couponId,
+					notifyUrl:common.API,
+					openId:pub.openId,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.linePayment.goto_pay_weixin.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(data){
+				alert(JSON.stringify(data))
+				//获取PrepayId
+				//调用微信支付JSAPI
+				var result = data.data;
+				var prepayId = result.prepayId;
+				var nonceStr = result.nonceStr;
+				var timeStamp = result.timeStamp;
+				var packages = result.package;//"prepay_id="+prepayId;
+				alert(packages)
+				var paySign = result.paySign;
+				var appId = result.appId;
+				var signType = result.signType;
+				alert(signType)
+				var configSign = result.configSign;
+				var timestamp = result.timestamp;
+				var noncestr = result.noncestr;						
+			   	wx.config({
+				    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				    appId: appId, // 必填，公众号的唯一标识
+				    timestamp:timestamp, // 必填，生成签名的时间戳
+				    nonceStr: noncestr, // 必填，生成签名的随机串
+				    signature: configSign,// 必填，签名，见附录1
+				    jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+			    wx.ready(function(){
+			    	wx.chooseWXPay({
+			    	    timestamp: timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+			    	    nonceStr: nonceStr, // 支付签名随机串，不长于 32 位
+			    	    package: packages, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+			    	    signType: signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+			    	    paySign: paySign, // 支付签名
+			    	    success: function (res) {
+			    	        //支付成功后的回调函数
+			    	        //alert(res)
+							//window.location.href='order_management.html';
+							alert("success")
+			    	    },
+			    	    cancel:function(res){  
+					        alert("cancel") 
+					    }  
+			    	})
+			    });
 			}
 		},
 		order_insurance_submit:{
@@ -114,9 +174,9 @@ define(function(require, exports, module){
 		eventHandle : {
 			init:function(){
 				$(".submit_btn90").on("click",function(){
+					pub.couponId = $(".lin_pay_packet").attr("data") || "";
 					if (pub.options.pageType == 4) {
-						
-						common.jumpLinkPlain("../html/pay_result.html")
+						pub.linePayment.goto_pay_weixin.init();
 					}
 				})
 				$(".lin_pay_packet").on("click",".float_right.icon",function(){
@@ -151,7 +211,6 @@ define(function(require, exports, module){
 		},
 		eventHandle : {
 			init:function(){
-				
 				$(".right_text").on("click",function(){
 					common.jumpLinkPlain("../html/my.html")
 				})

@@ -89,7 +89,7 @@ define(function(require, exports, module){
 						html +='	</div>'
 						html +='</div>'
 					}
-					nood.html(html);
+					nood.append(html);
 					if( pub.options.isEnd ){
 						pub.loading.show().html("没有更多数据了！");
 					}else{
@@ -126,9 +126,7 @@ define(function(require, exports, module){
 					}
 				});
 				//点击加载更多
-				pub.loading.on("click",".click_load",function(){
-					
-					/*e.stopPropagation()*/
+				pub.loading.on("click",function(){
 					if (!pub.options.isEnd) {
 						pub.options.pageNo ++;
 						pub.orderList.orders_manage.init();

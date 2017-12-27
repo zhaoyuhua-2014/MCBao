@@ -112,12 +112,15 @@ define(function(require, exports, module){
 	
 	common.imgUrlObj = new Memory("imgUrlObj","local");//信用评估存储图片地址
 	
+	common.websiteNode = new Memory('websiteNode','local');//站点编码
+	
+	common.openId = new Memory('openId','local'); //  
 	
 	common.jumpMake = new Memory('jumpMake','local'); // 跳转
 	common.orderType = new Memory('orderType','local'); // 1.普通商品 2.秒杀商品 3.预购商品
 	common.good = new Memory('good','local'); // 购物车商品信息
 	common.orderBack = new Memory('orderBack','local'); // 订单入口 
-	common.openId = new Memory('openId','local'); //  
+	
 	/*ios 不支持session 改为localstorage*/
 	common.addressData = new Memory('addressData','local'); // 存储地址数据
 	common.addType = new Memory('addType','local');  // 标记地址管理页面入口 + 订单结算 tab 切换
@@ -128,7 +131,7 @@ define(function(require, exports, module){
 	common.firmId = new Memory('firmId','local')//门店ID
 	common.logined = new Memory('logined','local'); // 登录状态 
 	common.firmIdType = new Memory('firmIdType','local')//门店类型
-	common.websiteNode = new Memory('websiteNode','local')//站点编码
+	
 	/*2017-10-24*/
 	common.orderColumn = new Memory('orderColumn','local'); // 订单 tab 
 	common.preColumn = new Memory('preColumn','local'); // 预购订单 tab 
