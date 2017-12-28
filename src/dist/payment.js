@@ -93,7 +93,7 @@ define(function(require, exports, module){
 				nood.find(".line_pay_ .line_pay_item").eq(0).find(".color_9e").html(o.orderCode);
 				nood.find(".line_pay_ .line_pay_item").eq(1).find(".color_9e").html(o.realPayMoney);
 				
-				nood.find('.lin_pay_packet .float_right.icon').html(c.length + "张可用");
+				nood.find('.lin_pay_packet .float_right.icon').html(c.length + "张可用").attr("data",JSON.stringify(c));
 				
 				nood.find(".line_pay_subtotal .float_right .color_e82b21").html((o.realPayMoney ? "￥"+ o.realPayMoney : ""))
 				
@@ -195,7 +195,9 @@ define(function(require, exports, module){
 					}
 				})
 				$(".lin_pay_packet").on("click",".float_right.icon",function(){
-					common.jumpLinkPlain("../html/red_packet.html")
+					
+					common.couponlist.setItem($(this).attr('data'));
+					common.jumpLinkPlain("../html/red_packet.html?order=line_payment")
 				})
 			}
 		}

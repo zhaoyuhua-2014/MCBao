@@ -3,7 +3,6 @@ define(function(require, exports, module){
 	//require('jquery');
 	var common = require('../dist/common');
 	
-	var data2 = require('LAreaData2');
 	
 	require ("Picker");
 	// 命名空间
@@ -97,7 +96,7 @@ define(function(require, exports, module){
 				html += '			<span class="float_left">' + obj.receiverName + '</span>'
 				html += '			<span class="float_right">' + obj.receiverMobile + '</span>'
 				html += '		</div>'
-				html += '		<p class="address_info">' + obj.allAddr + '取值为allAddr，暂时为空</p>'
+				html += '		<p class="address_info">' + obj.allAddr + '</p>'
 				html += '	</div>'
 				html += '	<div class="address_bottom clearfloat">'
 				html += '		<button class="float_left operate">' + pub.address_manager.add_deffer[obj.isDefault + 1] + '</button>'
@@ -197,6 +196,9 @@ define(function(require, exports, module){
 				});
 	    		!common.addType.getItem() && $('.address_management').off('click','.management_address'); // 判断是否从订单进入
     			*/
+    			$(".header_left").on("click",function(){
+	    			common.jumpLinkPlain("../html/my.html")
+	    		})
     		}
     	}
     }
@@ -335,7 +337,7 @@ define(function(require, exports, module){
     			});
     		},
     		apiData:function(d){
-    			common.jumpHistryBack()
+    			common.jumpLinkPlain("../html/my_address_list.html")
     		}
     	},
     	
@@ -373,7 +375,9 @@ define(function(require, exports, module){
 				$("#selectAddress").on("focus",function(){
 					$(this).blur();
 				})
-				
+				$(".header_left").on("click",function(){
+	    			common.jumpLinkPlain("../html/my_address_list.html")
+	    		})
 			}
 		}
     	
@@ -388,7 +392,7 @@ define(function(require, exports, module){
     		pub.address.init();
     		pub.address.eventHandle.init()
     	}
-    	pub.eventHandle.init()
+    	//pub.eventHandle.init()
     };
     
     module.exports = pub;

@@ -9,6 +9,8 @@ define(function(require, exports, module){
 	
 	pub.module_id = $('[data-type]').attr('data-type');
     pub.logined = common.isLogin(); // 是否登录
+    
+	pub.local_websiteNode = common.websiteNode.getItem();//本地存储的websiteNode
 	
     if( pub.logined ){
     	pub.userId = common.user_datafn().cuserInfo.id;
@@ -26,6 +28,7 @@ define(function(require, exports, module){
 	};
 	pub.options = {};
 	
+	pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
 	//客服中心
 	pub.clientServiceCenter = {
 		init:function(){
@@ -103,6 +106,7 @@ define(function(require, exports, module){
 				pub.changeCity.business_city.hotCity(hot);
 			},
 			allCity:function(d){
+				localStorage.setItem("websiteNodeData",JSON.stringify(d));
 				var html = '';
 				html +='<div class="citys_letter">'
 				html +='	<div class="city_first_letter">'
@@ -132,17 +136,18 @@ define(function(require, exports, module){
 				wh = document.documentElement.clientHeight;
 				$(".changecity_content").css("overflow-y","auto")
 				$(".changecity_content").height(wh-186);
-				console.log("124")
 				$("#position").on("click",function(){
 					if ($("#position").is(".success")) {
-						console.log("带回城市:"+$(this).html()+"返回首页")
+						//console.log("带回城市:"+$(this).html()+"返回首页")
 					}
 				});
 				$('.hot_city').on("click",".city_item",function(){
-					common.jumpHistryBack();
+					common.websiteNode.setItem($(this).attr("data"));
+					common.jumpLinkPlain("../index.html?name="+$(this).html())
 				})
 				$(".all_city").on("click",".city_list_item",function(){
-					common.jumpHistryBack();
+					common.websiteNode.setItem($(this).attr("data"));
+					common.jumpLinkPlain("../index.html?name="+$(this).html())
 				})
 			}
 		}
@@ -163,7 +168,8 @@ define(function(require, exports, module){
 				});
 			},
 			apiData:function(d){
-				console.log(d)
+				console.log(d);
+				
 			}
 		},
 		eventHandle : {
@@ -176,7 +182,8 @@ define(function(require, exports, module){
 						if (nood.is("#version_check")) {
 							pub.setUp.version_check.init();
 						}else if(nood.is("#clear_data")){
-							pub.othre.init();
+							common.prompt("缓存清除成功！");					
+							//pub.othre.init();
 						}
 					}
 				})
@@ -220,7 +227,7 @@ define(function(require, exports, module){
 				common.ajaxPost($.extend({
 					method:'mcb_desc',
 					code:"01",
-					websiteNode:pub.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.othre.mcb_desc.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr)
@@ -234,7 +241,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'off_item_desc',
-					websiteNode:pub.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.othre.off_item_desc.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr)
@@ -248,7 +255,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'share_rcd_query',
-					websiteNode:pub.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 					pageNo:common.PAGE_INDEX,
 					pageSize:common.PAGE_SIZE,
 				}, pub.userBasicParam ),function( d ){
@@ -264,7 +271,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'system_config_constant',
-					websiteNode:pub.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.othre.share_rcd_query.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr)
@@ -278,7 +285,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'img_base64',
-					websiteNode:pub.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.othre.img_base64.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr)
@@ -292,7 +299,7 @@ define(function(require, exports, module){
 			init:function(){
 				common.ajaxPost($.extend({
 					method:'imInfo',
-					websiteNode:pub.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 				}, pub.userBasicParam ),function( d ){
 					d.statusCode == "100000" && pub.othre.img_base64.apiData( d );
 					d.statusCode != "100000" && common.prompt(d.statusStr)

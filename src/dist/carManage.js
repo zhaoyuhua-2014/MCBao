@@ -25,6 +25,7 @@ define(function(require, exports, module){
 	};
 	
 	pub.options = {}
+	
 	//我的车库
 	//status 0待认证，1车库认证中，2车库已认证()，3车库认证失败；4投保认证中，5投保已认证 ,6投保认证失败
 	pub.garage = {
@@ -143,15 +144,15 @@ define(function(require, exports, module){
 		},
 		eventHandle:{
 			init:function(){
-				$(".garage_box").on("click",".garage_car_item dd",function(){
+				/*$(".garage_box").on("click",".garage_car_item dd",function(){
 					
 					var nood = $(this).parents(".line-wrapper");
 					if (!nood.is(".actived")) {
-						nood.addClass("actived").siblings().removeClass("actived");
+						//nood.addClass("actived").siblings().removeClass("actived");
 						//nood.find('.line-normal-info-wrapper .clearfloat .float_right').html("默认");
 						//nood.siblings().find('.line-normal-info-wrapper .clearfloat .float_right').html("")
 					}
-				})
+				})*/
 				
 				$(".garage_box").on("click",".garage_car_item",function(){
 					var nood = $(this),
@@ -310,11 +311,10 @@ define(function(require, exports, module){
 		},
 		eventHandle:{
 			init:function(){
-				$("#car_brand,#car_model,#carType").on("focus",function(){
+				$("#car_brand,#car_model,#carType,#carBrandKind").on("focus",function(){
 					$(this).blur();
 				});
 				$("#carType").on("click",function(){
-					
 					pub.picker2.show();
 				})
 				$("#carBrand").on("click",function(){
@@ -418,10 +418,8 @@ define(function(require, exports, module){
 			},
 			apiData:function( d ){
 				var o = d.data.brandlist,html = '',l = o.length;
-				console.log(o)
 				var arrLetter = [];//暂存一个list的数据-整体创建盒子
 				if (l != 0) {
-					console.log(l)
 					for (var i=0;i<l; i++) {
 						arrLetter.push(o[i]);
 						if ((i+1)< l) {
@@ -444,7 +442,7 @@ define(function(require, exports, module){
 						html += 	'<div class="car_brand_list_box_tit"><a name="'+arr[0].word+'">'+arr[0].word+'</a></div>'
 						html +=		'<div class="car_brand_list_box_center">'
 					for (var i in arr) {
-						html += 		'<dl class="car_brand_list_item"  id = "'+arr[i].id+'" code = "'+arr[i].brandCode+'"><dt><img src="../carimg/'+arr[i].brandCode+'.jpg"/></dt><dd>'+arr[i].brandName+'</dd></dl>'
+						html += 		'<dl class="car_brand_list_item"  id = "'+arr[i].id+'" code = "'+arr[i].brandCode+'"><dt><img src="'+arr[i].brandLogo+'"/></dt><dd>'+arr[i].brandName+'</dd></dl>'
 					}
 						html += '	</div>'
 						html += '</div>'
@@ -463,25 +461,26 @@ define(function(require, exports, module){
 			},
 			apiData:function( d ){
 				var o = d.data.brandlist,html = '';
-				console.log(o)
 				if (o.length != 0) {
 					
 				} else{
+					$(".car_brand_hot_wrap").hide();
 					$(".car_brand_hot_box").html("暂无热门品牌")
 				}
+				$(".car_brand_hot_wrap").hide();
 			}
 		},
-		brand_version_query:{
+		brand_version_query_level1 : {
 			init:function(){
 				common.ajaxPost($.extend({
-					method:'brand_version_query',
+					method:'brand_version_query_level1',
 					brandId:pub.options.brandId
 				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.carBrand.brand_version_query.apiData( d );
+					d.statusCode == "100000" && pub.carBrand.brand_version_query_level1.apiData( d.data.bversionist );
 					d.statusCode != "100000" && common.prompt(d.statusStr);
 				});
 			},
-			apiData:function( d ){
+			apiData:function( o ){
 				/*样式变化*/
 				$("#mask").addClass("actived");
 				$("body").css("overflow-y","hidden")
@@ -493,9 +492,10 @@ define(function(require, exports, module){
 				
 					tit = box.find(".car_brand_list_item"),
 					
-					center = box.find(".car_brand_list_box div"),
-					o = d.data.bversionist,
+					center = box.find(".car_brand_list_box"),
 					html = '';
+					
+					pub.first_node.data("data",JSON.stringify(o));
 					
 					tit.find("dt img").attr("src",pub.options.brand.brandLog);
 					
@@ -505,22 +505,66 @@ define(function(require, exports, module){
 					 box.find(".car_brand_list_box div").html("<p>暂无数据</p>").css("line-height","100px").css("text-align","center");
 				} else{
 					for (var i in o) {
-						html += '<p class="list_item" data="'+o[i].brandVersionCode+'">'+o[i].brandVersionName+'</p>'
+						html += '<div class="car_brand_list_box_item">'
+						html += '	<div class="car_brand_list_box_tit" id="'+o[i].id+'" data="'+o[i].brandVersionCode+'" index = "'+i+'">'+o[i].brandVersionName+'</div>'
+						html += '	<div class="hidden box"></div>'
+						html += '</div>'
 					}
 				}
-				
-				center.html(html);	
+				center.html(html);
 				html = '';
 				
+			}
+		},
+		brand_version_query_level2 : {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'brand_version_query_level2',
+					parentId:pub.options.parentId
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.carBrand.brand_version_query_level2.apiData( d.data.bversionist );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function( o ){
+				/*内容初始化*/
+				var box = $(".car_brand_list_box"),
+				
+					noods = box.find(".car_brand_list_box_item"),
+					
+					nood = noods.eq(pub.options.index),
+					
+					center = nood.find(".box"),
+					html = '';
+				nood.data("data",JSON.stringify(o));
+				if (center.is(".hidden")) {
+					center.height("0").removeClass("hidden");
+					if (o.length == 0) {
+						center.html("<p>暂无数据</p>").css("line-height","100px").css("text-align","center");
+						center.animate({"height":100+"px"});
+					} else{
+						for (var i in o) {
+							html += '<p class="list_item" data="'+o[i].brandVersionCode+'" id="'+o[i].id+'">'+o[i].brandVersionName+'</p>'
+						}
+						center.html(html);
+						center.animate({"height":100*o.length +"px"});
+					}
+					nood.siblings().find(".box").not(".hidden").animate({
+						"height":"0px",
+					},function(){
+						$(this).addClass("hidden")
+					});
+					html = '';
+				}
 			}
 		},
 		eventHandle:{
 			init:function(){
 				//点击热门品牌项
 				$(".car_brand_hot_wrap").on("click","dl",function(){
-					pub.carBrand.brand_version_query.init();
+					pub.carBrand.brand_version_query_level1.init();
 				})
-				$('.car_brand_list_wrap').on("click",".car_brand_list_item",function(){
+				$('.car_brand_box .car_brand_list_wrap').on("click",".car_brand_list_item",function(){
 					pub.options.brand = {
 						brandId : $(this).attr("id"),
 						brandCode : $(this).attr("code"),
@@ -528,8 +572,13 @@ define(function(require, exports, module){
 						brandLog : $(this).find("dt img").attr("src"),
 					}
 					pub.options.brandId = $(this).attr("id");
-					pub.carBrand.brand_version_query.init();
-					
+					pub.first_node = $(this);
+					var data = $(this).data("data");
+					if (data) {
+						pub.carBrand.brand_version_query_level1.apiData(JSON.parse(data));
+					}else{
+						pub.carBrand.brand_version_query_level1.init();
+					}
 				})
 				$("#mask").on("click",function(){
 					if ($(this).is(".actived")) {
@@ -554,12 +603,21 @@ define(function(require, exports, module){
 					}
 					pub.Back = l.length + 1;
 				})
+				$(".car_brand_fiexd").on("click",".car_brand_list_box_tit",function(){
+					pub.options.parentId = $(this).attr("id");
+					pub.options.index = $(this).attr("index");
+					var data = $(this).parent().data("data");
+					if (data) {
+						pub.carBrand.brand_version_query_level2.apiData(JSON.parse(data));
+					}else{
+						pub.carBrand.brand_version_query_level2.init();
+					}
+				})
 				$(".car_brand_fiexd").on("click",".list_item",function(){
-					
 					var carBrand = {
 						carBrand:pub.options.brand.brandName,//车品牌名称
 						carBrandCode:pub.options.brand.brandCode,//车品牌编码
-						carBrandKind:$(this).html(),//车品牌系名称
+						carBrandKind:$(this).html(),//型号
 						carBrandKindCode:$(this).attr("data"),//车品牌系编码
 					}
 					var car = $.extend({},JSON.parse(localStorage.getItem("car")), carBrand);

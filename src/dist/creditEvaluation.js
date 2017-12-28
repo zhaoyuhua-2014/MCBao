@@ -8,6 +8,8 @@ define(function(require, exports, module){
 	
 	pub.module_id = $('[data-type]').attr('data-type');
     pub.logined = common.isLogin(); // 是否登录
+    
+	pub.local_websiteNode = common.websiteNode.getItem();//本地存储的websiteNode
 	
     if( pub.logined ){
     	pub.userId = common.user_datafn().cuserInfo.id;
@@ -28,6 +30,7 @@ define(function(require, exports, module){
 		imgUrlObj : JSON.parse(localStorage.getItem("imgUrlObj")),
 	};
 	
+	pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
 	//信用评估页面
 	pub.creditEvaluation = {
 		
@@ -299,7 +302,7 @@ define(function(require, exports, module){
 					carPrice:'100',//车price
 					carDeposit:'123',
 					brandName:'123',*/
-					websiteNode:common.WebsiteNode,
+					websiteNode:pub.options.websiteNode,
 				}, pub.userBasicParam , pub.options.evaluation),function( d ){
 					d.statusCode == "100000" && pub.creditEvaluation.credit_assess_rcd_add.apiData( d );
 				});
@@ -869,14 +872,14 @@ define(function(require, exports, module){
 					
 				}else if (o.status == 1) {
 					noods.eq(2).find("#SignTime").removeAttr("disabled");
-					noods.eq(2).find(".btn_wrap").removeClass("hidden")
+					noods.eq(2).find(".btn_wrap").removeClass("hidden");
 				}else if (o.status == 2) {
 					noods.eq(2).addClass("actived");
 					noods.eq(2).find("#SignTime").val(o.preSignTime);
 				}else if (o.status == 3) {
 					noods.eq(2).addClass("actived");
 					noods.eq(3).addClass("actived");
-					noods.eq(3).find("dl dd .dd_top").html(o.buyTime ? );
+					noods.eq(3).find("dl dd .dd_top").html(' '+o.buyTime );
 				}else if (o.status == 4) {
 					noods.eq(2).addClass("actived");
 					noods.eq(3).addClass("actived");

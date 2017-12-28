@@ -36,11 +36,7 @@ define(function(require, exports, module){
 		pageSize:common.PAGE_SIZE,
 		isEnd:'',
 	}
-	if(pub.logined){
-		pub.options.websiteNode =  pub.user_websiteNode;
-	}else{
-		pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
-	}
+	pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
 	//商品相关逻辑
 	pub.mall_goods = {
 		init : function (){
@@ -84,7 +80,6 @@ define(function(require, exports, module){
 			},
 			apiData:function(d){
 				var o = d.data;
-				
 			}
 		},
 		goods_first_type : {
@@ -407,28 +402,12 @@ define(function(require, exports, module){
 					if (index == 0) {
 						window.history.back();
 					}else{
-						
-						localStorage.setItem("evaluation",JSON.stringify(pub.options.evaluation))
-						common.jumpLinkPlain("../html/credit_evaluation.html");
-						/*var status = prompt("输入对应的状态？\n 0表示还没有上传身份证信息;\n 1表示征信已查询未通过（15日内）\n 2表示审核中 \n 3表示征信已查询良好（15日内有效）");
-						if (status == 0) {
+						if (pub.logined) {
+							localStorage.setItem("evaluation",JSON.stringify(pub.options.evaluation))
 							common.jumpLinkPlain("../html/credit_evaluation.html");
-							
-						}else if(status == 1){
-							layer.open({
-								content: '征信已查询但是未通过,重新认证。',
-		    					btn: ['确定', '取消'],
-		    					yes: function(index){
-		    						common.jumpLinkPlain("../html/credit_evaluation.html")
-							    	layer.close(layerIndex)
-		    					}
-							})
-						}else if(status == 2){
-							common.prompt("征信正在努力审核中")
-						}else if(status == 3){
-							common.jumpLinkPlain("../html/car_reserve.html");
-						};*/
-						
+						}else{
+							common.jumpLinkPlain("../html/login.html");
+						}
 					}
 				})
 			}

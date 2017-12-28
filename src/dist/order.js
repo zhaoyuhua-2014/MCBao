@@ -185,13 +185,13 @@ define(function(require, exports, module){
 					btn = nood.find(".submit_btn90");
 				if (o.orderStatus == '1') {
 					btn.html("立即支付").addClass("pay");
+					nood.removeClass("hidden");
 				} else if(o.orderStatus == '2' || o.orderStatus == '3' || o.orderStatus == '4' ){
-					nood.addClass("hidden");
+					
 				} else if(o.orderStatus == '-1'){
 					btn.html("删除").addClass("del");
+					nood.removeClass("hidden");
 				}
-				
-				
 			},
 			car_order:function(d){
 				var o = d.data.orderInfo,c = d.data.couponlist,html='',good = o.details[0];

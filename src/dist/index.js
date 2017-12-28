@@ -34,17 +34,24 @@ define(function(require, exports, module){
 	};
 	
 	pub.options = {}
-	if(pub.logined){
-		pub.options.websiteNode =  pub.user_websiteNode;
-	}else{
-		pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
-	}
+	pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
 	
+	pub.options.websiteNodeData = localStorage.getItem("websiteNodeData") ? JSON.parse(localStorage.getItem("websiteNodeData")) : null;
 	// 接口处理命名空间
 	pub.apiHandle = {
 		init:function(){
 			pub.apiHandle.page_show.init();
 			!pub.openId && common.isWeiXin() && pub.weixinCode && pub.apiHandle.get_weixin_code.init();
+			if (pub.options.websiteNodeData == null) {
+				$(".header_left").html("杭州站")
+			}else{
+				console.log(pub.options.websiteNode)
+				for (var i in pub.options.websiteNodeData) {
+					if (pub.options.websiteNodeData[i].websiteNode == pub.options.websiteNode) {
+						$(".header_left").html(pub.options.websiteNodeData[i].websiteName)
+					}
+				}
+			}
 		},
 		get_code : {
 			init:function(){
@@ -182,7 +189,8 @@ define(function(require, exports, module){
 				if (nood.attr("data-url")) {
 					common.jumpLinkPlain( $(this).attr("data-url") )
 				}else{
-					alert("暂缺，待定");
+					//alert("暂缺，待定");
+					common.prompt("内测中，暂未开放！")
 				}
 			});
 			/*点击进入子菜单*/
@@ -191,7 +199,8 @@ define(function(require, exports, module){
 				if (nood.attr("data-url")) {
 					common.jumpLinkPlain( $(this).attr("data-url") )
 				}else{
-					alert("暂缺，待定");
+					//alert("暂缺，待定");
+					common.prompt("内测中，暂未开放！")
 				}
 			});
 		}

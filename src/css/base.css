@@ -43,6 +43,10 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .submit_btn90{width: 100%;height: 90px;background-image: url(../img/bg_02.png);background-repeat: repeat;background-position: left center;background-origin: content-box;  text-align: center;line-height: 90px;color: #FFFFFF;font-size: 34px;border-radius: 6px;}
 /*按钮不可点击*/
 .submit_isnot{background: #909090;}
+
+/*省略号样式*/
+.ellipsis{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+
 .toast-ui {
     display: none;
     top: 350px;
@@ -119,6 +123,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .regsiter_phone{background: url(../img/icon_phone@2x.png) no-repeat 20px center;}
 .regsiter_password,.regsiter_password_again{background: url(../img/icon_key@2x.png) no-repeat 20px center;}
 .regsiter_item input{width: 100%;height: 60px;line-height: 60px;background: #F7F7F7;font-size: 30px;}
+.regsiter_item input#verify_code{background-color:#F7F7F7 ;}
 .regsiter_smscode{background: url(../img/icon_direction@2x.png) no-repeat 20px center;}
 .get_verify_code{position: absolute;top: 20px;right: 0;width: 260px;height: 80px;line-height: 80px;text-align: center;color: #FFF;background: url(../img/bg_01.png) repeat-x center;border-radius: 6px;font-size: 30px;}
 .regsiter_btn{margin-top: 70px;margin-bottom: 20px; width: 100%;height: 90px;line-height: 90px; color: #FFF;font-size: 30px;text-align: center;border-radius: 6px;background: url(../img/bg_02.png) repeat center;font-size: 36px;}
@@ -429,7 +434,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 /*联系我们&& 设置*/
 .contact_us_box,.set_box{margin-bottom: 20px;}
 .contact_us_box .float_right,.set_box .float_right{color: #9E9E9E;}
-.my_address_box .float_right input{text-align: right;height: 98px;}
+.my_address_box .float_right input{text-align: right;height: 96px;}
 /*我的余额*/
 .my_balance.header_wrap{background: none;border: none;}
 .main_wrap.my_balance{padding-top: 0;}
@@ -494,7 +499,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 
 .mall_main .banner_wrap{width: 100%;height: 360px;overflow: hidden;position: relative;}
 .mall_main .mall_banner{width: 100%;height: 100%;}
-.mall_main .mall_banner .swiper-slide{height: 360px;background: red;line-height: 360px;text-align: center;font-size: 150px;}
+.mall_main .mall_banner .swiper-slide{height: 360px;line-height: 360px;text-align: center;font-size: 150px;}
 .mall_main .swiper-slide img{width: 100%;height: 100%;vertical-align: inherit;}
 
 .mall_nav{display: flex;text-align: center;background:#FFFFFF;}
@@ -551,6 +556,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 
 .car_brand_fiexd{position: fixed;top: 96px;left: 750px;bottom: 0;width: 630px;z-index: 10;background-color:#EEE;overflow-y: hidden;}
 .car_brand_fiexd .list_item{text-align: left;}
+.car_brand_fiexd .car_brand_list_box_tit{height: 80px;line-height: 80px;}
 #mask{position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,0.3);display: none;}
 #mask.actived{display: block;}
 .car_brand_fiexd .car_brand_list_item{height: 112px;margin-bottom: 20px;padding: 0 20px;background: #FFF;}

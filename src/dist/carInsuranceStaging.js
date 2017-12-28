@@ -28,11 +28,9 @@ define(function(require, exports, module){
 	};
 	
 	pub.options = {}
-	if(pub.logined){
-		pub.options.websiteNode =  pub.user_websiteNode;
-	}else{
-		pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
-	}
+	
+	pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
+	
 	pub.carInsuranceStaging = {
 		init:function(){
 			require('LAreaData');

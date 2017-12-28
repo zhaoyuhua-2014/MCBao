@@ -59,6 +59,7 @@ define(function(require, exports, module){
 		DTD : $.Deferred(),
 		//默认站点
 		WebsiteNode:'3301',
+		DATE:"1228",
 		
 	});
 
@@ -115,6 +116,15 @@ define(function(require, exports, module){
 	common.websiteNode = new Memory('websiteNode','local');//站点编码
 	
 	common.openId = new Memory('openId','local'); //  
+	
+	
+	
+	
+	//session存储
+	common.couponlist = new Memory('couponlist','session')
+	common.packetDate = new Memory('packetDate','session');//支付到选红包页面
+	
+	
 	
 	common.jumpMake = new Memory('jumpMake','local'); // 跳转
 	common.orderType = new Memory('orderType','local'); // 1.普通商品 2.秒杀商品 3.预购商品
@@ -280,6 +290,13 @@ define(function(require, exports, module){
 		// 处理普通的页面跳转
 		jumpLinkPlain : function( url ){
 			url = url || window.location.href;
+			if (common.DATE) {
+				if (url.indexOf("?")>0) {
+					url = url + "&v="+common.DATE;
+				}else{
+					url = url + "?v="+common.DATE;
+				}
+			}
 			window.location.href = url;
 			return true; 
 		},
@@ -492,16 +509,16 @@ define(function(require, exports, module){
 		var nodeTemp = $(this).remove();
 		nodeTemp = null;
 	});*/
-	/*(function(){
+	(function(){
 		var m = document.createElement("meta"),
 			h = document.getElementsByTagName("head")[0];
 			m.setAttribute("http-equiv","Content-Security-Policy");
 		if (common.EVE) {
-			m.setAttribute("content","script-src 'self' 'unsafe-inline' 'unsafe-eval' http://api.grhao.com/server/api.do; style-src 'self' 'unsafe-inline' 'unsafe-eval'");
+			m.setAttribute("content","script-src 'self' 'unsafe-inline' 'unsafe-eval' http://api.91mcb.com/mcb_api/server/api.do; style-src 'self' 'unsafe-inline' 'unsafe-eval'");
 		}else{
-			m.setAttribute("content","script-src 'self' 'unsafe-inline' 'unsafe-eval' http://61.164.118.194:8090/grh_api/server/api.do; style-src 'self' 'unsafe-inline' 'unsafe-eval'");
+			m.setAttribute("content","script-src 'self' 'unsafe-inline' 'unsafe-eval' http://restapi.amap.com/ http://webapi.amap.com/ http://api.91mcb.com/mcb_api/server/api.do; style-src 'self' 'unsafe-inline' 'unsafe-eval' http://webapi.amap.com/theme/v1.3/style1503546983737.css");
 		}
 		h.appendChild(m)
-	})(common)*/
+	})(common)
 	return common;
 });

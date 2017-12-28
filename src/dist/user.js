@@ -31,6 +31,10 @@ define(function(require, exports, module) {
 	//我的页面逻辑
 	pub.user = {
 		init: function() {
+			//清除一部分暂时没有的信息
+			common.couponlist.removeItem();
+			common.packetDate.removeItem();
+			
 			if(pub.logined) {
 				$(".my_top_info").addClass("login_status")
 				pub.user.user_info.init();
@@ -78,14 +82,25 @@ define(function(require, exports, module) {
 			init: function() {
 				$(".my_center .my_center_item").on("click", function() {
 					var nood = $(this);
-					if(nood.attr("data-url")) {
+					/*if(nood.attr("data-url")) {
 						common.jumpLinkPlain(nood.attr("data-url"))
+					}*/
+					if (nood.attr("data-switch") == "false") {
+						common.prompt("内测中，暂未开放！")
+					}else if(nood.attr("data-switch") == "true"){
+						if(nood.attr("data-url")) {
+							common.jumpLinkPlain(nood.attr("data-url"))
+						}
 					}
 				})
 				$(".my_info_nav .my_info_nav_item").on("click", function() {
 					var nood = $(this);
-					if(nood.attr("data-url")) {
-						common.jumpLinkPlain(nood.attr("data-url"))
+					if (nood.attr("data-switch") == "false") {
+						common.prompt("内测中，暂未开放！")
+					}else if(nood.attr("data-switch") == "true"){
+						if(nood.attr("data-url")) {
+							common.jumpLinkPlain(nood.attr("data-url"))
+						}
 					}
 				})
 				$("#foot").on("click", ".footer_item", function() {
@@ -95,7 +110,7 @@ define(function(require, exports, module) {
 					}
 				});
 				$(".my_info_top").on("click", "img.true", function() {
-					common.jumpLinkPlain("../html/my_info.html")
+					common.jumpLinkPlain("../html/my_info.html");
 				})
 			}
 		}
@@ -243,20 +258,27 @@ define(function(require, exports, module) {
 	//我的红包资源
 	pub.packet = {
 		init: function() {
-			pub.packet.coupon_info_show.init();
+			pub.type = common.getUrlParam("order");
+			console.log(pub.type);
+			if (pub.type == "line_payment") {
+				pub.options.couponlist = JSON.parse(localStorage.getItem("couponlist"))
+				pub.packet.coupon_info_show.apiData(pub.options.couponlist);
+			}else{
+				pub.packet.coupon_info_show.init();
+			}
+			
 		},
 		coupon_info_show: {
 			init: function() {
 				common.ajaxPost($.extend({
 					method: 'coupon_info_show',
 				}, pub.userBasicParam), function(d) {
-					d.statusCode == "100000" && pub.packet.coupon_info_show.apiData(d);
+					d.statusCode == "100000" && pub.packet.coupon_info_show.apiData(d.data);
 					d.statusCode != "100000" && common.prompt(d.statusStr)
 				});
 			},
-			apiData: function(d) {
-				var o = d.data,
-					html = '';
+			apiData: function(o) {
+				var	html = '';
 				if(o.length == 0) {
 					$(".red_packet_list_box").html("还没有红包哦！").css({
 						"text-align": "center",
@@ -266,19 +288,38 @@ define(function(require, exports, module) {
 				} else {
 					for(var i in o) {
 						html += '<dl class="red_packet_item">'
-						html += '	<dt class="float_left">安盛天平</dt>'
+						if (o[i].couponName.length > 5 && o[i].couponName.length <= 10) {
+							html += '	<dt class="float_left" style="line-height: 50px;padding:26px 0;">'+o[i].couponName+'</dt>'
+						}else{
+							html += '	<dt class="float_left">'+o[i].couponName+'</dt>'
+						}
+						
 						html += '	<dd class="float_left">'
-						html += '		<p><span style="color: #EC5330;font-size: 65px;">￥50</span><span style="color: #9E9E9E;font-size: 20px;padding-left: 15px;">满1000可用</span></p>'
-						html += '		<p><span style="color: #d9aaaa;font-size: 24px;">有效期至：2017.12.31</span><span class="float_right" style="display: inline-block;background: url(../img/red_packet_txt@2x.png) no-repeat center;"></span></p>'
+						html += '		<p><span style="color: #EC5330;font-size: 65px;">￥'+o[i].couponMoney+'</span><span style="color: #9E9E9E;font-size: 20px;padding-left: 15px;">满'+o[i].leastOrderMoney+'可用</span></p>'
+						html += '		<p><span style="color: #d9aaaa;font-size: 24px;">有效期至：'+o[i].endTime+'</span></p>'
 						html += '	</dd>'
 						html += '</dl>'
 					}
+					/*<span class="float_right" style="display: inline-block;background: url(../img/red_packet_txt@2x.png) no-repeat center;"></span>*/
+					$(".red_packet_list_box").html(html)
 				}
 			}
 		},
 		eventHandle: {
 			init: function() {
-
+				$(".red_packet_list_box").on("click",".red_packet_item",function(){
+					var nood = $(this),
+						packet = nood.attr("data");
+					if (pub.type == "line_payment") {
+						common.packetDate.setItem(packet);
+						common.jumpHistryBack();	
+					}
+				});
+				$(".no_use_red_packet").on("click",function(){
+					if (pub.type == "line_payment") {
+						common.jumpHistryBack();	
+					}
+				})
 			}
 		}
 	};
