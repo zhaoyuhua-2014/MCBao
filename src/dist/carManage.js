@@ -95,7 +95,7 @@ define(function(require, exports, module){
 						str += '					<p class="float_left">状态: <span class="color_gr">认证通过</span></p>'
 						str += '					<p class="float_right color_re"></p>'
 					} else if(d.status == 3){
-						str += '					<p class="float_left">状态: <span class="color_gr">认证失败</span></p>'
+						str += '					<p class="float_left">状态: <span class="color_re">认证失败</span></p>'
 						str += '					<p class="float_right color_re"></p>'
 					} else if(d.status == 4 || d.status == 5 || d.status == 6){
 						str += '					<p class="float_left">状态: <span class="color_gr">认证通过</span></p>'
