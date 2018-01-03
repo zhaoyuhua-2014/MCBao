@@ -205,6 +205,9 @@ define(function(require, exports, module){
     					}
     				})
 				})
+				$(".callback").on("click",function(){
+					common.jumpLinkPlain("../html/my.html");
+				});
 			}
 		}
 	};
@@ -858,17 +861,20 @@ define(function(require, exports, module){
 		if (pub.module_id == "garage"){
     		pub.garage.init()
 			pub.garage.eventHandle.init();
-    	}else if (pub.module_id == "addCar"){
-    		pub.addCar.init()
-			pub.addCar.eventHandle.init();
-    	}else if (pub.module_id == "carBrand"){
-    		pub.carBrand.init()
-			pub.carBrand.eventHandle.init();
-    	}else if (pub.module_id == "selectCar"){
-    		pub.selectCar.init()
-			pub.selectCar.eventHandle.init();
-    	}
-		pub.eventHandle.init();
+    	}else{
+    		if (pub.module_id == "addCar"){
+	    		pub.addCar.init()
+				pub.addCar.eventHandle.init();
+	    	}else if (pub.module_id == "carBrand"){
+	    		pub.carBrand.init()
+				pub.carBrand.eventHandle.init();
+	    	}else if (pub.module_id == "selectCar"){
+	    		pub.selectCar.init()
+				pub.selectCar.eventHandle.init();
+	    	}
+	    	pub.eventHandle.init();
+    	} 
+		
 	};
 	
 	module.exports = pub;
