@@ -55,7 +55,7 @@ define(function(require, exports, module){
 						//console.log(status)
 						html += creatCar(o[i],i,status)
 					}
-					$(".garage_box").html(html)
+					$(".garage_box").html(html).data("data",o);
 				}
 				function getstatus (i) {
 					var s = '';
@@ -77,10 +77,10 @@ define(function(require, exports, module){
 				function creatCar(d,i,status){
 					console.log(status)
 					var str = '';
-						str += '<div class="line-wrapper" dataid="'+ d.id +'">'
+						str += '<div class="line-wrapper" dataid="'+ d.id +'" index = "'+i+'">'
 						str += '	<div class="line-scroll-wrapper clearfloat">'
 						str += '		<dl class="line-normal-wrapper garage_car_item clearfloat " status = "'+d.status+'">'
-						str += '			<dt class="line-normal-avatar-wrapper"><img src="../carimg/'+d.carBrandKindCode+'.jpg"></dt>'
+						str += '			<dt class="line-normal-avatar-wrapper"><img src="'+d.carLogo+'"></dt>'
 						str += '			<dd class="line-normal-info-wrapper">'
 						str += '				<p>车牌号:'+ d.carNoProvince + d.carNoCity + d.carNo +'</p>'
 						str += '				<p>车型:'+ d.carBrandKind +'</p>'
@@ -140,29 +140,36 @@ define(function(require, exports, module){
 			apiData:function(d){
 				var o = d.data,html = '';
 				$(".garage_box .line-wrapper").eq(pub.options.carIndex).remove();
+				/*$(".garage_box").data("data").splice(pub.options.carIndex,1)
+				console.log($(".garage_box").data("data"));*/
 			}
 		},
 		eventHandle:{
 			init:function(){
-				/*$(".garage_box").on("click",".garage_car_item dd",function(){
-					
-					var nood = $(this).parents(".line-wrapper");
-					if (!nood.is(".actived")) {
-						//nood.addClass("actived").siblings().removeClass("actived");
-						//nood.find('.line-normal-info-wrapper .clearfloat .float_right').html("默认");
-						//nood.siblings().find('.line-normal-info-wrapper .clearfloat .float_right').html("")
+				$(".garage_box").on("click",".garage_car_item dd .float_right",function(e){
+					var nood = $(this);
+					pub.options.carId = nood.parents(".line-wrapper").attr("dataid");
+					pub.options.carIndex = nood.parents(".line-wrapper").attr("index");
+					common.stopEventBubble(e);
+					if (nood.is(".color_or")) {
+						common.jumpLinkPlain("../html/car_authentication.html?id="+pub.options.carId);
 					}
-				})*/
-				
+				})
 				$(".garage_box").on("click",".garage_car_item",function(){
 					var nood = $(this),
-						status = nood.attr("status");
-						id = nood.parents(".line-wrapper").attr("dataid")
-					
+						status = nood.attr("status"),
+						id = nood.parents(".line-wrapper").attr("dataid"),
+						obj = {carStatus:status,carId:id};
+						pub.options.carIndex = nood.parents(".line-wrapper").attr("index");
 					if (status == 0) {
-						common.jumpLinkPlain("../html/car_authentication.html"+"?id="+id)
+						localStorage.setItem("car",JSON.stringify($(".garage_box").data('data')[pub.options.carIndex]));
+						common.jumpLinkPlain( "../html/car_info.html" );
+						//common.jumpLinkPlain("../html/car_authentication.html"+"?id="+id);
+						
 					} else if(status == 2 || status == 4 || status == 5 || status == 6){
-						common.prompt("该车已认证！")
+						localStorage.setItem("car",JSON.stringify($(".garage_box").data('data')[pub.options.carIndex]));
+						common.jumpLinkPlain( "../html/car_info.html" );
+						//common.prompt("该车已认证！")
 					} else if(status == 1){
 						var layerIndex = layer.open({
 	    					content: '车辆认证中，请耐心等待。<br/><a href="tel:4008001234">4008001234</a>',
@@ -182,14 +189,13 @@ define(function(require, exports, module){
 					}
 				})
 				$(".header_right").on("click",function(){
+					localStorage.removeItem("car");
 					common.jumpLinkPlain( "../html/car_info.html" )
 				})
 				$(".garage_box").on("click",".line-btn-delete",function(e){
 					pub.nood = $(this).parents(".line-wrapper");
 					pub.options.carId = pub.nood.attr("dataid");
-					pub.options.carIndex = pub.nood.index();
-					//
-					//
+					pub.options.carIndex = pub.nood.attr("index");
     				var layerIndex = layer.open({
     					content: '您确定要删除该车吗？',
     					btn: ['确定', '取消'],
@@ -225,15 +231,25 @@ define(function(require, exports, module){
 			var car = localStorage.getItem("car");
 			if(car){
 				car = JSON.parse(car);
+				/*判断车状态和车id*/
+				
+				if (car.carId) {
+					pub.carId = car.id;
+				}
 				pub.addCar.htmlInit(car);
+				if (car.status == 0) {
+					
+				}else if(car.status == 2 || car.status == 4 || car.status == 5 || car.status == 6){
+					$("#car_number,#carBrand,#carBrandKind").attr("disabled","disabled");
+					$(".payment_submit").addClass("hidden");
+				}
 			}
 			//pub.addCar.carOwnerInit.init();
 		},
 		htmlInit:function(d){
 			var nood = $(".car_info_box");
-			console.log(d)
 			
-			if (d.carType) {
+			/*if (d.carType) {
 				nood.find("#carTypeValue").val(d.carType);
 				if (d.carType == "person") {
 					nood.find("#carType").val("个人车");
@@ -249,7 +265,7 @@ define(function(require, exports, module){
 					nood.find("#ownerName").val(d.ownerName)
 				}
 				nood.find(".carOwner").show();
-			}
+			}*/
 			if(d.carNoProvince && d.carNoCity  && d.carNo){//车牌号
 				nood.find("#car_number").val(d.carNoProvince + d.carNoCity + d.carNo);
 				nood.find("#carNoProvince").val(d.carNoProvince);
@@ -264,6 +280,7 @@ define(function(require, exports, module){
 				nood.find("#carBrandKind").val(d.carBrandKind);
 				nood.find("#carBrandKindCode").val(d.carBrandKindCode);
 			}
+			
 		},
 		carOwnerInit:{
     		init:function(){
@@ -292,6 +309,22 @@ define(function(require, exports, module){
 				})
     		}
     	},
+    	car_info_show: {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'car_info_show',
+					carId:pub.carId,
+					tokenId:pub.tokenId,
+				}, pub.car ),function( d ){
+					d.statusCode == "100000" && pub.addCar.car_info_show.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+				pub.addCar.htmlInit(o)
+			}
+		},
 		car_info_add: {
 			init:function(){
 				common.ajaxPost($.extend({
@@ -306,12 +339,28 @@ define(function(require, exports, module){
 			apiData:function(d){
 				var o = d.data,html = '';
 				localStorage.removeItem("car")
-				common.jumpHistryBack();
+				common.jumpLinkPlain("../html/my_garage.html")
+			}
+		},
+		car_info_update: {
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'car_info_update',
+					tokenId:pub.tokenId,
+				}, pub.car ),function( d ){
+					d.statusCode == "100000" && pub.addCar.car_info_update.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				var o = d.data,html = '';
+				localStorage.removeItem("car")
+				common.jumpLinkPlain("../html/my_garage.html")
 			}
 		},
 		eventHandle:{
 			init:function(){
-				$("#car_brand,#car_model,#carType,#carBrandKind").on("focus",function(){
+				$("#carBrand,#car_brand,#car_model,#carType,#carBrandKind").on("focus",function(){
 					$(this).blur();
 				});
 				$("#carType").on("click",function(){
@@ -336,7 +385,14 @@ define(function(require, exports, module){
 						/*ownerName:ownerName,//车主姓名
 						carType:carType,//车类型*/
 					};
-					localStorage.setItem("car",JSON.stringify(pub.car))
+					var car = localStorage.getItem("car");
+					if(car){
+						car = JSON.parse(car)
+					}else{
+						car = {};
+					}
+					car = $.extend({},pub.car , car);
+					localStorage.setItem("car",JSON.stringify(car));
 					common.jumpLinkPlain( "../html/car_brand.html" )
 				})
 				$("#car_model").on("click",function(){
@@ -395,8 +451,18 @@ define(function(require, exports, module){
 						/*ownerName:"赵玉华",//车主姓名
 						carType:"01",//车类型*/
 					};
-					localStorage.setItem("car",JSON.stringify(pub.car));
-					pub.addCar.car_info_add.init();
+					var car = localStorage.getItem("car");
+					if(car){
+						car = JSON.parse(car);
+						if (car.id) {
+							pub.car = $.extend({},pub.car,{carId:car.id});
+							pub.addCar.car_info_update.init();
+						}else{
+							pub.addCar.car_info_add.init();
+						}
+					}else{
+						car = {};
+					}
 				})
 			}
 		}

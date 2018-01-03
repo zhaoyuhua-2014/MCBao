@@ -117,7 +117,9 @@ define(function(require, exports, module){
 	
 	common.openId = new Memory('openId','local'); //  
 	
+	common.carId = new Memory('carId','local'); //  车id
 	
+	common.car = new Memory('car','local'); //  车库添加修改车信息
 	
 	
 	//session存储
