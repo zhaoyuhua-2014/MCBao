@@ -113,7 +113,7 @@ define(function(require, exports, module){
 				init:function(d){
 					var html = '';
 					for (var i in d) {
-						html += '<div class="swiper-slide"><img src="'+d[i].adPic+'"/></div>'
+						html += '<div class="swiper-slide"><a href="javascript:void(0)"><img src="'+d[i].adPic+'"/></a></div>'
 					}
 					$(".banner_wrap .index_banner .swiper-wrapper").html(html);
 					pub.apiHandle.page_show.adInfo.apiData();
@@ -122,12 +122,12 @@ define(function(require, exports, module){
 					var swiper = new Swiper (".index_banner", {
 					    direction: 'horizontal',
 					    loop: true,
-					    loopAdditionalSlides :2,
+//					    loopAdditionalSlides :2,
 					    autoplay:5000,
 					    //autoplayDisableOnInteraction : false,
 					    //spaceBetween : 34,
-					    slidesPerView : 1.4,
-						centeredSlides : true,
+//					    slidesPerView : 1.4,
+//						centeredSlides : true,
 					    //width:618,
 					});
 				},
