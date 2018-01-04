@@ -177,7 +177,6 @@ function Picker(option) {
 
     var i;
     for (i = 0; i < cols.length; i++) {
-
         //设置滚轮的选项
         that.setValue(i, that[KEY_OPTION].setValues[i]);
     }
@@ -223,7 +222,7 @@ Picker.prototype.close = function () {
  * @param defaultValue      默认值,如果为空会以当前值作为默认值。如果没有当前值会以第一个值作为默认值
  */
 Picker.prototype.setOptions = function (index, list, defaultValue) {
-    if (this[KEY_WHEELS][index]) this[KEY_WHEELS][index].setOptions(list, defaultValue);
+	if (this[KEY_WHEELS][index]) this[KEY_WHEELS][index].setOptions(list, defaultValue);
 };
 
 /**
@@ -244,7 +243,7 @@ Picker.prototype.getOptions = function (index) {
  * @param value             设置的值
  */
 Picker.prototype.setValue = function (index, value) {
-    if (this[KEY_WHEELS][index]) this[KEY_WHEELS][index].selectOption(value);
+	if (this[KEY_WHEELS][index]) this[KEY_WHEELS][index].selectOption(value);
 };
 
 /**
@@ -803,7 +802,6 @@ var browserUtil = __webpack_require__(9);
 var tick = __webpack_require__(10)();
 
 function Wheel(picker, col, option, index) {
-//console.log(option)
 	///////////////////主要属性
 	//picker对象
 	this.picker = picker;
@@ -1003,7 +1001,6 @@ Wheel.prototype.endDrag = function () {
  */
 Wheel.prototype.setOptions = function (list, selectedValue, isInti) {
 	var that = this;
-
 	list = list || [];
 	if (Array.isArray(list)) {
 		//清空容器
@@ -1076,7 +1073,6 @@ Wheel.prototype.setOptions = function (list, selectedValue, isInti) {
 
 	//刷新标签
 	this.flushLabel();
-
 	if (isInti) {
 		if (list.length > 0) {
 			this.selectedIndex = 0;
@@ -1092,7 +1088,6 @@ Wheel.prototype.setOptions = function (list, selectedValue, isInti) {
 
 		return;
 	}
-
 	//设置被选值。如果用户给定被选值,使用给定被选值。如果没有且之前有被选值,并仍在新options里面,保存之前的值。都没有返回0
 	if (list.length > 0) {
 		if (selectedValue != null && this.valueHashMap[selectedValue] != null) {

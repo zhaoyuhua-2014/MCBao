@@ -168,7 +168,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .index_module .module_item{padding: 16px 0;border-bottom: 1px solid #333;}
 .index_module .module_item:last-child{border-bottom: none;}
 .module_item dt,.module_item dd{float: left;}
-.module_item dt{width: 270px;height: 178px;border-radius: 15px;}
+.module_item dt{width: 270px;height: 178px;border-radius: 15px;overflow: hidden;}
 .module_item dt img{width: 100%;height: 100%;}
 .module_item dd{padding: 0 24px;width: 402px;}
 .module_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 30px;color: #9C9FA3;}
@@ -352,7 +352,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 32px;color: #303030;}
 .car_item .description{font-size: 26px;color: #9E9E9E;line-height: 46px;min-height: 76px;}
 .car_item .money{font-size: 32px;color: #ec5330;}
-.car_mall_center{padding: 24px;width: 100%;margin-top: 20px;background: #FFF;padding-top: 80px;}
+.car_mall_center{/*padding: 24px;*/width: 100%;margin-top: 20px;background: #FFF;padding-top: 20px;}
 .car_mall_center .car_staging_box_title{background: url(../img/bg_title_gold@2x.png) no-repeat center;}
 
 .car_mall_center .car_staging_box_header{border: none;}

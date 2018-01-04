@@ -203,12 +203,16 @@ define(function(require, exports, module){
     		var year = [];
 			var today = new Date();
 			var year_n = today.getFullYear();
-			for (var i = year_n; i <= (year_n + 5); i++) {
+			for (var i = (year_n); i <= (year_n + 5); i++) {
 			    year.push(i);
 			}
 			var month = [];
 			for (var i = 1; i <= 12; i++) {
 			    month.push(i);
+			}
+			var days = [];
+			for (var i = today.getDate() ; i <= getCountDays() ; i++) {
+				days.push(i)
 			}
 			pub.picker8 = new myPicker({
 			    cols: [{
@@ -218,7 +222,7 @@ define(function(require, exports, module){
 			        options: month,
 			        suffix: "月",
 			    }, {
-			        options: [],
+			        options: days,
 			        suffix: "日",
 			    },],
 			    title:'请选择提车日期',
@@ -268,6 +272,19 @@ define(function(require, exports, module){
 			        }
 			    }
 			});
+			function getCountDays() {
+		        var curDate = new Date();
+		        /* 获取当前月份 */
+		        var curMonth = curDate.getMonth();
+		       /*  生成实际的月份: 由于curMonth会比实际月份小1, 故需加1 */
+		       curDate.setMonth(curMonth + 1);
+		       /* 将日期设置为0, 这里为什么要这样设置, 我不知道原因, 这是从网上学来的 */
+		       curDate.setDate(0);
+		       /* 返回当月的天数 */
+		       return curDate.getDate();
+			}
+			//例如,  获取当前月份(现在是3月)的总天数: 
+			//getCountDays()       // 返回31
     	},
 		idcard_img_upload : {
 			init:function(){
