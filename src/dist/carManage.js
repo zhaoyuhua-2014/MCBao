@@ -172,7 +172,7 @@ define(function(require, exports, module){
 						//common.prompt("该车已认证！")
 					} else if(status == 1){
 						var layerIndex = layer.open({
-	    					content: '车辆认证中，请耐心等待。<br/><a href="tel:4008001234">4008001234</a>',
+	    					content: '车辆认证中，请耐心等待。<br/><a href="tel:0571-87790773">0571-87790773</a>',
 	    					btn: ['确定', '取消'],
 	    					yes: function(index){
 						    	layer.close(layerIndex)
@@ -180,8 +180,8 @@ define(function(require, exports, module){
 	    				});
 					} else if(status == 3){
 						var layerIndex = layer.open({
-	    					content: '认证未通过可咨询客服解决<br/><a href="tel:4008001234">4008001234</a>',
-	    					btn: ['<a href="tel:4008001234" style="display:block;text-align:center">确定</a>', '取消'],
+	    					content: '认证未通过可咨询客服解决<br/><a href="tel:0571-87790773">0571-87790773</a>',
+	    					btn: ['<a href="tel:0571-87790773" style="display:block;text-align:center">确定</a>', '取消'],
 	    					yes: function(index){
 						    	layer.close(layerIndex)
 	    					}

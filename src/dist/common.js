@@ -60,6 +60,7 @@ define(function(require, exports, module){
 		//默认站点
 		WebsiteNode:'3301',
 		DATE:"1228",
+		PhoneNum:"0571-87790773",
 		
 	});
 

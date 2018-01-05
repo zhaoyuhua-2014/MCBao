@@ -219,7 +219,7 @@ define(function(require, exports, module){
 				var arrTitle = ["支付失败","支付成功"];
 				var arrUrl = "../html/my.html";
 				var arrStatus = ["fail","success"]
-				var arrInfoText = ["联系官方客服：<a href=''>400-4576-8888</a>","*根据保险公司规定您还未上传身份证及行驶证正副本，信息仅用于投保，我们将严格为你保密。<a href=''>继续完善信息</a>"]
+				var arrInfoText = ["联系官方客服：<a href='tel:0571-87790773'>0571-87790773</a>","*根据保险公司规定您还未上传身份证及行驶证正副本，信息仅用于投保，我们将严格为你保密。<a href=''>继续完善信息</a>"]
 				var nood = $(".pay_result_box");
 				$(".header_title").html(arrTitle[d]);
 				nood.addClass(arrStatus[d]).end().find(".pay_result_txt").html(arrTitle[d]).end().find(".pay_result_info").html(arrInfoText[d]);
