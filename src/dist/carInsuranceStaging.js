@@ -30,7 +30,7 @@ define(function(require, exports, module){
 	pub.options = {}
 	
 	pub.options.websiteNode = pub.local_websiteNode ? pub.local_websiteNode : common.WebsiteNode;
-	
+	//车险分期
 	pub.carInsuranceStaging = {
 		init:function(){
 			require('LAreaData');
@@ -404,7 +404,6 @@ define(function(require, exports, module){
 						}
 					};
 					
-					
 					//保存原始数据
 					var carInfo = {
 						selectAddress : selectAddress,//投保城市
@@ -416,12 +415,13 @@ define(function(require, exports, module){
 						is_Transfer :is_Transfer,//是否是过户车
 						transfer_time : transfer_time,//注册时间
 					};
+					
 					//本地保存数据
-					localStorage.setItem("carInfo_1",JSON.stringify(carInfo));
+					sessionStorage.setItem("carInfo_1",JSON.stringify(carInfo));
 					var options = {
 						
 					}
-					window.location.href = "car_info1.html"
+					common.jumpLinkPlain("../html/car_info1.html");
 				})
 				
     		}
@@ -433,8 +433,8 @@ define(function(require, exports, module){
 			require ("Picker");
 			require("PickerCss")
 			pub.carInsuranceStaging.timeInit.init();
-			var carInfo = localStorage.getItem("carInfo_1");
-			var carInfo2 = localStorage.getItem("carInfo_2");
+			var carInfo = sessionStorage.getItem("carInfo_1");
+			var carInfo2 = sessionStorage.getItem("carInfo_2");
 			var result = {}
 			if (carInfo && carInfo2) {
 				carInfo = JSON.parse(carInfo);
@@ -463,9 +463,12 @@ define(function(require, exports, module){
 			if(d.car_province && d.car_Letter  && d.car_NO){//车牌号
 				nood.find("#car_number").val(d.car_province + d.car_Letter + d.car_NO);
 			}
-			if (d.car_brand && d.carBrandCode) {//车品牌型号
-				nood.find("#car_brand").val(d.car_brand);
+			if (d.carBrand && d.carBrandCode) {//车品牌型号
+				nood.find("#car_brand").val(d.carBrandKind);
+				nood.find("#carBrand").val(d.carBrand);
 				nood.find("#carBrandCode").val(d.carBrandCode);
+				nood.find("#carBrandKind").val(d.carBrandKind);
+				nood.find("#carBrandKindCode").val(d.carBrandKindCode);
 			}
 			if (d.car_Identification_code ) {//17位识别码
 				nood.find("#car_Identification_code").val(d.car_Identification_code);
@@ -477,6 +480,26 @@ define(function(require, exports, module){
 				nood.find(".car_regsiter_time").val(d.car_regsiter_time);
 			}
 		},
+		temp_carinfo_submit:{
+			init: function() {
+				common.ajaxPost($.extend({
+					method: 'temp_carinfo_submit',
+					websiteNode:pub.options.websiteNode,
+				}, pub.userBasicParam , pub.carInfo2), function(d) {
+					d.statusCode == "100000" && pub.carInfo1.temp_carinfo_submit.apiData(d);
+					d.statusCode != "100000" && common.prompt(d.statusStr)
+				});
+			},
+			apiData: function(d) {
+				var o = d.data,html = '';
+				var carInfo = {
+					carExistTag:"2",//	车来源；1车库；2新加
+					carId:o.id,//车id
+				};
+				localStorage.setItem("tempCarInfo",JSON.stringify(carInfo));
+				common.jumpLinkPlain("../html/selectc_policy_programme.html");
+			}
+		},
 		eventHandle : {
 			init : function(){
 				//节点缓存
@@ -486,12 +509,51 @@ define(function(require, exports, module){
 				$("#example8").on("click",function(e){
 					pub.picker8.show();
 				});
+				$("#car_brand").on("focus",function(){
+					$(this).blur();
+				});
+				$("#car_brand").on("click",function(){
+					var car_person = $("#car_person").val(),
+						car_person_number = $("#car_person_number").val(),
+						car_number = $("#car_number").val(),
+						
+						car_Identification_code = $("#car_Identification_code").val(),
+						car_engine_number = $("#car_engine_number").val(),
+						car_regsiter_time =$(".car_regsiter_time").val();
+					if(car_person == ""){
+						common.prompt("请输入车主姓名");
+						return;
+					}else if(car_person_number == ''){
+						common.prompt("请输入身份证号");
+						return;
+					}else if(!common.ID_CARD_REG.test(car_person_number)){
+						common.prompt("请输入正确的身份证号");
+						return;
+					}
+					//保存一份原始数据；
+					var carInfo2 = {
+						car_person : car_person,//车主姓名
+						car_person_number : car_person_number,//车主身份证号码
+						car_number : car_number,//车牌号
+						car_Identification_code : car_Identification_code,//车识别码
+						car_engine_number : car_engine_number,//车发动机号
+						car_regsiter_time : car_regsiter_time,//车注册日期
+					}
+					//本地保存数据
+					sessionStorage.setItem("carInfo_2",JSON.stringify(carInfo2));
+					common.jumpLinkPlain("../html/car_brand.html?type=carInfo1")
+				})
 				$(".submit_btn90").on("click",function(){
 					var car_person = $("#car_person").val(),
 						car_person_number = $("#car_person_number").val(),
 						car_number = $("#car_number").val(),
 						car_brand = $("#car_brand").val(),
-						carBrandCode ="1" ,//$("#carBrandCode").val()
+						
+						carBrand = $("#carBrand").val(),
+						carBrandCode = $("#carBrandCode").val(),
+						carBrandKind = $("#carBrandKind").val(),
+						carBrandKindCode = $("#carBrandKindCode").val(),
+						
 						car_Identification_code = $("#car_Identification_code").val(),
 						car_engine_number = $("#car_engine_number").val(),
 						car_regsiter_time =$(".car_regsiter_time").val();
@@ -525,35 +587,49 @@ define(function(require, exports, module){
 						car_person : car_person,//车主姓名
 						car_person_number : car_person_number,//车主身份证号码
 						car_number : car_number,//车牌号
-						car_brand : car_brand,//车品牌型号
-						carBrandCode : carBrandCode,//车品牌型号编码
+						
+						carBrand : carBrand,
+						carBrandCode : carBrandCode,
+						carBrandKind : carBrandKind,
+						carBrandKindCode : carBrandKindCode,
+						
 						car_Identification_code : car_Identification_code,//车识别码
 						car_engine_number : car_engine_number,//车发动机号
 						car_regsiter_time : car_regsiter_time,//车注册日期
 					}
 					//本地保存数据
-					localStorage.setItem("carInfo_2",JSON.stringify(carInfo2));
-					
-					var options1 = {
-						"carNo"	: "",//车牌号，后5位
-						"carNoCity"	: "", //车牌号，代表城市的字母
-						"carNoProvince"	: "",// 车牌号，省份简称
-					};
-					var options2 = {
-						"carId" : "",//如果是数据库已有的车，则直接传carId就可以了，其他车信息不用传。如果不是数据库的车，则carId=null，其他车信息全部都要传值
-						
-						"carBrandCode" : "", //汽车品牌代码
-						"carBrand" : "",// 品牌名称
-						"carBrandKind" : "",// 车型名称
-						"carBrandKindCode" : "",// 车型代码
-						
-						"carType" : "",// 车类型
-						
-						"carVin" : "",// 车架号
-						"engineNo" : "",// 发动机号
+					sessionStorage.setItem("carInfo_2",JSON.stringify(carInfo2));
+					var carInfo = sessionStorage.getItem("carInfo_1");
+						if (carInfo) {
+							carInfo = JSON.parse(carInfo);
+							var options1 = {
+								"carNo"	: carInfo.car_NO,//车牌号，后5位
+								"carNoCity"	: carInfo.car_Letter, //车牌号，代表城市的字母
+								"carNoProvince"	: carInfo.car_province,// 车牌号，省份简称
+							};
+						}
+					/*	private Integer carType;//车辆类型 1 标识客车；2 标识货车；*/
+					pub.carInfo2 = {
+						carExistTag:"2",//	车来源；1车库；2新加
+						carId:"",//	车编码 - 如果是数据库已有的车，则直接传carId就可以了，其他车信息不用传。如果不是数据库的车，则carId=null，其他车信息全部都要传值
+						carType:"1",
+						carNo:options1.carNo,//	车牌号
+						carNoCity:options1.carNoCity,//	车牌号市
+						carNoProvince:options1.carNoProvince,//	车牌号省
+						carVin:carInfo2.car_Identification_code,//	车架号
+						engineNo:carInfo2.car_engine_number,//	发动机号
+						carBrand:carInfo2.carBrand,//	品牌名称
+						carBrandCode:carInfo2.carBrandCode,//	品牌编码
+						carBrandKind:carInfo2.carBrandKind,//	品牌型号名称
+						carBrandKindCode:carInfo2.carBrandKindCode,//	品牌型号编码
+						ownerName:carInfo2.car_person,//	车主姓名，公司名称
+						ownerIdcard:carInfo2.car_person_number,//	车主身份信息，公司营业执照信息
+						regDate:carInfo2.car_regsiter_time,//	注册日期
+						guohuDate:"",//  否	过户日期
+							
 					}
+					pub.carInfo1.temp_carinfo_submit.init();
 					
-					window.location.href = "selectc_policy_programme.html"
 				});
 				/*提示事件*/
 				nood_car_msg.on("click",function(){

@@ -689,8 +689,13 @@ define(function(require, exports, module){
 						carBrandKind:$(this).html(),//型号
 						carBrandKindCode:$(this).attr("data"),//车品牌系编码
 					}
-					var car = $.extend({},JSON.parse(localStorage.getItem("car")), carBrand);
-					localStorage.setItem("car",JSON.stringify(car))
+					if (common.getUrlParam("type")) {
+						var car = $.extend({},JSON.parse(sessionStorage.getItem("carInfo_2")), carBrand);
+						sessionStorage.setItem("carInfo_2",JSON.stringify(car))
+					}else{
+						var car = $.extend({},JSON.parse(localStorage.getItem("car")), carBrand);
+						localStorage.setItem("car",JSON.stringify(car))
+					}
 					common.jumpHistryBack(pub.Back);
 				})
 			}

@@ -363,6 +363,8 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_mall_center .car_section{border-width: 4px ;border-style: solid;border-radius: 20px;}
 .car_mall_center .car_section:first-child{border-color: #c68b43;}
 .car_mall_center .car_section:last-child{border-color: #48412f;}
+.car_mall_top{text-align: center;}
+.car_mall_top img{display: block;margin: 0 auto;margin-bottom: 10px;}
 .car_mall_context{font-size: 28px;text-align: center;}
 
 .car_mall_footer{height: 100px;line-height: 100px;font-size: 36px;color: #FFFFFF;display: flex;text-align: center;width: 100%;}

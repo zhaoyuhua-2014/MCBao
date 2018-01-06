@@ -370,7 +370,7 @@ define(function(require, exports, module){
 				});
 			},
 			apiData:function(d){
-				var o = d.data,html = '';
+				var o = d.data,html = '',str='';
 				
 				//商品信息
 				html+= '<dl class="car_item clearfloat">'
@@ -382,8 +382,16 @@ define(function(require, exports, module){
 				html+= '	</dd>'
 				html+= '</dl>'
 				$(".car_mall_info").html(html);
-				
-				console.log(JSON.stringify(d));
+				//判断是否有折扣的图片
+				if (o.planPics != "") {
+					var arrPics = o.planPics.split("@")
+					for (var i in arrPics) {
+						if (arrPics[i] != "") {
+							str += '<img src="'+arrPics[i]+'" />'
+						}
+					}
+					$(".car_mall_top").html(str).show();
+				}
 				$(".car_mall_context").html(o.goodsContext);
 				
 				pub.options.evaluation = {
