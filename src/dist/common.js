@@ -522,6 +522,7 @@ define(function(require, exports, module){
 			m.setAttribute("content","script-src 'self' 'unsafe-inline' 'unsafe-eval' http://restapi.amap.com/ http://webapi.amap.com/ http://api.91mcb.com/mcb_api/server/api.do; style-src 'self' 'unsafe-inline' 'unsafe-eval' http://webapi.amap.com/theme/v1.3/style1503546983737.css");
 		}
 		h.appendChild(m)
+		$("title").html("脉车保");
 	})(common)
 	return common;
 });
