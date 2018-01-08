@@ -388,6 +388,8 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 #selectc_policy_swiper_pagination .swiper-pagination-bullet{width: 14px;height: 14px;border-radius: 100%;background: #ff4847;margin: 0 8px; opacity:.5;display: inline-block;}
 #selectc_policy_swiper_pagination .swiper-pagination-bullet-active{opacity: 1;}
 
+.selectc_policy_box .car_staging_box_c_item .center{position: absolute;width: 160px;height: 72px;line-height: 72px;padding-left:40px ;background: url(../img/agree_choose@2x.png) no-repeat left center;left: 50%;margin-left: -80px;}
+.selectc_policy_box .car_staging_box_c_item .center.actived{background: url(../img/agree_chosen@2x.png) no-repeat left center;}
 /*订单详情*/
 .order_details_top{background: url(../img/bg_list_middle@2x.png) no-repeat center;}
 .order_details_center{padding: 0 24px;padding-top: 70px;}
