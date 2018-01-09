@@ -265,10 +265,10 @@ define(function(require, exports, module){
 			},{
 				name:"驾乘险",
 				code:"YWX-JCX",
-				isForce:true,//是否投保boolean
+				isForce:false,//是否投保boolean
 				isBjmp:null,//不计免赔
 				type:"",
-				value:"50万"
+				value:"不投保"
 			}]
 		},{
 			title:"热销款",
@@ -321,16 +321,16 @@ define(function(require, exports, module){
 				name:"人身意外伤害险",
 				code:"YWX-RSYYSHX",
 				isForce:false,//是否投保boolean
-				isBjmp:true,//不计免赔 boolean
+				isBjmp:null,//不计免赔 boolean
 				type:"",
 				value:"100万"
 			},{
 				name:"驾乘险",
 				code:"YWX-JCX",
-				isForce:true,//是否投保boolean
+				isForce:false,//是否投保boolean
 				isBjmp:null,//不计免赔
 				type:"",
-				value:"50万"
+				value:"不投保"
 			}]
 		},{
 			title:"高端款",
@@ -381,50 +381,50 @@ define(function(require, exports, module){
 			},{
 				name:"盗抢险",
 				code:"SYX-DQX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"投保"
 			},{
 				name:"涉水险",
 				code:"SYX-SSX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"投保"
 			},{
 				name:"玻璃险",
 				code:"SYX-BLX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"国产"
 			},{
 				name:"划痕险",
 				code:"SYX-HHX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"1万"
 			},{
 				name:"自燃损失险",
 				code:"SYX-ZRSSX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"投保"
 			},{
 				name:"指定专修厂险",
 				code:"SYX-ZDZXCX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"投保"
 			}],
 			YWX_Insurance:[{
 				name:"人身意外伤害险",
 				code:"YWX-RSYYSHX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔 boolean
 				type:"",
 				value:"100万"
@@ -485,50 +485,50 @@ define(function(require, exports, module){
 			},{
 				name:"盗抢险",
 				code:"SYX-DQX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"投保"
 			},{
 				name:"涉水险",
 				code:"SYX-SSX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"投保"
 			},{
 				name:"玻璃险",
 				code:"SYX-BLX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"国产"
 			},{
 				name:"划痕险",
 				code:"SYX-HHX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"2万"
 			},{
 				name:"自燃损失险",
 				code:"SYX-ZRSSX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"投保"
 			},{
 				name:"指定专修厂险",
 				code:"SYX-ZDZXCX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔boolean
 				type:"",
-				value:"不投保"
+				value:"投保"
 			}],
 			YWX_Insurance:[{
 				name:"人身意外伤害险",
 				code:"YWX-RSYYSHX",
-				isForce:false,//是否投保boolean
+				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔 boolean
 				type:"",
 				value:"100万"
@@ -634,14 +634,14 @@ define(function(require, exports, module){
 				isForce:false,//是否投保boolean
 				isBjmp:null,//不计免赔 boolean
 				type:"",
-				value:"100万"
+				value:"不投保"
 			},{
 				name:"驾乘险",
 				code:"YWX-JCX",
 				isForce:true,//是否投保boolean
 				isBjmp:null,//不计免赔
 				type:"",
-				value:"100万"
+				value:"不投保"
 			}]
 		}
 	}
@@ -742,7 +742,7 @@ define(function(require, exports, module){
 			apiData: function(d) {
 				var o = d.data,html = '';
 				sessionStorage.setItem("priceList",JSON.stringify(d.data))
-				common.jumpLinkPlain("../html/new_insurance_price.html")
+				//common.jumpLinkPlain("../html/new_insurance_price.html")
 			}
 		},
 		eventHandle : {
@@ -769,6 +769,13 @@ define(function(require, exports, module){
 					for (var i in r.YWX_Insurance) {
 						arrs[r.YWX_Insurance[i].code] = JSON.stringify(r.YWX_Insurance[i]);
 					}
+					//去除 没有赋值为字符串的默认项 如果包含数组 则去除数组后转为json字符串
+					for (var i in arrs) {
+						if (arrs[i].arr) {
+							delete arrs[i]['arr'];
+							arrs[i] = JSON.stringify(arrs[i])
+						}
+					}
 					pub.selectcPolicy.insurance_price_query.init(arrs);
 					//common.jumpLinkPlain("../html/new_insurance_price.html")
 				})
@@ -786,7 +793,7 @@ define(function(require, exports, module){
 			
 			var defData = pub.options.policyData.details;
 			var nowData = pub.options.policyData.list[pub.type-1];
-			var resultData = $.extend(true, nowData, defData);
+			var resultData = $.extend(true, defData, nowData);
 			pub.options.resultData = resultData;
 			pub.editPolicy.htmlInit(resultData);
 			pub.editPolicy.selectInit(resultData);
@@ -1329,27 +1336,7 @@ define(function(require, exports, module){
 			}
 		}
 	}
-	//保单新的报价列表
-	pub.policyNewInsurancePrice = {
-		init:function(){
-			
-		},
-		eventHandle : {
-			init:function(){
-				/*点击选择保险公司*/
-				$(".new_insurance_price_box").on("click",".garage_car_item",function(){
-					var nood = $(this);
-					if (!nood.is(".actived")) {
-						$(this).addClass("actived").siblings().removeClass("actived")
-					}
-				});
-				/*确定跳转到询价页面--或者提示人工询价*/
-				$(".submit_btn90").on("click",function(){
-					window.location.href = "payment.html";
-				});
-			}
-		}
-	}
+	
 	//事件处理
 	pub.eventHandle = {
 		init:function(){

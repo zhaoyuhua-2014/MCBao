@@ -690,6 +690,9 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .evaluationDetails_box_item:last-child dd{line-height: 100px;font-size: 30px;color: #bcbbbb;}
 .evaluationDetails_box_item .btn_wrap{padding-right: 24px;text-align: right;height: 56px;padding-top: 20px;}
 .evaluationDetails_box_item .btn_wrap button{width: 160px;height: 56px;border: 1px solid #a8d5ff;text-align: center;line-height: 56px;font-size: 28px;color: #57acfc;border-radius: 10px;}
+/*添加银行卡*/
+/*.addCard_box .list_item label{width: 180px;}*/
+.addCard_box .list_item input{width: 428px;}
 /*说明描述信息*/
 .description_info{font-size: 24px;line-height: 36px;color: #9E9E9E;}
 

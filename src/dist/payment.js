@@ -27,36 +27,7 @@ define(function(require, exports, module){
 	pub.options = {
 		
 	}
-	//付款页面
-	pub.payment = {
-		init:function(){
-			
-		},
-		
-		eventHandle : {
-			init:function(){
-				/*点击选择分期方式*/
-				$(".pay_item_boxs").on("click",".pay_way_item",function(){
-					var nood = $(this);
-					if (!nood.is(".actived")) {
-						$(this).addClass("actived").siblings().removeClass("actived")
-					}
-				})
-				$(".car_staging_box_agreement .icon").on("click",function(){
-					if ($(this).is(".actived")) {
-						$(this).removeClass("actived");
-					}else{
-						 $(this).addClass("actived");
-					}
-				});
-				/*点击确定到在线支付页面*/
-				$(".submit_btn90").on("click",function(){
-					window.location.href = "line_payment.html";
-				});
-				
-			},
-		}
-	}
+	
 	//在线支付
 	pub.linePayment = {
 		init:function(){
@@ -245,10 +216,7 @@ define(function(require, exports, module){
 	}
 	
 	pub.init = function(){
-		if (pub.module_id == "payment") {
-    		pub.payment.init()
-			pub.payment.eventHandle.init();
-    	}else if (pub.module_id == "linePayment"){
+		if (pub.module_id == "linePayment"){
     		pub.linePayment.init()
 			pub.linePayment.eventHandle.init();
     	}else if (pub.module_id == "payResult"){
