@@ -46,6 +46,63 @@ define(function(require, exports, module){
 			},
 			apiData: function(d) {
 				var o = d.data,html = '';
+				if (o.length == 0) {
+					$(".new_insurance_price").html("空空如也").css({"text-align":"center","font-size":"50px","line-height":"80px"});
+				}else{
+					var status = '',l=o.length,html='';//status 1:表示不需要圆角；2：表示第一个，3：表示最后一个；4：表示中间的
+					
+					for(var i in o){
+						status = getstatus(i);
+						html += creatCom(o[i],i,status)
+					}
+					$(".new_insurance_price_box").html(html).data("data",o);
+					$(".submit").removeClass("hidden");
+				}
+				function getstatus (i) {
+					var s = '';
+					if (l == 1) {
+						s = '1'
+					}else if(l==2){
+						s = parseInt(i)+2;
+					}else{
+						if (i == '0') {
+							s = '2'
+						}else if(parseInt(l-1) == i){
+							s = '3'
+						}else{
+							s = '4'
+						}
+					};
+					return s;
+				}
+				function creatCom(d,i,status){
+					var str = '';
+						
+						str += '<dl class="garage_car_item '+(i == "0" ? "actived" : "")+'" dataCode="'+d.insuranceComCode+'" dataId = "'+d.id+'">'
+						str += '	<dt><img src="../carimg/aerfaluomiou.jpg"/></dt>'
+						str += '	<dd>'
+						str += '		<p>保险公司：'+d.insuranceComName+'</p>'
+						str += '		<p>价格: <span class="color_f9">询价中...</span></p>'
+						str += '	</dd>'
+						
+						if(status == '1'){
+							str +=''
+						}else if(status == "2"){
+							str += '			<span class="border_radius bottom_left"></span>'
+							str += '			<span class="border_radius bottom_right"></span>'
+						}else if(status == "3"){
+							str += '			<span class="border_radius top_left"></span>'
+							str += '			<span class="border_radius top_right"></span>'
+						}else if(status == "4"){
+							str += '			<span class="border_radius top_left"></span>'
+							str += '			<span class="border_radius top_right"></span>'
+							str += '			<span class="border_radius bottom_left"></span>'
+							str += '			<span class="border_radius bottom_right"></span>'
+						}
+						str += '</dl>'
+					
+					return str;
+				}
 				
 			}
 		},
