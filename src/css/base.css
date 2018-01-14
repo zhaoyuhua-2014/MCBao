@@ -285,7 +285,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .car_info_msg1{height: 60px;line-height: 60px;background: #ffdd83;color: #e47634;font-size: 24px;padding: 0 24px;}
 .car_info_box .list_item .float_right input{text-align: right;}
 
-.alert_car_img_box{position: absolute;width: 680px;height: 600px;left: 50%;top: 50%;background: #FFF;margin-top: -300px;margin-left: -340px;padding: 10px 20px;display: none;}
+.alert_car_img_box{position: absolute;width: 680px;height: 600px;left: 50%;top: 50%;background: #FFF;margin-top: -300px;margin-left: -340px;padding: 10px 20px;display: none;z-index: 9999;}
 .alert_car_img{width: 640px;height: 480px;border-radius: 24px;overflow: hidden;}
 .alert_car_img img{width: 100%;height: 100%;}
 .alert_car_img_box_bottom span{float: right;line-height: 100px;text-align: right;font-size: 36px;}
@@ -561,7 +561,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .car_brand_fiexd{position: fixed;top: 96px;left: 750px;bottom: 0;width: 630px;z-index: 10;background-color:#EEE;overflow-y: hidden;}
 .car_brand_fiexd .list_item{text-align: left;}
 .car_brand_fiexd .car_brand_list_box_tit{height: 80px;line-height: 80px;}
-#mask{position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,0.3);display: none;}
+#mask{position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: rgba(0,0,0,0.3);display: none;z-index: 9;}
 #mask.actived{display: block;}
 .car_brand_fiexd .car_brand_list_item{height: 112px;margin-bottom: 20px;padding: 0 20px;background: #FFF;}
 /*支付结果*/
@@ -693,6 +693,30 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 /*添加银行卡*/
 /*.addCard_box .list_item label{width: 180px;}*/
 .addCard_box .list_item input{width: 428px;}
+/*报价详情*/
+.offterDetails_main{}
+.offter_top{position: relative;background: #FFF;padding: 10px 24px;}
+.offter_top .list_item{border-bottom: 0px;padding: 0;line-height: 60px;height: 60px;}
+.offter_top .list_item .float_right{color: #9E9E9E;}
+.offer_details_box_wrap{padding: 30px 24px;margin-top: 50px;}
+.offer_details_box_wrap .car_staging_box_header{height: 40px;border-bottom: none;}
+.offer_details_box_wrap .car_staging_item.border_top{border-top: 2px solid #e8e6f3;}
+.offer_details_box_wrap .car_staging_item_title{height: 72px;line-height: 72px;}
+.offer_details_box_wrap .car_staging_item_title b{font-weight:400}
+.offer_details_box_wrap .car_staging_box_c_item {height: 60px;line-height: 60px;}
+.offter_footer.footer_wrap{background: #CCCCCC;}
+.offter_footer .footer{display: block;width: 100%;padding: 10px 30px;}
+.offter_footer .float_left p{line-height: 50px;font-size: 36px;}
+.offter_footer .float_left b{font-size: 24px;font-weight: 400;line-height: 30px;}
+.offter_footer .float_right span.submit_btn90{display: inline-block;height: 80px;line-height: 80px;font-size: 30px;padding: 0 24px;}
+/*预约出单*/
+.reservationOrder_main{}
+.reservationOrder_main_item{position: relative;margin-bottom: 10px;padding: 0 24px;background: #FFF;padding-bottom: 16px;}
+.reservationOrder_main_item .list_item{border-bottom: none;height: 60px;line-height: 60px;padding: 0;}
+.reservationOrder_main_item .list_item:first-child{border-bottom:#e8e6f3 2px solid ;height: 80px;line-height: 80px;}
+.reservationOrder_main_item .list_item .float_right input{height: 59px;text-align: right;}
+.reservationOrder_main .reservationOrder_main_item:last-child{padding-bottom: 0px;}
+.policy_type_box_text{font-size: 24px;color: #9E9E9E;line-height: 36px;}
 /*说明描述信息*/
 .description_info{font-size: 24px;line-height: 36px;color: #9E9E9E;}
 
@@ -703,6 +727,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .color_re1{color: #f25f5f;}
 .color_f9{color: #f96268;}
 .color_9e{color: #9E9E9E;}
+.color_92{color: #92C4F3;}
 .color_30{color: #303030;}
 .color_ff6600{color: #ff6600;}
 .color_e82b21{color: #e82b21;}

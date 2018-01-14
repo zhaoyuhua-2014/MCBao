@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>预约出单</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body data-type = "reservationOrder">
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback"><img src="../img/icon_back@2x.png"/></div>
+			    <h1 class="header_title header_title_color">预约出单</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main ">
+				<div class="reservationOrder_main">
+					<div class="reservationOrder_main_item">
+						<div class="list_item clearfloat">
+							<span class="float_left">车主</span>
+							<span class="float_right"></span>
+						</div>
+						<div class="list_item clearfloat">
+							<span class="float_left">姓名</span>
+							<span class="float_right">李双江</span>
+						</div>
+						<div class="list_item clearfloat">
+							<span class="float_left">手机号</span>
+							<span class="float_right">13888888888</span>
+						</div>
+						<div class="list_item clearfloat">
+							<span class="float_left">身份证号</span>
+							<span class="float_right"><input type="text" name="" id="" value="" placeholder="请输入身份证号" /></span>
+						</div>
+						<div class="list_item clearfloat">
+							<span class="float_left">身份证号地址</span>
+							<span class="float_right"><input type="text" name="" id="" value="" placeholder="请输入身份证号地址 " /></span>
+						</div>
+						<span class="border_radius top_left"></span>
+						<span class="border_radius top_right"></span>
+						<span class="border_radius bottom_left"></span>
+						<span class="border_radius bottom_right"></span>
+					</div>
+					<div class="reservationOrder_main_item ">
+						<div class="list_item clearfloat transfer_car ">
+							<span class="float_left">分期付款</span>
+							<span class="float_right actived"></span>
+						</div>
+						<div class="policy_type_box">
+							<div class="list_item clearfloat ">
+								<span class="float_left">垫报人</span>
+								<span class="float_right">杭州市拱墅区人民路泰丰有限公司</span>
+							</div>
+							<div class="policy_type_box_text">
+								由本公司垫付用户商业保险保费，车主享受保险公司全部收益。用户每月在个人中心“我的”【分期还款】按时还款即可。
+							</div>
+						</div>
+						<div class="policy_type_box">
+							<div class="list_item clearfloat">
+								<span class="float_left">姓名</span>
+								<span class="float_right">李双江</span>
+							</div>
+							<div class="list_item clearfloat">
+								<span class="float_left">手机号</span>
+								<span class="float_right">13888888888</span>
+							</div>
+							<div class="list_item clearfloat">
+								<span class="float_left">身份证号</span>
+								<span class="float_right"><input type="text" name="" id="" value="" placeholder="请输入身份证号" /></span>
+							</div>
+							<div class="list_item clearfloat">
+								<span class="float_left">身份证号地址</span>
+								<span class="float_right"><input type="text" name="" id="" value="" placeholder="请输入身份证号地址 " /></span>
+							</div>
+						</div>
+						<span class="border_radius top_left"></span>
+						<span class="border_radius top_right"></span>
+						<span class="border_radius bottom_left"></span>
+						<span class="border_radius bottom_right"></span>
+					</div>
+					<div class="reservationOrder_main_item">
+						<div class="list_item clearfloat">
+							<span class="float_left">被保人</span>
+							<span class="float_right"></span>
+						</div>
+						<div class="list_item clearfloat">
+							<span class="float_left">姓名</span>
+							<span class="float_right">李双江</span>
+						</div>
+						<div class="list_item clearfloat">
+							<span class="float_left">手机号</span>
+							<span class="float_right">13888888888</span>
+						</div>
+						<div class="list_item clearfloat">
+							<span class="float_left">身份证号</span>
+							<span class="float_right"><input type="text" name="" id="" value="" placeholder="请输入身份证号" /></span>
+						</div>
+						<div class="list_item clearfloat">
+							<span class="float_left">身份证号地址</span>
+							<span class="float_right"><input type="text" name="" id="" value="" placeholder="请输入身份证号地址 " /></span>
+						</div>
+						<span class="border_radius top_left"></span>
+						<span class="border_radius top_right"></span>
+						<span class="border_radius bottom_left"></span>
+						<span class="border_radius bottom_right"></span>
+					</div>
+					<div class="reservationOrder_main_item">
+						<div class="list_item clearfloat">
+							<span class="float_left">受益人</span>
+							<span class="float_right">(不可修改)法定</span>
+						</div>
+						<span class="border_radius top_left"></span>
+						<span class="border_radius top_right"></span>
+						<span class="border_radius bottom_left"></span>
+						<span class="border_radius bottom_right"></span>
+					</div>
+				</div>
+				<div class="payment_submit">
+					<button class="submit_btn90">提交核保</button>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".callback").on("click",function(){
+				window.history.back();
+			})
+			
+		})
+	</script>
+</html>

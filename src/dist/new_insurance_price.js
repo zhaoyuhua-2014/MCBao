@@ -131,8 +131,20 @@ define(function(require, exports, module){
 				});
 				/*确定跳转到询价页面--或者提示人工询价*/
 				$(".submit_btn90").on("click",function(){
-					window.location.href = "payment.html";
+					common.jumpLinkPlain("../html/offer_details.html")
+					//window.location.href = "payment.html";
 				});
+			}
+		}
+	}
+	//预约出单
+	pub.offerDetails = {
+		init:function(){
+			
+		},
+		eventHandle:{
+			init:function(){
+				
 			}
 		}
 	}
@@ -211,6 +223,9 @@ define(function(require, exports, module){
 		if (pub.module_id == "policyNewInsurancePrice"){
     		pub.policyNewInsurancePrice.init()
 			pub.policyNewInsurancePrice.eventHandle.init();
+    	}else if (pub.module_id == "offerDetails") {
+    		pub.offerDetails.init()
+			pub.offerDetails.eventHandle.init();
     	}else if (pub.module_id == "payment") {
     		pub.payment.init()
 			pub.payment.eventHandle.init();
