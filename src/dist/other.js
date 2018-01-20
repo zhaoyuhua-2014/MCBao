@@ -212,14 +212,17 @@ define(function(require, exports, module){
 			}
 		}
 	}
+	/*注册邀请*/
 	pub.regsiterInvitation = {
 		init:function(){
 			pub.loading = $(".click_load");
 			pub.regsiterInvitation.share_rcd_query.init();
 			require('qrcode');
-			pub.regsiterInvitation.htmlInit()
+			pub.regsiterInvitation.htmlInit();
+			
 		},
 		htmlInit:function(){
+			$(".envitation_name span").html(pub.userId);
 			var str = "http://weixin.91mcb.com/html/regsiter.html?id="+pub.userId;
 			var obj = {
 				render   : "canvas",//设置渲染方式  
@@ -382,7 +385,7 @@ define(function(require, exports, module){
 		}
 	}
 	pub.init = function(){
-		
+	
 		if (pub.module_id == "clientServiceCenter"){
     		pub.clientServiceCenter.init()
 			pub.clientServiceCenter.eventHandle.init();

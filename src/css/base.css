@@ -446,7 +446,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 #qrcode img{margin: 0 auto;}
 .invitetion_pople_boxs{background: #FFF;}
 .invitation_table_line{height: 72px;line-height: 72px;display: flex;}
-.invitation_table_line .line_item{flex: 1;text-align: center;font-size: 26px;}
+.invitation_table_line .line_item{flex: 1;text-align: center;font-size: 24px;overflow: hidden;}
 .invitation_table_line .line_item:nth-child(2){width: 300px;}
 .invitation_table_line.invitetoin_pople_title{background: #e0e0e0;}
 .invitation_table_box .invitation_table_line:nth-child(2n){background: #e0e0e0;}

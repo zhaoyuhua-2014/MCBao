@@ -59,14 +59,14 @@ define(function(require, exports, module){
 		DTD : $.Deferred(),
 		//默认站点
 		WebsiteNode:'3301',
-		DATE:"1228",
+		DATE:"0120",
 		PhoneNum:"0571-87790773",
 		
 	});
 
 	(function(){
 		if (common.EVE) {
-			common.API = "";
+			common.API = "http://api.91mcb.com/mcb_api/server/api.do";
 		}else{
 			common.API = "http://api.91mcb.com/mcb_api/server/api.do"
 		}
