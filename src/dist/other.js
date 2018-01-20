@@ -212,6 +212,80 @@ define(function(require, exports, module){
 			}
 		}
 	}
+	pub.regsiterInvitation = {
+		init:function(){
+			pub.loading = $(".click_load");
+			pub.regsiterInvitation.share_rcd_query.init();
+			require('qrcode');
+			pub.regsiterInvitation.htmlInit()
+		},
+		htmlInit:function(){
+			var str = "http://weixin.91mcb.com/html/regsiter.html?id="+pub.userId;
+			var obj = {
+				render   : "canvas",//设置渲染方式  
+			    width       : 256,     //设置宽度  
+			    height      : 256,     //设置高度  
+			    typeNumber  : -1,      //计算模式  
+			    background      : "#ffffff",//背景颜色  
+			    foreground      : "#000000", //前景颜色 
+			    text:str
+			};
+			new QRCode(document.getElementById("qrcode"), obj);
+		},
+		share_rcd_query:{
+			init:function(){
+				common.ajaxPost($.extend({
+					method:'share_rcd_query',
+					websiteNode:pub.options.websiteNode,
+					pageNo:common.PAGE_INDEX,
+					pageSize:common.PAGE_SIZE,
+				}, pub.userBasicParam ),function( d ){
+					d.statusCode == "100000" && pub.regsiterInvitation.share_rcd_query.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr)
+				});
+			},
+			apiData:function(d){
+				var d = d.data,o = d.objects,html = '';
+				pub.options.isEnd = d.isLast;
+				if (pub.options.pageNo == 1) {
+					$(".invitation_table_box").html('');
+				}
+				var nood = $(".invitation_table_box");
+				if (o.length == '0') {
+					pub.loading.hide();
+					nood.html("暂无邀请人快去邀请吧！").css("line-height","100px").css("text-align","center").css("font-size","30px");
+				}else{
+					nood.removeAttr("style");
+					for (var i in o) {
+						html +='<ul class="invitation_table_line">'
+						html +='	<li class="line_item">'+o[i].newuserName+'</li>'
+						html +='	<li class="line_item">'+o[i].regTime+'</li>'
+						html +='	<li class="line_item">'+(o[i].isRake ? "已返佣" : "未返佣")+'</li>'
+						html +='</ul>'
+					}
+					nood.append(html);
+					if( pub.options.isEnd ){
+						pub.loading.show().html("没有更多数据了！");
+					}else{
+						pub.loading.show().html("点击加载更多！");
+					};
+				}
+			}
+		},
+		eventHandle:{
+			init:function(){
+				//点击加载更多
+				pub.loading.on("click",function(){
+					if (!pub.options.isEnd) {
+						pub.options.pageNo ++;
+						pub.regsiterInvitation.share_rcd_query.init();
+					}else{
+						pub.loading.show().html("没有更多数据了！");
+					}
+				})
+			}
+		}
+	}
 	//其他接口
 	pub.othre = {
 		init:function(){
@@ -251,22 +325,7 @@ define(function(require, exports, module){
 				console.log(d)
 			}
 		},
-		share_rcd_query:{
-			init:function(){
-				common.ajaxPost($.extend({
-					method:'share_rcd_query',
-					websiteNode:pub.options.websiteNode,
-					pageNo:common.PAGE_INDEX,
-					pageSize:common.PAGE_SIZE,
-				}, pub.userBasicParam ),function( d ){
-					d.statusCode == "100000" && pub.othre.share_rcd_query.apiData( d );
-					d.statusCode != "100000" && common.prompt(d.statusStr)
-				});
-			},
-			apiData:function(d){
-				console.log(d)
-			}
-		},
+		
 		system_config_constant:{
 			init:function(){
 				common.ajaxPost($.extend({
@@ -339,8 +398,11 @@ define(function(require, exports, module){
     	}else if (pub.module_id == "setNewPassword"){
     		pub.setNewPassword.init()
 			pub.setNewPassword.eventHandle.init();
+    	}else if(pub.module_id == "regsiterInvitation"){
+    		pub.regsiterInvitation.init();
+    		pub.regsiterInvitation.eventHandle.init();
     	}
-    	pub.eventHandle.init()
+    	pub.eventHandle.init();
 	};
 	module.exports = pub;
 })

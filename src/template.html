@@ -7,6 +7,7 @@
 		<meta content="telephone=no, address=no" name="format-detection" />
     	<link rel="stylesheet" href="../css/rest.css" />
     	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+    	<script src="js/qrcode.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div class="header_wrap">
@@ -107,13 +108,21 @@
 					<input type="text" name="userId" id="" value="2" style="line-height: 76px;" />
 					<input type="submit" value="提交"/>
 				</form>
-			</div>			
+			</div>
+			<div id="qrcode">
+			</div>
+			
+			<input type="text" id="getval"/> <button id="send">点击更换验证码</button>
+			<script>
+			    
+			
+			
+			</script>
 		</div>
 	</body>
 	<script src="../js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
+		/*$(document).ready(function(){
 			$(".callback").on("click",function(){
 				window.history.back();
 			})
@@ -125,6 +134,16 @@
 			console.log(obj)
 			delete obj[sex]
 			console.log(obj)
-		})
+		})*/
+		window.onload =function(){
+	        var qrcode = new QRCode(document.getElementById("qrcode"), {
+	            width : 96,//设置宽高
+	            height : 96
+	        });
+	        qrcode.makeCode("http://www.baidu.com");
+	        document.getElementById("send").onclick =function(){
+	            qrcode.makeCode(document.getElementById("getval").value);
+	        }
+	    }
 	</script>
 </html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册邀请</title>
+		<meta name="viewport" content="width=750,user-scalable=no"/>
+		<meta content="telephone=no, address=no" name="format-detection" />
+    	<link rel="stylesheet" type="text/css" href="../css/rest.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+    	<style type="text/css">
+    		#qrcode{
+    			padding: 20px 0;
+    			background: #FFF;
+    		}
+    		#qrcode img{
+    			margin: 0 auto;
+    		}
+    		.invitetion_pople_boxs{background: #FFF;}
+    		.invitation_table_line{height: 72px;line-height: 72px;display: flex;}
+    		.invitation_table_line .line_item{flex: 1;text-align: center;font-size: 26px;}
+    		.invitation_table_line .line_item:nth-child(2){width: 300px;}
+    		.invitation_table_line.invitetoin_pople_title{background: #e0e0e0;}
+    		.invitation_table_box .invitation_table_line:nth-child(2n){background: #e0e0e0;}
+    		.invitation_table_box .invitation_table_line:nth-child(2n+1){background: #FFF;}
+    	</style>
+	</head>
+	<body data-type = "regsiterInvitation">
+		<div class="header_wrap">
+			<div class="header_contain">
+			    <div class="header_left callback">
+					<img src="../img/icon_back@2x.png"/>
+			    </div>
+			    <h1 class="header_title header_title_color">注册邀请</h1>
+			</div>
+		</div>
+		<div class="empty"></div>
+		<div class="main_wrap">
+			<div class="main">
+				<div class="list_item">
+					<div class="float_left">邀请人ID：</div><span>1</span>
+				</div>
+				<div class="invitation_box">
+					<div class="list_item">邀请二维码：</div>
+					<div id="qrcode" class="invitation_box_img"></div>
+				</div>
+				<div class="invitetion_pople_boxs">
+					<div class="list_item">
+						<div class="float_left">已邀请人列表</div>
+					</div>
+					<div class="invitetion_pople_box">
+						<ul class="invitation_table_line invitetoin_pople_title">
+							<li class="line_item">姓名</li>
+							<li class="line_item">注册时间</li>
+							<li class="line_item">是否返佣</li>
+						</ul>
+						<div class="invitation_table_box">
+							<ul class="invitation_table_line">
+								<li class="line_item">姓名</li>
+								<li class="line_item">注册时间</li>
+								<li class="line_item">是否返佣</li>
+							</ul>
+							<ul class="invitation_table_line">
+								<li class="line_item">姓名</li>
+								<li class="line_item">注册时间</li>
+								<li class="line_item">是否返佣</li>
+							</ul>
+						</div>
+						<p class="click_load hidden">点击加载更多！</p>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="../seajs/2.1.1/sea.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../seajs-config.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		seajs.use(['../dist/other'],function( pub ){
+			pub.init();
+		});
+	</script>
+</html>

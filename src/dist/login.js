@@ -40,7 +40,7 @@ define(function(require, exports, module){
 			if ( pub.time == 0 ) {
 				pub.time = 59; // 重置倒计时值
 				$("#reg_time").hide();
-				$("#reg_verify_code").show().html('重新获取');
+				$("#mcb_get_verify_code").show().html('重新获取');
 				clearInterval(id);
 				id = null;
 			}else{
@@ -154,6 +154,8 @@ define(function(require, exports, module){
 	pub.register.eventHandle = {
 
 		init : function(){
+			pub.suid = common.getUrlParam("id");
+			
 			$('.regsiter_btn').on('click',function(){
 				pub.phoneNum = $('#reg_phoneNumber').val();
 				pub.verify_code = $('#verify_code').val();
@@ -192,16 +194,12 @@ define(function(require, exports, module){
 			    mobile:pub.phoneNum,
 			    randCode:pub.verify_code,
 			   	pwd:pub.password,
-			   	second_pwd:pub.repeatPassword
+			   	second_pwd:pub.repeatPassword,
+			   	suid:pub.suid
 			}, function( d ){
 				if ( d.statusCode == '100000' ) {
 				    pub.register.regist.apiData( d );					   
-			    } /*else if ( d.statusCode == '100510' ){
-				    $('.pop').css({'display':'block'});
-					$('.pop_makeSure').on('click',function(){
-						$('.pop').css({'display':'none'});
-					})					    
-			    }*/else{
+			    } else{
 			    	common.prompt(d.statusStr)
 			    }
 			},function( d ){

@@ -294,10 +294,12 @@ define(function(require, exports, module){
 		jumpLinkPlain : function( url ){
 			url = url || window.location.href;
 			if (common.DATE) {
-				if (url.indexOf("?")>0) {
-					url = url + "&v="+common.DATE;
-				}else{
-					url = url + "?v="+common.DATE;
+				if (url.substr(0,4) != 'http') {
+					if (url.indexOf("?")>0) {
+						url = url + "&v="+common.DATE;
+					}else{
+						url = url + "?v="+common.DATE;
+					}
 				}
 			}
 			window.location.href = url;

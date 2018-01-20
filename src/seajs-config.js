@@ -21,7 +21,8 @@ seajs.config({
     "LayerCss":"layer_mobile/need/layer.css",
     "LayerJs":"layer_mobile/layer",
     "EXIF":"outside/exif",
-    "imgUpload":"dist/imgUpload"
+    "imgUpload":"dist/imgUpload",
+    "qrcode":"js/qrcode"
   },
   preload: [
     'mobile-util',

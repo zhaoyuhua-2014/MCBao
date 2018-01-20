@@ -26,7 +26,8 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .footer .footer_item.actived:nth-child(3){background: url(../img/icon_bot_list_b@2x.png) no-repeat center 16px}
 .footer .footer_item:nth-child(4){background: url(../img/icon_bot_user_a@2x.png) no-repeat center 16px}
 .footer .footer_item.actived:nth-child(4){ background: url(../img/icon_bot_user_b@2x.png) no-repeat center 16px}
-
+/*头部没有padding-top*/
+.changecity.main_wrap,.main_wrap.my_main,.main_wrap.my_balance,.main_wrap.mall_main,.main_wrap.car_brand,.main_wrap.my_order,.main_wrap.evaluationDetails,.main_wrap.carInsuranceStaging{padding-top: 0px;}
 /*公用功能性类*/
 /*左右浮动*/
 .float_left{float: left;}
@@ -175,7 +176,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .module_item dd h4{height: 50px;line-height: 50px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;font-size: 30px;color: #9C9FA3;}
 .module_item dd .description{padding: 15px 0; overflow:hidden; text-overflow:ellipsis;display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:3;line-height: 30px;}
 /*城市选择*/
-.changecity.main_wrap{padding-top: 0px;}
+
 .changecity_box{font-size: 30px;}
 .changecity_header{height: 88px;line-height: 88px;padding: 0 24px;background: #FFFFFF;border-bottom: 1px solid #E1E1E1;z-index: 2; position: fixed;left: 0;top: 96px;width: 100%;}
 .changecity_center {margin-top: 88px;}
@@ -194,7 +195,7 @@ html,body{margin: 0;padding: 0;height:100%;width: 100%;background: #f0f0f0;}
 .changecity_sidenav li a{height: 32px; color: #C30D23;display: block;}
 
 /*我模块样式*/
-.main_wrap.my_main{padding-top: 0px;}
+
 .my_top{width: 100%;min-height: 340px;padding: 0 24px; padding-bottom:36px ;background: url(../img/bg_top@2x.png) no-repeat center top;}
 .my_header{height: 86px;line-height: 86px;text-align: center;color: #FFFFFF;font-size: 36px;}
 
@@ -441,7 +442,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .my_address_box .float_right input{text-align: right;height: 96px;}
 /*我的余额*/
 .my_balance.header_wrap{background: none;border: none;}
-.main_wrap.my_balance{padding-top: 0;}
+
 .my_balance.footer_wrap{background: url(../img/bg_red_100.png) repeat center;line-height: 100px;color: #FFFFFF;}
 .my_balance .footer{text-align: center;font-size: 36px;display: block;}
 .my_balance_top{height: 432px;width: 100%;background:#FFFFFF url(../img/bg_money@2x.png) no-repeat center;padding-top: 110px;margin-bottom: 56px;}
@@ -497,7 +498,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 
 /*商城*/
 .header_wrap.mall_header{background: transparent;border-bottom: none;}
-.main_wrap.mall_main{padding: 0;}
+
 .mall_header .header_search{padding: 15px 0;padding-left: 96px;padding-right: 40px;background: transparent;}
 .header_search input{width: 100%;height: 65px;border-radius: 30px;background: #FFFFFF url(../img/icon_serch@2x.png) no-repeat 30px center;padding-left: 80px;font-size: 28px;line-height: 65px;}
 
@@ -535,7 +536,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 
 
 /*汽车品牌*/
-.main_wrap.car_brand{padding-top: 0;}
+
 .car_brand_box{position: relative;}
 .car_brand_hot_wrap{font-size: 24px;margin-bottom: 10px;}
 .car_brand_hot_tit{height: 70px;line-height: 70px;color: #9E9E9E;padding: 0 24px;}
@@ -651,7 +652,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .user_driving_card_a{background: url(../img/up_drivelicense_a@2x.png) no-repeat center;}
 .user_driving_card_b{background: url(../img/up_drivelicense_b@2x.png) no-repeat center;}
 /*订单模块*/
-.main_wrap.my_order{padding-top: 0px;}
+
 .order_nav{margin-bottom: 20px;}
 .order_nav .mall_nav_item{height: 100px;line-height: 100px;}
 .order_item{width: 100%;padding: 0 20px;background: #FFFFFF;margin-bottom: 20px;}
@@ -674,7 +675,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .evaluation_item dd.float_left{padding-left: 20px;}
 .evaluation_item dd.float_right{font-size: 28px;}
 /*信用评估工单详情*/
-.evaluationDetails.main_wrap{padding-top:0 ;}
+
 .evaluationDetails_box{width: 100%;padding-left: 90px;position: relative;height: auto;min-height: 500px;background: #FFF;}
 .evaluationDetails_box_item{position: relative;border-left: 2px dashed #e5e5e5;padding-bottom: 120px;}
 .evaluationDetails_box_item.actived{border-left-style: solid;}
