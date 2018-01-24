@@ -888,8 +888,13 @@ define(function(require, exports, module){
 				if (o.status == 0) {
 					
 				}else if (o.status == 1) {
-					noods.eq(2).find("#SignTime").removeAttr("disabled");
-					noods.eq(2).find(".btn_wrap").removeClass("hidden");
+					if (o.preSignTime) {
+						noods.eq(2).addClass("actived");
+						noods.eq(2).find("#SignTime").val(o.preSignTime);
+					}else{
+						noods.eq(2).find("#SignTime").removeAttr("disabled");
+						noods.eq(2).find(".btn_wrap").removeClass("hidden");
+					}
 				}else if (o.status == 2) {
 					noods.eq(2).addClass("actived");
 					noods.eq(2).find("#SignTime").val(o.preSignTime);

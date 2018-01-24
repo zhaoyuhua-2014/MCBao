@@ -223,7 +223,7 @@ define(function(require, exports, module){
 		},
 		htmlInit:function(){
 			$(".envitation_name span").html(pub.userId);
-			var str = "http://weixin.91mcb.com/test/html/regsiter.html?id="+pub.userId;
+			var str = "http://weixin.91mcb.com/html/regsiter.html?id="+pub.userId;
 			var obj = {
 				render   : "canvas",//设置渲染方式  
 			    width       : 256,     //设置宽度  

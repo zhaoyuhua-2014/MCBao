@@ -116,7 +116,6 @@ define(function(require, exports, module){
 			    	    success: function (res) {
 			    	        //支付成功后的回调函数
 			    	        common.jumpLinkPlain("../html/pay_result.html?type="+pub.options.pageType)
-							
 			    	    },
 			    	    cancel:function(res){  
 					        common.prompt("取消支付");

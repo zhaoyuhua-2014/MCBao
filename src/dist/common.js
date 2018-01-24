@@ -59,7 +59,7 @@ define(function(require, exports, module){
 		DTD : $.Deferred(),
 		//默认站点
 		WebsiteNode:'3301',
-		DATE:"0120",
+		DATE:"0124",
 		PhoneNum:"0571-87790773",
 		
 	});

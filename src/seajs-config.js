@@ -1,4 +1,4 @@
-var version = '1.0.2';
+var version = '1.1.24';
 seajs.config({
   // Configure alias
   alias: {
