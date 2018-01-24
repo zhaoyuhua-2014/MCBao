@@ -59,7 +59,7 @@ define(function(require, exports, module) {
 				var o = d.data;
 				var nood = $(".my_info_top");
 				nood.find("dt").html("<img class='true' src='" + (o.faceImgUrl ? o.faceImgUrl : '../img/bg_head@2x.png') + "' />");
-				nood.find("dd").html(o.petName);
+				nood.find("dd").html(o.mobile);
 			}
 		},
 		user_update_pwd: {

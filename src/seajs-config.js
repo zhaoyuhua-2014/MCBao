@@ -1,3 +1,4 @@
+var version = '1.0.2';
 seajs.config({
   // Configure alias
   alias: {
@@ -22,10 +23,16 @@ seajs.config({
     "LayerJs":"layer_mobile/layer",
     "EXIF":"outside/exif",
     "imgUpload":"dist/imgUpload",
-    "qrcode":"js/qrcode"
+    "qrcode":"js/qrcode",
+  	"qrious":"js/qrious"
   },
   preload: [
     'mobile-util',
     'jquery'
-  ]
+  ],
+  map: [
+		//可配置版本号
+		['.css', '.css?v=' + version],
+		['.js', '.js?v=' + version]
+	],
 });

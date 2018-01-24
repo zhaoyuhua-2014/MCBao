@@ -443,7 +443,7 @@ height: 78px;line-height: 78px;text-align: center;color: #fff; font-size: 36px}
 .wxlog{width: 100%;height: 100%;}
 /*-邀请注册-*/
 #qrcode{padding: 20px 0;background: #FFF;}
-#qrcode img{margin: 0 auto;}
+#qrcode img{margin: 0 auto;display: block;}
 .invitetion_pople_boxs{background: #FFF;}
 .invitation_table_line{height: 72px;line-height: 72px;display: flex;}
 .invitation_table_line .line_item{flex: 1;text-align: center;font-size: 24px;overflow: hidden;}

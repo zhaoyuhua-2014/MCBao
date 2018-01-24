@@ -12,6 +12,7 @@ define(function(require, exports, module){
 	var pub = {};
 
 	pub.weixinCode = common.getUrlParam('code'); // 获取url参数
+	pub.openId = common.openId.getItem();
 
 	// 属性
 	$.extend(pub,{
@@ -146,16 +147,53 @@ define(function(require, exports, module){
 
 	// 注册 命名空间
 
-	pub.register = {};
-
+	pub.register = {
+		init:function(){
+			if (localStorage.getItem("suid")) {
+				pub.suid = localStorage.getItem("getItem")
+			}else{
+				pub.suid = common.getUrlParam("id");
+				localStorage.setItem("suid",pub.suid)
+			}
+			/*if (common.isWeiXin()) {
+				if (!pub.openId) {
+					if (pub.weixinCode) {
+						pub.register.get_weixin_code.init();
+					} else{
+						//var http = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxde629c25e29d1415&redirect_uri=http://weixin.91mcb.com/test/html/regsiter.html&response_type=code&scope=snsapi_userinfo&state=mcb123&connect_redirect=1#wechat_redirect";
+						var http = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzIwOTY4MDIxNw==&scene=124#wechat_redirect";
+						window.location.href = http;
+					}
+				}
+			}*/
+			pub.register.eventHandle.init();
+		},
+		//获取微信Code
+		get_weixin_code :{
+			init:function(){
+				common.ajaxPost({
+					method:'get_weixin_code',
+					weixinCode:pub.weixinCode,
+				 },function( d ){
+					d.statusCode == "100000" && pub.register.get_weixin_code.apiData( d );
+					d.statusCode != "100000" && common.prompt(d.statusStr);
+				});
+			},
+			apiData:function(d){
+				if (d.data.fromWX == 1 ) {
+					pub.openId = d.data.openId;
+					common.openId.setItem(pub.openId);
+				}
+			}
+		}
+	};
+	
 	pub.repeatPassword = ''; // 重复密码
 
 	// 注册事件处理
 	pub.register.eventHandle = {
 
 		init : function(){
-			pub.suid = common.getUrlParam("id");
-			
 			$('.regsiter_btn').on('click',function(){
 				pub.phoneNum = $('#reg_phoneNumber').val();
 				pub.verify_code = $('#verify_code').val();
@@ -167,7 +205,7 @@ define(function(require, exports, module){
 				if( !common.PHONE_NUMBER_REG.test( pub.phoneNum ) ){
 					common.prompt('请输入正确的手机号'); return;
 				}
-				if( pub.password == '' ){
+				/*if( pub.password == '' ){
 				    common.prompt('请输入密码'); return;
 				}
 				if( !common.PWD_REG.test( pub.password ) ){
@@ -178,7 +216,7 @@ define(function(require, exports, module){
 				}
 				if(pub.password != pub.repeatPassword ){
 					common.prompt('两次密码输入不一致'); return;
-				}
+				}*/
 				pub.register.regist.init();
 			});
 		},
@@ -207,9 +245,18 @@ define(function(require, exports, module){
 			});
 		},
 		apiData : function(d){
-
-			common.jumpLinkPlain('login.html');
-			
+			//common.jumpLinkPlain('login.html');
+			common.prompt("注册成功！");
+			setTimeout(function(){
+				var 
+				infor = d.data;	
+				common.user_data.setItem( common.JSONStr(infor) );
+				common.tokenId.setItem( d.data.tokenId );
+				common.secretKey.setItem( d.data.secretKey );
+				common.setMyTimeout(function(){
+					common.jumpLinkPlain('../index.html');
+				},500);
+			},1000)
 		}
 	};
 
@@ -254,7 +301,7 @@ define(function(require, exports, module){
 		
 		pub.send_sms_type == '5' && pub.login.eventHandle.init(); // 登录初始化
 		
-		pub.send_sms_type == '1' && pub.register.eventHandle.init(); // 注册初始化
+		pub.send_sms_type == '1' && pub.register.init(); // 注册初始化
 	};
 
 	module.exports = pub;
